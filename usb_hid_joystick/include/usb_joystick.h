@@ -1,1 +1,1 @@
-void send_joypad_movement();
+void send_joystick_movement();

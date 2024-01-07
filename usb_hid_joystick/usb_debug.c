@@ -30,7 +30,7 @@ void DEBUG_PRINT(uint8_t *debug_text, ...) {
 
 }
 
-void DEBUG_SHOW(uint8_t debug_level, uint8_t *prefix_text, uint8_t *debug_text, ...) {
+void  __not_in_flash_func (DEBUG_SHOW)(uint8_t debug_level, uint8_t *prefix_text, uint8_t *debug_text, ...) {
    
    TIMESTAMP();
 
@@ -103,10 +103,10 @@ unsigned char *concatenate(uint8_t *string1, uint8_t *string2) {
 
         do {
 
-        strings[strings_offset] = string1[string1_offset];
+            strings[strings_offset] = string1[string1_offset];
 
-        ++ strings_offset; 
-        ++ string1_offset;
+            ++ strings_offset; 
+            ++ string1_offset;
 
         } while (--string1_length);
 
@@ -114,12 +114,12 @@ unsigned char *concatenate(uint8_t *string1, uint8_t *string2) {
 
     if (string2_length) {
 
-    do {
+        do {
 
-        strings[strings_offset] = string2[string2_offset];
+            strings[strings_offset] = string2[string2_offset];
 
-        ++ strings_offset; 
-        ++ string2_offset;
+            ++ strings_offset; 
+            ++ string2_offset;
 
         } while (--string2_length);
 
@@ -128,7 +128,6 @@ unsigned char *concatenate(uint8_t *string1, uint8_t *string2) {
     strings[++strings_offset] = 0;
 
     return strings;
-
 }
 
 

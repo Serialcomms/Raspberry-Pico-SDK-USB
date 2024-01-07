@@ -1,8 +1,4 @@
 #include <stdio.h>
-//#include <string.h>                         // For memcpy
-//#include "pico/stdlib.h"                    // for printf
-//#include "include/time_stamp.h"
-
 #include "include/usb_debug.h"
 #include "include/usb_dev_init.h"
 #include "include/status_screen.h"
@@ -45,7 +41,7 @@ int main(void) {
 
         busy_wait_ms(333);
 
-        send_joypad_movement();
+        send_joystick_movement();
 
     }
 }

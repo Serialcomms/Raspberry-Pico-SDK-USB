@@ -14,7 +14,7 @@
 
 static uint8_t *DEBUG_TEXT = DEBUG_STRING_BUFFER;
 
-void send_joypad_movement() {
+void send_joystick_movement() {
 
 static uint16_t i = 200;
 static uint16_t angle;
