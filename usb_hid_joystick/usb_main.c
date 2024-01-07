@@ -1,10 +1,12 @@
 #include <stdio.h>
-#include <string.h>                         // For memcpy
-#include "pico/stdlib.h"                    // for printf
-#include "include/time_stamp.h"
+//#include <string.h>                         // For memcpy
+//#include "pico/stdlib.h"                    // for printf
+//#include "include/time_stamp.h"
+
 #include "include/usb_debug.h"
 #include "include/usb_dev_init.h"
 #include "include/status_screen.h"
+#include "include/setup_strings.h"
 #include "include/usb_endpoints.h"
 #include "include/usb_joystick.h"
 
@@ -25,6 +27,10 @@ int main(void) {
 
     DEBUG_TEXT = "Pico Initialising\tUSB Device - HID Joystick Device Function";
     DEBUG_SHOW (1 , "SDK", DEBUG_TEXT);
+
+    generate_serial_number_string();
+
+    show_serial_number_string();
    
     usb_setup_endpoint_0();
 

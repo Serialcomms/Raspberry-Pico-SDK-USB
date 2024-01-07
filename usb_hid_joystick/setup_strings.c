@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <string.h>                         // For strlen
 #include "pico/stdlib.h"                    // for printf
-//#include "pico/unique_id.h"
 #include "include/usb_debug.h"
 #include "include/time_stamp.h"
 #include "include/usb_transfer.h"
@@ -26,10 +25,10 @@ unsigned char *pico_string_descriptors[] = {
 } ;
 
 unsigned char string_buffer[64];
-unsigned char serial_number[32];
+static unsigned char serial_number[32];
 
-unsigned char *ROM_VERSIONS[] =  { "?" , "1" , "2", "3" };
-unsigned char *CHIP_VERSIONS[] = { "?" , "B0/B1" , "B2" };
+unsigned char *rp2040_rom_versions[] =  { "?", "V1", "V2", "V3" };
+unsigned char *rp2040_chip_versions[] = { "?", "B0/B1", "B2" };
 
 void send_device_string_to_host(uint8_t string_index) {
 
@@ -131,8 +130,8 @@ void usb_start_string_transfer(uint8_t *string_descriptor, uint8_t string_length
 
     } else {
 
-     DEBUG_TEXT = "Pico Request Handler \tGET PICO STRINGS, Empty String" ;
-     DEBUG_SHOW (1, "USB", DEBUG_TEXT);
+    DEBUG_TEXT = "Pico Request Handler \tGET PICO STRINGS, Empty String" ;
+    DEBUG_SHOW (1, "USB", DEBUG_TEXT);
 
     }
 
@@ -140,25 +139,38 @@ void usb_start_string_transfer(uint8_t *string_descriptor, uint8_t string_length
 
 uint8_t generate_serial_number_string() {
   
-  snprintf(serial_number, 32, ":, :, :, :", "Pico Chip=", read_rp2040_chip_version(), ", ROM=", read_rp2040_rom_version());
-
+  snprintf(serial_number, 32, "%s%s%s%s", "CHIP_", read_rp2040_chip_version(), "_ROM_", read_rp2040_rom_version());
+  
   uint8_t serial_number_length = build_string_descriptor(serial_number);
+
+  DEBUG_TEXT = "Pico Serial String \tSerial Number Length = %d" ;
+  DEBUG_SHOW (1, "USB", DEBUG_TEXT, serial_number_length);
 
   return serial_number_length;
 
 }
 
+
+void show_serial_number_string() {
+
+  unsigned char *serial_string = serial_number;
+
+  DEBUG_TEXT = "Pico Serial String \tSerial Number = %s" ;
+  DEBUG_SHOW (1, "USB", DEBUG_TEXT, serial_string);
+
+}
+
 unsigned char *read_rp2040_chip_version() {
 
-  uint8_t VERSION = rp2040_chip_version() ;
+  uint8_t chip_version = rp2040_chip_version() ;
  
-  if ((VERSION > 0 ) && (VERSION < count_of(CHIP_VERSIONS) + 1)) {
+  if ((chip_version > 0) && (chip_version < count_of(rp2040_chip_versions) + 1)) {
 
-    return CHIP_VERSIONS[VERSION];
+    return rp2040_chip_versions[chip_version];
     
   } else {
 
-    return CHIP_VERSIONS[0];
+    return rp2040_chip_versions[0];
 
   }
   
@@ -166,15 +178,15 @@ unsigned char *read_rp2040_chip_version() {
 
 unsigned char *read_rp2040_rom_version() {
 
-  uint8_t VERSION = rp2040_rom_version() ;
+  uint8_t rom_version = rp2040_rom_version() ;
   
-  if ((VERSION > 0) && (VERSION < count_of(ROM_VERSIONS) + 1)) {
+  if ((rom_version > 0) && (rom_version < count_of(rp2040_rom_versions) + 1)) {
 
-    return ROM_VERSIONS[VERSION];
+    return rp2040_rom_versions[rom_version];
     
   } else {
 
-    return ROM_VERSIONS[0];
+    return rp2040_rom_versions[0];
 
   }
   

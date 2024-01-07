@@ -10,7 +10,6 @@
 #include <stdio.h>
 #include "pico/stdlib.h"
 #include "include/usb_debug.h"
-//#include "include/time_stamp.h"
 #include "include/status_screen.h"
 
 static uint8_t *DEBUG_TEXT = DEBUG_STRING_BUFFER;
