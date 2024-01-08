@@ -18,16 +18,31 @@ typedef void (*buffer_completion_handler)(uint8_t EP_NUMBER);
 extern buffer_completion_handler buffer_completion_handler_pico[16];
 extern buffer_completion_handler buffer_completion_handler_host[16];
 
+struct source_data_queue {
+
+
+
+};
+
 struct host_endpoint_profile {
 
-    uint8_t *data_buffer;
+    bool last_packet;
+    uint8_t  packet_size;
+    uint8_t  full_packets;
+    uint8_t  part_packet_size;
+    uint8_t *usb_buffer;
+    uint16_t buffer_length;
+    uint32_t buffer_offset;
     uint32_t packet_id;
     uint32_t control_register;
     uint32_t address_base_offset;
     uint32_t data_buffer_address;
+    uint32_t transfer_duration;
+    //queue_t source_data;
 
-    void *handler_address;
-
+    absolute_time_t start_time_now;
+    absolute_time_t start_time_end;
+     
     buffer_completion_handler completion_handler;
 
 } ;

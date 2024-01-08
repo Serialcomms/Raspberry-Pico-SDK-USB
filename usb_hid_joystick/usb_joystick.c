@@ -30,7 +30,7 @@ static int8_t pointer_y;
 
 const float radians = M_PI / (float) 180.0;   
 
-uint8_t *joystick_report = host_endpoint[1].data_buffer;
+uint8_t *joystick_report = host_endpoint[1].usb_buffer;
 
 ++i;
 
