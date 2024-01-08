@@ -26,9 +26,8 @@ struct source_data_queue {
 
 struct host_endpoint_profile {
 
-    bool last_packet;
     uint8_t  packet_size;
-    uint8_t  full_packets;
+    uint8_t  full_async_packets;
     uint8_t  part_packet_size;
     uint8_t *usb_buffer;
     uint16_t buffer_length;
