@@ -33,4 +33,3 @@ void DEBUG_PRINT(uint8_t *debug_text, ...);
 
 void DEBUG_SHOW(uint8_t debug_level, uint8_t *prefix_text, uint8_t *debug_text, ...);
 
-//void DEBUG_SHOW2(uint8_t debug_level, uint8_t *prefix_text, ...) ;

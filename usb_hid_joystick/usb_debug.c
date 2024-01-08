@@ -15,6 +15,9 @@
 
 uint8_t DEBUG_STRING_BUFFER[100];
 static uint8_t *show_text = DEBUG_STRING_BUFFER;
+static uint8_t string_pointer = 0;
+static const uint8_t debug_threshold = 0;
+
 
 void DEBUG_PRINT(uint8_t *debug_text, ...) {
    
@@ -31,45 +34,45 @@ void DEBUG_PRINT(uint8_t *debug_text, ...) {
 }
 
 void  __not_in_flash_func (DEBUG_SHOW)(uint8_t debug_level, uint8_t *prefix_text, uint8_t *debug_text, ...) {
-   
-   TIMESTAMP();
 
-   printf(prefix_text);
+if (debug_level > debug_threshold) {
+
+    TIMESTAMP();
+
+    printf(prefix_text);
     
-   printf(":\t");
+    printf(":\t");
 
-   va_list args;
+    va_list args;
 
-   va_start(args, debug_text);
+    va_start(args, debug_text);
    
-   vprintf(debug_text, args);
+    vprintf(debug_text, args);
    
-   va_end(args);
+    va_end(args);
 
-   printf("\n");
+    printf("\n");
 
-   fflush(stdout);
+    fflush(stdout);
 
-}
+    } else {
 
-void DEBUG_SHOW2(uint8_t debug_level, uint8_t *prefix_text, ...) {
+    va_list args;
 
-   TIMESTAMP();
+    va_start(args, debug_text);
 
-   printf(prefix_text);
+    va_copy(args, args);
+
+    va_end(args);
     
-   printf(":\t");
+    fflush(stdout);
 
-   va_list args;
+      //  gpio_put(PICO_DEFAULT_LED_PIN, !gpio_get(PICO_DEFAULT_LED_PIN));
 
-   va_start(args, prefix_text);
-   
-   vprintf(show_text, args);
-   
-   va_end(args);
+      //  printf("DBG:\t Debug Print\tDebug Threshold=%d, Level=%d\n", debug_threshold, debug_level);
 
-   printf("\n");
-
+    }
+      
 }
 
 unsigned char *ep_text(uint8_t EP_NUMBER) {

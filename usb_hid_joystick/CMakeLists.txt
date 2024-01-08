@@ -31,5 +31,7 @@ pico_add_extra_outputs(usb_hid_joystick)
 pico_enable_stdio_usb(usb_hid_joystick 0)
 pico_enable_stdio_uart(usb_hid_joystick 1)
 
+add_compile_definitions(PICO_USE_STACK_GUARDS=1)
+
 # add url via pico_set_program_url
 # example_auto_set_url(dev_lowlevel)

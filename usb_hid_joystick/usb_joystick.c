@@ -30,7 +30,7 @@ static int8_t pointer_y;
 
 const float radians = M_PI / (float) 180.0;   
 
-uint8_t *joystick_report = endpoint_data_buffer_to_host[1];
+uint8_t *joystick_report = host_endpoint[1].data_buffer;
 
 ++i;
 
@@ -64,7 +64,9 @@ DEBUG_TEXT = "HID Report Bytes\ti=%d, Angle=%d, Rudder=%d, Pointer x/y = %d/%d  
 
 DEBUG_SHOW (1, "JOY" , DEBUG_TEXT, i, angle, rudder, pointer_x, pointer_y);
 
-send_data_packet(1, 6, false, true, true); // P4=true, must toggle PID
+//send_data_packet(1, 6, false, true, true); // P4=true, must toggle PID
+
+joystick_data_packet(1, 6, false, true) ;
 
 gpio_put(PICO_DEFAULT_LED_PIN, !gpio_get(PICO_DEFAULT_LED_PIN));
 

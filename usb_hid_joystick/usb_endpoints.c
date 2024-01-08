@@ -11,6 +11,8 @@
 
 static uint8_t *DEBUG_TEXT = DEBUG_STRING_BUFFER;
 
+bool valid_host_endpoint[16];
+
 uint32_t endpoint_packet_id_to_host[16]; 
 uint32_t endpoint_packet_id_to_pico[16]; 
 
@@ -19,6 +21,8 @@ uint8_t *endpoint_data_buffer_to_pico[16];
 
 buffer_completion_handler buffer_completion_handler_pico[16];
 buffer_completion_handler buffer_completion_handler_host[16];
+
+struct host_endpoint_profile host_endpoint[16];
 
 static inline uint32_t usb_buffer_offset(volatile uint8_t *buffer) {  // from pico-examples
 
@@ -35,6 +39,30 @@ static inline uint32_t endpoint_base_config(uint8_t TRANSFER_TYPE, uint32_t addr
   base_config |= TRANSFER_TYPE << EP_CTRL_BUFFER_TYPE_LSB;
 
   return base_config;
+
+}
+
+
+void usb_setup_host_endpoint(uint8_t EP_NUMBER, uint16_t TRANSFER_TYPE, void *completion_handler_address) {
+
+  uint8_t EP_OFFSET = EP_NUMBER - 1;
+
+  valid_host_endpoint[EP_NUMBER] = true; 
+
+  host_endpoint[EP_NUMBER].packet_id = USB_BUF_CTRL_DATA0_PID;
+  host_endpoint[EP_NUMBER].data_buffer = &usb_dpram->epx_data[64 * 2 * EP_OFFSET];
+  host_endpoint[EP_NUMBER].completion_handler = completion_handler_address;
+
+  uint32_t address_base_offset = usb_buffer_offset(host_endpoint[EP_NUMBER].data_buffer); 
+  uint32_t ep_control_register = endpoint_base_config(TRANSFER_TYPE, address_base_offset);
+
+  usb_dpram->ep_ctrl[EP_OFFSET].in = ep_control_register;
+
+  DEBUG_TEXT = "Configure Endpoint\tConfigure and Enable Endpoint %d to Host";
+  DEBUG_SHOW (1, ep_text(EP_NUMBER), DEBUG_TEXT, EP_NUMBER);
+
+  DEBUG_TEXT = "Endpoint Control In\tRegister = %08X, Offset = %04X";
+  DEBUG_SHOW (1, ep_text(EP_NUMBER), DEBUG_TEXT, usb_dpram->ep_ctrl[EP_OFFSET].in, address_base_offset);
 
 }
 
@@ -109,7 +137,9 @@ void usb_setup_endpoint_0() {
 
 void usb_setup_function_endpoints() {
 
-  usb_setup_endpoint_to_host(1, USB_TRANSFER_TYPE_INTERRUPT, &ep_handler_to_host_ep1);
+  //usb_setup_endpoint_to_host(1, USB_TRANSFER_TYPE_INTERRUPT, &ep_handler_to_host_ep1);
+
+  usb_setup_host_endpoint(1, USB_TRANSFER_TYPE_INTERRUPT, &ep_handler_to_host_ep1);
 
   usb_setup_endpoint_to_host(4, USB_TRANSFER_TYPE_INTERRUPT, NULL);
 

@@ -5,8 +5,12 @@ void set_device_address(uint8_t DEVICE_ADDRESS);
 
 void send_data_packet(uint8_t EP_NUMBER, uint8_t packet_size, bool wait_for_buffer, bool toggle_pid, bool last_packet);
 
+void joystick_data_packet(uint8_t EP_NUMBER, uint8_t data_packet_size, bool wait_for_buffers, bool last_packet);
+
 void usb_start_transfer_host_to_pico(uint8_t EP_NUMBER, uint16_t buffer_length);
 void usb_start_transfer_pico_to_host(uint8_t EP_NUMBER, uint8_t packet_size, uint8_t *buffer_data, uint16_t buffer_length, bool transaction_wait);
+
+void synchronous_transfer_to_host(uint8_t EP_NUMBER, uint8_t packet_size, uint8_t *buffer_data, uint16_t buffer_length);
 
 void usb_wait_for_buffer_completion_pico_to_host(uint8_t EP_NUMBER, bool buffer_clear);
 void usb_wait_for_buffer_completion_host_to_pico(uint8_t EP_NUMBER, bool buffer_clear);
