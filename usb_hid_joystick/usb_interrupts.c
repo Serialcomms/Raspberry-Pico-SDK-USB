@@ -50,8 +50,7 @@ void  __not_in_flash_func (usb_handle_buffer_status_host)(uint8_t EP_NUMBER) {
 
     } else {
 
-
-    void *handler_address = buffer_completion_handler_host[EP_NUMBER];        
+    void *handler_address = host_endpoint[EP_NUMBER].completion_handler;     
 
     buffer_completion_handler buffer_completion_function = handler_address;
 
@@ -71,7 +70,7 @@ void  __not_in_flash_func (usb_handle_buffer_status_host)(uint8_t EP_NUMBER) {
 
 void __not_in_flash_func (usb_handle_buffer_status_pico)(uint8_t EP_NUMBER) {
 
-    void *handler_address = buffer_completion_handler_pico[EP_NUMBER];
+    void *handler_address = pico_endpoint[EP_NUMBER].completion_handler;
 
     buffer_completion_handler buffer_completion_function = handler_address;
 
@@ -85,9 +84,9 @@ void __not_in_flash_func (usb_handle_buffer_status_pico)(uint8_t EP_NUMBER) {
     }
 }
 
-void __not_in_flash_func (buffer_completion_default)(uint8_t EP_NUMBER, uint8_t status_bit) {
+void __not_in_flash_func (buffer_completion_default)(uint8_t EP_NUMBER, uint8_t direction_bit) {
 
-    uint32_t buffer_status_bit = (1 << (2 * EP_NUMBER)) + status_bit;
+    uint32_t buffer_status_bit = (1 << (2 * EP_NUMBER)) + direction_bit;
 
     usb_hardware_clear->buf_status = buffer_status_bit;
    

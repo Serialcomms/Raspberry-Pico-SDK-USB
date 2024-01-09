@@ -19,9 +19,9 @@ static uint8_t *DEBUG_TEXT = DEBUG_STRING_BUFFER;
 void send_async_packet(uint8_t EP_NUMBER) {
 
     uint8_t offset = 0;
+    uint16_t async_bytes = host_endpoint[EP_NUMBER].async_bytes;
     uint8_t *dpram_buffer = host_endpoint[EP_NUMBER].dpram_address;
     uint8_t *source_buffer = host_endpoint[EP_NUMBER].source_buffer_address;
-    uint16_t async_bytes = host_endpoint[EP_NUMBER].async_bytes;
     uint16_t transfer_bytes = host_endpoint[EP_NUMBER].transfer_bytes;
     uint8_t  ep_packet_size = host_endpoint[EP_NUMBER].packet_size;
     uint8_t  async_packet_size = MIN(host_endpoint[EP_NUMBER].packet_size, async_bytes);
@@ -69,22 +69,20 @@ void send_data_packet(uint8_t EP_NUMBER, uint8_t data_packet_size, bool wait_for
        
 } 
 
-void synchronous_transfer_to_host(uint8_t EP_NUMBER, uint8_t packet_size, uint8_t *buffer_data, uint16_t buffer_length) {
+void synchronous_transfer_to_host(uint8_t EP_NUMBER, uint8_t packet_size, uint8_t *buffer_data, uint16_t transfer_bytes) {
 
     uint8_t  dpram_offset = 0;
     uint32_t buffer_offset = 0;
-    uint32_t buffer_dispatch = 0; 
     uint64_t transfer_duration = 0;
     uint8_t  full_packet_size = MIN(packet_size, 64);
-
-    uint8_t  full_packets       = buffer_length / full_packet_size;
-    uint8_t  last_packet_size   = buffer_length - (full_packets * full_packet_size);
+    uint8_t  full_packets       = transfer_bytes / full_packet_size;
+    uint8_t  last_packet_size   = transfer_bytes - (full_packets * full_packet_size);
     uint8_t *usb_dpram_data     = host_endpoint[EP_NUMBER].dpram_address;
 
     DEBUG_TEXT = "Synchronous Transfer \tFull (%d Byte) Packets to Send=%d, Remainder=%d";
     DEBUG_SHOW (1, "USB", DEBUG_TEXT, full_packet_size, full_packets, last_packet_size);
 
-    bool last_packet = (buffer_length == full_packet_size) ? true : false;
+    bool last_packet = (transfer_bytes == full_packet_size) ? true : false;
 
     absolute_time_t start_time_now = get_absolute_time();
 
@@ -102,7 +100,7 @@ void synchronous_transfer_to_host(uint8_t EP_NUMBER, uint8_t packet_size, uint8_
         
         }  
 
-    } while (++buffer_offset < buffer_length);
+    } while (++buffer_offset < transfer_bytes);
     
     if (last_packet_size) {
 
@@ -138,13 +136,12 @@ void start_async_transfer_to_host(uint8_t EP_NUMBER, uint8_t packet_size, void *
     bool last_packet = (transfer_bytes <= full_packet_size) ? true : false;
 
     host_endpoint[EP_NUMBER].async_mode = true;
-    host_endpoint[EP_NUMBER].source_buffer_offset = 0;
+    host_endpoint[EP_NUMBER].async_bytes = async_bytes;
     host_endpoint[EP_NUMBER].transfer_bytes = transfer_bytes;
     host_endpoint[EP_NUMBER].source_buffer_address = source_buffer_address;
-    host_endpoint[EP_NUMBER].full_async_packets = full_async_packets;
     host_endpoint[EP_NUMBER].last_packet_size = last_packet_size;
-    host_endpoint[EP_NUMBER].start_time_now = get_absolute_time();
     host_endpoint[EP_NUMBER].transfer_duration = 0;
+    host_endpoint[EP_NUMBER].start_time_now = get_absolute_time();
           
     DEBUG_TEXT = "Start Async Transfer \tSending First %d/%d Bytes";  
     DEBUG_SHOW (1, "USB", DEBUG_TEXT, first_packet_size, transfer_bytes);
@@ -160,8 +157,6 @@ void start_async_transfer_to_host(uint8_t EP_NUMBER, uint8_t packet_size, void *
     send_data_packet(EP_NUMBER, first_packet_size, false, last_packet);
  
 }
-
-
 
 void usb_start_transfer_host_to_pico(uint8_t EP_NUMBER, uint16_t buffer_length) {
 

@@ -12,18 +12,13 @@
 static uint8_t *DEBUG_TEXT = DEBUG_STRING_BUFFER;
 
 bool valid_host_endpoint[16];
-
-//uint32_t endpoint_packet_id_to_host[16]; 
-//uint32_t endpoint_packet_id_to_pico[16]; 
-
-uint8_t *endpoint_data_buffer_to_host[16]; 
-uint8_t *endpoint_data_buffer_to_pico[16]; 
-
-buffer_completion_handler buffer_completion_handler_pico[16];
-buffer_completion_handler buffer_completion_handler_host[16];
+bool valid_pico_endpoint[16];
 
 struct endpoint_profile host_endpoint[16];
 struct endpoint_profile pico_endpoint[16];
+
+const uint16_t usb_dpram_size = sizeof(*usb_dpram);
+const uint16_t usb_dpram_epx_size = usb_dpram_size - 128; // check
 
 static inline uint32_t usb_buffer_offset(volatile uint8_t *buffer) {  // from pico-examples
 
@@ -67,7 +62,7 @@ void usb_setup_host_endpoint(uint8_t EP_NUMBER, uint16_t TRANSFER_TYPE, void *co
   uint8_t EP_OFFSET = EP_NUMBER - 1;
 
   valid_host_endpoint[EP_NUMBER] = true; 
-
+  host_endpoint[EP_NUMBER].async_mode = false;
   host_endpoint[EP_NUMBER].packet_id = USB_BUF_CTRL_DATA0_PID;
   host_endpoint[EP_NUMBER].dpram_address = &usb_dpram->epx_data[64 * 2 * EP_OFFSET];
   host_endpoint[EP_NUMBER].completion_handler = completion_handler_address;
@@ -85,87 +80,48 @@ void usb_setup_host_endpoint(uint8_t EP_NUMBER, uint16_t TRANSFER_TYPE, void *co
 
 }
 
-void zz_usb_setup_endpoint_to_host(uint8_t EP_NUMBER, uint16_t TRANSFER_TYPE, void *handler_address) {
+void usb_setup_pico_endpoint(uint8_t EP_NUMBER, uint16_t TRANSFER_TYPE, void *completion_handler_address) {
 
-  uint8_t *data_buffer_address;
-  uint32_t control_register = 0;
-  uint32_t address_base_offset = 0;
-  uint8_t  EP_OFFSET = EP_NUMBER - 1;
+  uint8_t EP_OFFSET = EP_NUMBER - 1;
 
-  data_buffer_address = &usb_dpram->epx_data[64 * 2 * EP_OFFSET];
+  valid_pico_endpoint[EP_NUMBER] = true; 
+  pico_endpoint[EP_NUMBER].async_mode = false;
+  pico_endpoint[EP_NUMBER].packet_id = USB_BUF_CTRL_DATA0_PID;
+  pico_endpoint[EP_NUMBER].dpram_address = &usb_dpram->epx_data[(64 * 2 * EP_OFFSET) + 0x0780];  // second half of available dpram
+  pico_endpoint[EP_NUMBER].completion_handler = completion_handler_address;
 
- // endpoint_packet_id_to_host[EP_NUMBER] = USB_BUF_CTRL_DATA0_PID;
+  uint32_t address_base_offset = usb_buffer_offset(pico_endpoint[EP_NUMBER].dpram_address); 
+  uint32_t ep_control_register = endpoint_base_config(TRANSFER_TYPE, address_base_offset);
 
-  endpoint_data_buffer_to_host[EP_NUMBER] = data_buffer_address;
+  usb_dpram->ep_ctrl[EP_OFFSET].out = ep_control_register;
 
-  buffer_completion_handler_host[EP_NUMBER] = handler_address;   
-
-  address_base_offset = usb_buffer_offset(data_buffer_address); 
-
-  control_register = endpoint_base_config(TRANSFER_TYPE, address_base_offset);
-
-  usb_dpram->ep_ctrl[EP_OFFSET].in = control_register;
-
-  DEBUG_TEXT = "Configure Endpoint\tConfigure and Enable Endpoint %d to Host";
+  DEBUG_TEXT = "Configure Endpoint\tConfigure and Enable Endpoint %d to Pico";
   DEBUG_SHOW (1, ep_text(EP_NUMBER), DEBUG_TEXT, EP_NUMBER);
 
-  DEBUG_TEXT = "Endpoint Control In\tRegister = %08X, Offset = %04X";
-  DEBUG_SHOW (1, ep_text(EP_NUMBER), DEBUG_TEXT, control_register, address_base_offset);
+  DEBUG_TEXT = "Endpoint Control Out\tRegister = %08X, Offset = %04X";
+  DEBUG_SHOW (1, ep_text(EP_NUMBER), DEBUG_TEXT, usb_dpram->ep_ctrl[EP_OFFSET].out, address_base_offset);
 
 }
 
 // 3840 dspram bytes available for buffers
 // = 64 * 2 bytes for each EP number > 0
 
-void zz_usb_setup_endpoint_to_pico(uint8_t EP_NUMBER, uint16_t TRANSFER_TYPE, void *handler_address) {
-
-  uint8_t *data_buffer_address;
-  uint32_t control_register = 0;
-  uint32_t address_base_offset = 0;
-  uint8_t  EP_OFFSET = EP_NUMBER - 1;
-
-  data_buffer_address = &usb_dpram->epx_data[(64 * 2 * EP_OFFSET) + 0x0780]; // second half of available dpram
-
- // endpoint_packet_id_to_pico[EP_NUMBER] = USB_BUF_CTRL_DATA0_PID;
-
-  endpoint_data_buffer_to_pico[EP_NUMBER] = data_buffer_address;
-
-  buffer_completion_handler_pico[EP_NUMBER] = handler_address;  
-
-  address_base_offset = usb_buffer_offset(data_buffer_address); 
-
-  control_register = endpoint_base_config(TRANSFER_TYPE, address_base_offset);
-
-  usb_dpram->ep_ctrl[EP_OFFSET].out = control_register;
-
-  DEBUG_TEXT = "Configure Endpoint\tConfigure and Enable Endpoint %d to Pico";
-  DEBUG_SHOW (1, ep_text(EP_NUMBER), DEBUG_TEXT, EP_NUMBER);
-
-  DEBUG_TEXT = "Endpoint Control Out\tRegister = %08X, Offset = %04X";
-  DEBUG_SHOW (1, ep_text(EP_NUMBER), DEBUG_TEXT, control_register, address_base_offset);
-
-
-}
 
 void usb_setup_endpoint_0() {
 
-  endpoint_data_buffer_to_pico[0] = &usb_dpram->ep0_buf_a[0];
-  endpoint_data_buffer_to_host[0] = &usb_dpram->ep0_buf_a[0];
-
   setup_host_endpoint_0(NULL);
   setup_pico_endpoint_0(NULL);
-
-
-
 
 }
 
 void usb_setup_function_endpoints() {
 
-  //usb_setup_endpoint_to_host(1, USB_TRANSFER_TYPE_INTERRUPT, &ep_handler_to_host_ep1);
-
   usb_setup_host_endpoint(1, USB_TRANSFER_TYPE_INTERRUPT, &ep_handler_to_host_ep1);
 
- // usb_setup_endpoint_to_host(4, USB_TRANSFER_TYPE_INTERRUPT, NULL);
+  DEBUG_TEXT = "Endpoint Setup\t\tUSB dpram size = %d/%04X";
+  DEBUG_SHOW (1, "USB", DEBUG_TEXT, usb_dpram_size, usb_dpram_size);
+
+  DEBUG_TEXT = "Endpoint Setup\t\tUSB dpram epx size = %d/%04X";
+  DEBUG_SHOW (1, "USB", DEBUG_TEXT, usb_dpram_epx_size, usb_dpram_epx_size);
 
 }

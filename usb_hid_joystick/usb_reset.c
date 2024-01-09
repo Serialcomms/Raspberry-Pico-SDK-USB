@@ -3,7 +3,6 @@
 //#include <string.h>                         // For memcpy
 #include "include/usb_reset.h"
 #include "include/usb_debug.h"
-//#include "include/time_stamp.h"
 #include "include/setup_device.h"
 #include "include/setup_packet.h"
 #include "include/show_registers.h"
