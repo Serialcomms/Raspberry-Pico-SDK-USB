@@ -45,7 +45,7 @@ angle += 6;
 angle %= 360;
 
 rudder = (i % 0xFF * 8) & 0xFF;               // values -127 to +128;
-throttle = 255 - (i % 0xFF * 8) & 0xFF;       // values -127 to 128;
+throttle = 255 - (i % 0xFF * 8) & 0xFF;       // values -127 to +128;
 buttons = (int8_t) (1 << (i%8)) & 0xff;       // one bit per button 
 hat_switch = (i) & 0x07;                      // hat switch value 
 pointer_x = cosf(angle * radians) * radius ;  // values -127 to +128

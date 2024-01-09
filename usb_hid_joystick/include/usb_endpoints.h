@@ -14,6 +14,7 @@ extern uint8_t *endpoint_data_buffer_to_host[16];
 extern uint8_t *endpoint_data_buffer_to_pico[16];
 
 typedef void (*buffer_completion_handler)(uint8_t EP_NUMBER);
+typedef bool boolean;
 
 extern buffer_completion_handler buffer_completion_handler_pico[16];
 extern buffer_completion_handler buffer_completion_handler_host[16];
@@ -21,24 +22,23 @@ extern buffer_completion_handler buffer_completion_handler_host[16];
 struct source_data_queue {
 
 
-
 };
 
 struct host_endpoint_profile {
 
-    uint8_t  packet_size; 
-    uint8_t  full_async_packets;
-    uint8_t  last_packet_size;
-    uint16_t async_bytes;
-    uint32_t packet_id;
-    uint32_t control_register;
-    uint32_t address_base_offset;
-    uint16_t source_buffer_bytes;
-    uint16_t source_buffer_offset;
-    void    *source_buffer_address;
-    void    *dpram_address;
-    uint32_t transfer_duration;
-  
+    boolean     async_mode;
+    uint8_t     packet_size; 
+    uint8_t     full_async_packets;
+    uint8_t     last_packet_size;
+    uint16_t    async_bytes;
+    uint32_t    packet_id;
+    uint32_t    control_register;
+    uint32_t    address_base_offset;
+    uint16_t    transfer_bytes;
+    uint32_t    transfer_duration;
+    uint16_t    source_buffer_offset;
+    void        *source_buffer_address;
+    void        *dpram_address;  
     absolute_time_t start_time_now;
     absolute_time_t start_time_end;
      

@@ -25,7 +25,6 @@ static uint8_t *DEBUG_TEXT = DEBUG_STRING_BUFFER;
 #define usb_hardware_set   ((usb_hw_t *)hw_set_alias_untyped(usb_hw))
 #define usb_hardware_clear ((usb_hw_t *)hw_clear_alias_untyped(usb_hw))
 
-
 void  __not_in_flash_func (buffer_endpoint_status_host)(uint8_t EP_NUMBER) {
 
     void *handler_address = host_endpoint[EP_NUMBER].completion_handler;

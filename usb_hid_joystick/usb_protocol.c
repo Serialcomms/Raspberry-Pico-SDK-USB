@@ -87,7 +87,6 @@ void usb_setup_device_request_to_pico(struct usb_setup_command *setup_command) {
         default:
 
             DEBUG_TEXT = "Pico Request Handler \tUNKNOWN USB SET REQUEST";
-
             DEBUG_SHOW (9, "ERR", DEBUG_TEXT);
 
         break;
@@ -107,7 +106,6 @@ void usb_setup_device_respond_to_host(struct usb_setup_command *setup_command) {
         case USB_REQUEST_GET_STATUS:            // 0
 
             DEBUG_TEXT = "Pico Request Handler \tGET PICO DEVICE STATUS, Count=%d";
-
             DEBUG_SHOW (1, "USB", DEBUG_TEXT, ++get_status_count);
 
         break;
@@ -123,7 +121,6 @@ void usb_setup_device_respond_to_host(struct usb_setup_command *setup_command) {
         case USB_REQUEST_GET_CONFIGURATION:     // 8
 
             DEBUG_TEXT = "Pico Request Handler \tGET PICO DEVICE CONFIGURATION, Count=%d";
-
             DEBUG_SHOW (1, "USB", DEBUG_TEXT, ++get_configuration_count);
   
         break;
@@ -132,7 +129,6 @@ void usb_setup_device_respond_to_host(struct usb_setup_command *setup_command) {
         default:
 
             DEBUG_TEXT = "Pico Request Handler \tUNKNOWN USB GET REQUEST, Count=%d";
-
             DEBUG_SHOW (9, "ERR", DEBUG_TEXT, ++get_unknown_count);
 
         break;
