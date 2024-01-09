@@ -27,6 +27,7 @@ struct source_data_queue {
 struct host_endpoint_profile {
 
     boolean     async_mode;
+    boolean     double_buffered;
     uint8_t     packet_size; 
     uint8_t     full_async_packets;
     uint8_t     last_packet_size;

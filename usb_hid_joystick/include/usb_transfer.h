@@ -5,6 +5,8 @@ void set_device_address(uint8_t DEVICE_ADDRESS);
 
 void send_data_packet(uint8_t EP_NUMBER, uint8_t packet_size, bool wait_for_buffer, bool toggle_pid, bool last_packet);
 
+void send_async_packet(uint8_t EP_NUMBER);
+
 void joystick_data_packet(uint8_t EP_NUMBER, uint8_t data_packet_size, bool wait_for_buffers, bool last_packet);
 
 void usb_start_transfer_host_to_pico(uint8_t EP_NUMBER, uint16_t buffer_length);
