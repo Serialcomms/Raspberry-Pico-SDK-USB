@@ -22,9 +22,8 @@ void send_async_packet(uint8_t EP_NUMBER) {
     uint16_t async_bytes = host_endpoint[EP_NUMBER].async_bytes;
     uint8_t *dpram_buffer = host_endpoint[EP_NUMBER].dpram_address;
     uint8_t *source_buffer = host_endpoint[EP_NUMBER].source_buffer_address;
-    uint16_t transfer_bytes = host_endpoint[EP_NUMBER].transfer_bytes;
     uint8_t  ep_packet_size = host_endpoint[EP_NUMBER].packet_size;
-    uint8_t  async_packet_size = MIN(host_endpoint[EP_NUMBER].packet_size, async_bytes);
+    uint8_t  async_packet_size = MIN(ep_packet_size, async_bytes);
     uint16_t source_buffer_offset = host_endpoint[EP_NUMBER].source_buffer_offset;
 
     bool last_packet = (async_packet_size <= ep_packet_size) ? true : false;

@@ -2,6 +2,7 @@
 #include <stdarg.h>
 #include <string.h>                         // For memcpy
 #include "pico/stdlib.h"                    // for printf
+#include "pico/lock_core.h"                 
 
 #include "include/usb_debug.h"
 #include "include/time_stamp.h"
@@ -34,6 +35,8 @@ void DEBUG_PRINT(uint8_t *debug_text, ...) {
 }
 
 void  __not_in_flash_func (DEBUG_SHOW)(uint8_t debug_level, uint8_t *prefix_text, uint8_t *debug_text, ...) {
+
+//wait_for_transmit_fifo_empty();
 
 if (debug_level > debug_threshold) {
 
@@ -214,6 +217,29 @@ unsigned char *buffer_control_out_avail(uint8_t EP) {
     return usb_dpram->ep_buf_ctrl[EP].out & USB_BUF_CTRL_AVAIL ? "Y" : "N" ;
 }
 
+bool transmit_fifo_empty() {
+
+    return uart_get_hw(uart0)->fr & 0x40;
+
+}
+
+void wait_for_transmit_fifo_empty() {
+
+uint64_t wait_duration = 0;
+volatile bool wait_timeout;
+volatile bool transmit_fifo_empty;
+absolute_time_t wait_time_now = get_absolute_time();
+absolute_time_t wait_time_end = make_timeout_time_us(1000);
+    
+    do { 
+
+        transmit_fifo_empty = uart_get_hw(uart0)->fr & 0x40;
+   
+        wait_timeout = time_reached(wait_time_end);
+
+    } while (!transmit_fifo_empty && !wait_timeout);
+
+}
 
 void show_buffer_control(uint8_t EP) {
 
