@@ -36,11 +36,7 @@ void usb_bus_reset() {
   
   clear_buffer_status_register();
   
-  if (!DEVICE_ADDRESS) {
-
-    enable_setup_interrupts();
-
-  }
+  if (!DEVICE_ADDRESS) enable_setup_interrupts();
 
   busy_wait_ms(2);
 

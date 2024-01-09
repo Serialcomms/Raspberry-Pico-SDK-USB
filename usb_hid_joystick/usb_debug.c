@@ -36,7 +36,7 @@ void DEBUG_PRINT(uint8_t *debug_text, ...) {
 
 void  __not_in_flash_func (DEBUG_SHOW)(uint8_t debug_level, uint8_t *prefix_text, uint8_t *debug_text, ...) {
 
-//wait_for_transmit_fifo_empty();
+wait_for_transmit_fifo_empty();
 
 if (debug_level > debug_threshold) {
 
@@ -229,11 +229,11 @@ uint64_t wait_duration = 0;
 volatile bool wait_timeout;
 volatile bool transmit_fifo_empty;
 absolute_time_t wait_time_now = get_absolute_time();
-absolute_time_t wait_time_end = make_timeout_time_us(1000);
+absolute_time_t wait_time_end = make_timeout_time_us(200000);
     
     do { 
 
-        transmit_fifo_empty = uart_get_hw(uart0)->fr & 0x40;
+        transmit_fifo_empty = uart_get_hw(uart0)->fr & UART_UARTFR_TXFE_BITS;
    
         wait_timeout = time_reached(wait_time_end);
 

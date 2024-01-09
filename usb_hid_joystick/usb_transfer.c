@@ -47,11 +47,7 @@ void send_data_packet(uint8_t EP_NUMBER, uint8_t data_packet_size, bool wait_for
     uint32_t DATA_PID = host_endpoint[EP_NUMBER].packet_id;
     uint32_t buffer_dispatch = DATA_PID | USB_BUF_CTRL_AVAIL | USB_BUF_CTRL_FULL; 
 
-    if (last_packet) {
-
-        buffer_dispatch |= USB_BUF_CTRL_LAST;
-
-    }
+    if (last_packet) buffer_dispatch |= USB_BUF_CTRL_LAST;
 
     DEBUG_TEXT = "Sending Data Packet \tData Packet Size=%d Bytes,      Packet ID (PID)=%d" ;
     DEBUG_SHOW (1, ep_text(EP_NUMBER), DEBUG_TEXT, data_packet_size, DATA_PID/8192);
@@ -219,12 +215,7 @@ void send_ack_handshake_to_host(uint8_t EP_NUMBER, bool clear_buffer_status) {
 
     buffer_control = usb_dpram->ep_buf_ctrl[EP_NUMBER].in;
 
-    if (clear_buffer_status) {
-
-        usb_hardware_clear->buf_status = buffer_status_mask;
-
-    }
-
+    if (clear_buffer_status) usb_hardware_clear->buf_status = buffer_status_mask;
 
     DEBUG_TEXT = "ACK Handshake (Host)\tSending ACK to Host, PID=%d, Register=%08X";
     DEBUG_SHOW (1, "ACK", DEBUG_TEXT, USB_BUF_CTRL_DATA1_PID/8192, buffer_control);
