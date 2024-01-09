@@ -7,11 +7,11 @@ void usb_setup_function_endpoints();
 extern bool valid_host_endpoint[16];
 extern bool valid_pico_endpoint[16];
 
-extern uint32_t endpoint_packet_id_to_host[16];
-extern uint32_t endpoint_packet_id_to_pico[16];
+//extern uint32_t endpoint_packet_id_to_host[16];
+//extern uint32_t endpoint_packet_id_to_pico[16];
 
-extern uint8_t *endpoint_data_buffer_to_host[16];
-extern uint8_t *endpoint_data_buffer_to_pico[16];
+//extern uint8_t *endpoint_data_buffer_to_host[16];
+//extern uint8_t *endpoint_data_buffer_to_pico[16];
 
 typedef void (*buffer_completion_handler)(uint8_t EP_NUMBER);
 typedef bool boolean;
@@ -24,7 +24,7 @@ struct source_data_queue {
 
 };
 
-struct host_endpoint_profile {
+struct endpoint_profile {
 
     boolean     async_mode;
     boolean     double_buffered;
@@ -47,7 +47,8 @@ struct host_endpoint_profile {
 
 } ;
 
-extern struct host_endpoint_profile host_endpoint[16];
+extern struct endpoint_profile host_endpoint[16];
+extern struct endpoint_profile pico_endpoint[16];
 
 
 /* Struct in which we keep the endpoint configuration

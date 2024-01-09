@@ -58,7 +58,7 @@ void send_hid_descriptors_to_host() {
     DEBUG_TEXT = "Pico HID Report \tSend Descriptor to Host,\tBytes=%d";
     DEBUG_SHOW (1, "HID", DEBUG_TEXT , report_length);
 
-    usb_start_transfer_pico_to_host(0, ep0_packet_size(), report_descriptor, report_length, true);
+    synchronous_transfer_to_host(0, ep0_packet_size(), report_descriptor, report_length);
 
     receive_status_transaction_from_host(0, true);
 

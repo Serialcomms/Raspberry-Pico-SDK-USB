@@ -16,32 +16,6 @@
 
 static uint8_t *DEBUG_TEXT = DEBUG_STRING_BUFFER;
 
-void joystick_data_packet(uint8_t EP_NUMBER, uint8_t data_packet_size, bool wait_for_buffers, bool last_packet) {
-
-    uint32_t DATA_PID = host_endpoint[EP_NUMBER].packet_id;
-
-    uint32_t buffer_dispatch = DATA_PID | USB_BUF_CTRL_AVAIL | USB_BUF_CTRL_FULL; 
-
-    if (last_packet) {
-
-        buffer_dispatch |= USB_BUF_CTRL_LAST;
-    }
-
-    DEBUG_TEXT = "Sending Joystick Data \tPacket Size=%d Bytes,      Packet ID (PID)=%d" ;
-    DEBUG_SHOW (1, ep_text(EP_NUMBER), DEBUG_TEXT, data_packet_size, DATA_PID/8192);
-
-    usb_dpram->ep_buf_ctrl[EP_NUMBER].in = data_packet_size | buffer_dispatch;
-
-    if (wait_for_buffers) {
-
-        usb_wait_for_buffer_completion_pico_to_host(EP_NUMBER, true);
-
-    }
-
-    host_endpoint[EP_NUMBER].packet_id = toggle_data_pid(DATA_PID);
-
-}
-
 void send_async_packet(uint8_t EP_NUMBER) {
 
     uint8_t offset = 0;
@@ -64,15 +38,14 @@ void send_async_packet(uint8_t EP_NUMBER) {
     host_endpoint[EP_NUMBER].async_bytes -= offset;
     host_endpoint[EP_NUMBER].source_buffer_offset += offset;
 
-    send_data_packet(EP_NUMBER, async_packet_size, false, true, last_packet);
+    send_data_packet(EP_NUMBER, async_packet_size, false, last_packet);
 
 }
 
 
-void send_data_packet(uint8_t EP_NUMBER, uint8_t data_packet_size, bool wait_for_buffers, bool toggle_pid, bool last_packet) {
+void send_data_packet(uint8_t EP_NUMBER, uint8_t data_packet_size, bool wait_for_buffers, bool last_packet) {
 
-    uint32_t DATA_PID = endpoint_packet_id_to_host[EP_NUMBER];
-
+    uint32_t DATA_PID = host_endpoint[EP_NUMBER].packet_id;
     uint32_t buffer_dispatch = DATA_PID | USB_BUF_CTRL_AVAIL | USB_BUF_CTRL_FULL; 
 
     if (last_packet) {
@@ -86,18 +59,14 @@ void send_data_packet(uint8_t EP_NUMBER, uint8_t data_packet_size, bool wait_for
 
     usb_dpram->ep_buf_ctrl[EP_NUMBER].in = data_packet_size | buffer_dispatch;
 
+    host_endpoint[EP_NUMBER].packet_id = toggle_data_pid(DATA_PID);
+
     if (wait_for_buffers) {
 
         usb_wait_for_buffer_completion_pico_to_host(EP_NUMBER, true);
 
     }
-
-    if (toggle_pid) {
-
-        endpoint_packet_id_to_host[EP_NUMBER] = toggle_data_pid(DATA_PID);
        
-    }
-
 } 
 
 void synchronous_transfer_to_host(uint8_t EP_NUMBER, uint8_t packet_size, uint8_t *buffer_data, uint16_t buffer_length) {
@@ -110,7 +79,7 @@ void synchronous_transfer_to_host(uint8_t EP_NUMBER, uint8_t packet_size, uint8_
 
     uint8_t  full_packets       = buffer_length / full_packet_size;
     uint8_t  last_packet_size   = buffer_length - (full_packets * full_packet_size);
-    uint8_t *usb_dpram_data     = endpoint_data_buffer_to_host[EP_NUMBER];
+    uint8_t *usb_dpram_data     = host_endpoint[EP_NUMBER].dpram_address;
 
     DEBUG_TEXT = "Synchronous Transfer \tFull (%d Byte) Packets to Send=%d, Remainder=%d";
     DEBUG_SHOW (1, "USB", DEBUG_TEXT, full_packet_size, full_packets, last_packet_size);
@@ -119,7 +88,7 @@ void synchronous_transfer_to_host(uint8_t EP_NUMBER, uint8_t packet_size, uint8_
 
     absolute_time_t start_time_now = get_absolute_time();
 
-  //  host_endpoint[EP_NUMBER].async_mode = false;
+    host_endpoint[EP_NUMBER].async_mode = false;
 
     do {  
 
@@ -129,7 +98,7 @@ void synchronous_transfer_to_host(uint8_t EP_NUMBER, uint8_t packet_size, uint8_
 
         if (dpram_offset == full_packet_size - 1) { 
 
-            send_data_packet(EP_NUMBER, full_packet_size, true, true, last_packet);
+            send_data_packet(EP_NUMBER, full_packet_size, true, last_packet);
         
         }  
 
@@ -140,7 +109,7 @@ void synchronous_transfer_to_host(uint8_t EP_NUMBER, uint8_t packet_size, uint8_
         DEBUG_TEXT = "Synchronous Transfer \tDPRAM Data Remaining, bytes=%d";
         DEBUG_SHOW (1, "USB", DEBUG_TEXT, dpram_offset + 1);
 
-        send_data_packet(EP_NUMBER, last_packet_size, true, true, true);
+        send_data_packet(EP_NUMBER, last_packet_size, true, true);
 
     }
 
@@ -188,77 +157,19 @@ void start_async_transfer_to_host(uint8_t EP_NUMBER, uint8_t packet_size, void *
 
     host_endpoint[EP_NUMBER].source_buffer_offset = offset; 
 
-    send_data_packet(EP_NUMBER, first_packet_size, false, true, last_packet);
+    send_data_packet(EP_NUMBER, first_packet_size, false, last_packet);
  
 }
 
-void usb_start_transfer_pico_to_host(uint8_t EP_NUMBER, uint8_t packet_size, uint8_t *buffer_data, uint16_t buffer_length, bool transaction_wait) { 
 
-    uint8_t  dpram_offset = 0;
-    uint32_t buffer_offset = 0;
-    uint32_t buffer_dispatch = 0; 
-    uint64_t transfer_duration = 0;
-    uint8_t  full_packet_size = MIN(packet_size, 64);
-
-    uint8_t  full_packets       = buffer_length / full_packet_size;
-    uint8_t  part_packet_size   = buffer_length - (full_packets * full_packet_size);
-    uint8_t *usb_dpram_data     = endpoint_data_buffer_to_host[EP_NUMBER];
-
-    bool last_packet = (buffer_length == full_packet_size) ? true : false;
- 
-    absolute_time_t start_time_now = get_absolute_time();
-
-    DEBUG_TEXT = "Start Transfer-In \tFull (%d Byte) Packets to Send=%d, Remainder=%d";
-    DEBUG_SHOW (1, "USB", DEBUG_TEXT, full_packet_size, full_packets, part_packet_size);
-
-    do {  
-
-        dpram_offset = buffer_offset % full_packet_size;
-
-        usb_dpram_data[dpram_offset] = buffer_data[buffer_offset];
-
-        if (dpram_offset == full_packet_size - 1) { 
-
-            send_data_packet(EP_NUMBER, full_packet_size, true, true, last_packet);
-        
-        }  
-
-    } while (++buffer_offset < buffer_length);
-    
-    if (part_packet_size) {
-
-        DEBUG_TEXT = "Start Transfer In \tDPRAM Data Remaining, bytes=%d";
-        DEBUG_SHOW (1, "USB", DEBUG_TEXT, dpram_offset + 1);
-
-        send_data_packet(EP_NUMBER, part_packet_size, true, true, true);
-
-    }
-
-    if (transaction_wait) {
-
-        DEBUG_TEXT = "Transaction Wait \tWaiting for Transaction Completion";
-        DEBUG_SHOW (1, "USB", DEBUG_TEXT);
-
-        usb_wait_for_transaction_completion(EP_NUMBER, true);
-
-    }
-
-    transfer_duration = absolute_time_diff_us(start_time_now, get_absolute_time());
-
-    DEBUG_TEXT = "Start Transfer End \tBuffer Offset=%d, Transfer Duration=%lldµs";
-    DEBUG_SHOW (1, "USB", DEBUG_TEXT, buffer_offset, transfer_duration);
-
-
-} 
 
 void usb_start_transfer_host_to_pico(uint8_t EP_NUMBER, uint16_t buffer_length) {
 
-    uint32_t DATA_PID;
     uint32_t buffer_dispatch;
 
-    DATA_PID = endpoint_packet_id_to_pico[EP_NUMBER];
+    uint32_t DATA_PID = pico_endpoint[EP_NUMBER].packet_id;
 
-    endpoint_packet_id_to_pico[EP_NUMBER] = toggle_data_pid(DATA_PID);
+    pico_endpoint[EP_NUMBER].packet_id = toggle_data_pid(DATA_PID);
 
     buffer_dispatch = DATA_PID | USB_BUF_CTRL_AVAIL;
 
@@ -339,7 +250,7 @@ uint32_t toggle_data_pid(uint32_t data_pid) {
 
 void usb_wait_for_buffer_completion_pico_to_host(uint8_t EP_NUMBER, bool buffer_status_clear) {
     
-    uint32_t buffer_mask = (1 << (EP_NUMBER * 2u));
+    uint32_t buffer_mask = (1 << (EP_NUMBER * 2u) + 0);
 
     usb_wait_for_buffer_completion(EP_NUMBER, buffer_mask, buffer_status_clear);
 

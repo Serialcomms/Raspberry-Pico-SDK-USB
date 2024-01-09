@@ -55,8 +55,8 @@ void reset_endpoint_pids() {
 
     do {
 
-      endpoint_packet_id_to_host[ep_number] = 0x0000;
-      endpoint_packet_id_to_pico[ep_number] = 0x0000;
+      host_endpoint[ep_number].packet_id = 0x0000;
+      pico_endpoint[ep_number].packet_id = 0x0000;
 
     } while (++ep_number < 16);
 

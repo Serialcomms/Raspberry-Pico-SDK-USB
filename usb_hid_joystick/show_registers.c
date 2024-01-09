@@ -31,12 +31,16 @@ TIMESTAMP(); printf("USB:\t EP Status Stall    \tNAK          \t   Register = %0
 
 void show_dpram_to_host(uint8_t EP_NUMBER, uint8_t max_bytes) {
 
-    show_dpram(EP_NUMBER, max_bytes, endpoint_data_buffer_to_host[EP_NUMBER]);
+   // show_dpram(EP_NUMBER, max_bytes, endpoint_data_buffer_to_host[EP_NUMBER]);
+
+    show_dpram(EP_NUMBER, max_bytes, host_endpoint[EP_NUMBER].dpram_address);
+
 }
 
 void show_dpram_to_pico(uint8_t EP_NUMBER, uint8_t max_bytes) {
 
-    show_dpram(EP_NUMBER, max_bytes, endpoint_data_buffer_to_pico[EP_NUMBER]);
+    //show_dpram(EP_NUMBER, max_bytes, endpoint_data_buffer_to_pico[EP_NUMBER]);
+    show_dpram(EP_NUMBER, max_bytes, pico_endpoint[EP_NUMBER].dpram_address);
 }
 
 void show_dpram(uint8_t EP_NUMBER, uint8_t max_bytes, uint8_t *usb_dpram_data) {

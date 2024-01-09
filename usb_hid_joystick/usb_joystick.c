@@ -70,8 +70,6 @@ DEBUG_SHOW (1, "JOY" , DEBUG_TEXT, i, angle, rudder, pointer_x, pointer_y);
 
 //send_data_packet(1, 6, false, true, true); // P4=true, must toggle PID
 
-//joystick_data_packet(1, 6, false, true) ;
-
 start_async_transfer_to_host(1, 8, &joystick_buffer, 6);
 
 gpio_put(PICO_DEFAULT_LED_PIN, !gpio_get(PICO_DEFAULT_LED_PIN));

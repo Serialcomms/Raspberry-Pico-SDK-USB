@@ -124,7 +124,7 @@ void usb_start_string_transfer(uint8_t *string_descriptor, uint8_t string_length
     
         }
 
-        usb_start_transfer_pico_to_host(0, ep0_packet_size(), string_descriptor, string_length, true);
+        synchronous_transfer_to_host(0, ep0_packet_size(), string_descriptor, string_length);
 
         receive_status_transaction_from_host(0, true);
 

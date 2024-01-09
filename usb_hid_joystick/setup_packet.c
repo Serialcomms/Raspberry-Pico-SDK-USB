@@ -28,8 +28,8 @@ void usb_handle_setup_packet() {
 
     setup_command = prepare_setup_packet();
 
-    endpoint_packet_id_to_host[0] = USB_BUF_CTRL_DATA1_PID;
-    endpoint_packet_id_to_pico[0] = USB_BUF_CTRL_DATA1_PID; 
+    host_endpoint[0].packet_id = USB_BUF_CTRL_DATA1_PID;
+    pico_endpoint[0].packet_id = USB_BUF_CTRL_DATA1_PID;
 
     switch (setup_command.recipient) {
 
