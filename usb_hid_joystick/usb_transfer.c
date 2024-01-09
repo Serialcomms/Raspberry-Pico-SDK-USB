@@ -127,31 +127,37 @@ void synchronous_transfer_to_host(uint8_t EP_NUMBER, uint8_t packet_size, uint8_
 
 }
 
-void start_async_transfer_to_host(uint8_t EP_NUMBER, uint8_t packet_size, uint8_t *source_buffer, uint16_t transfer_bytes) {
+void start_async_transfer_to_host(uint8_t EP_NUMBER, uint8_t packet_size, void *source_buffer_address, uint16_t transfer_bytes) {
 
-    uint8_t dpram_offset = 0;
+    uint8_t offset = 0;
     uint8_t full_packet_size = MIN(packet_size, 64);
     uint8_t first_packet_size = MIN(transfer_bytes, full_packet_size);
     uint8_t async_bytes = transfer_bytes - first_packet_size;
     uint8_t full_async_packets = async_bytes / full_packet_size;
-    uint8_t part_packet_size = async_bytes - (full_async_packets * full_packet_size);
-    bool last_packet = (transfer_bytes == full_packet_size) ? true : false;
+    uint8_t last_packet_size = async_bytes - (full_async_packets * full_packet_size);
+    uint8_t *source_buffer = source_buffer_address;
+    uint8_t *dpram_buffer = host_endpoint[EP_NUMBER].dpram_address;
+    bool last_packet = (transfer_bytes <= full_packet_size) ? true : false;
 
+    host_endpoint[EP_NUMBER].source_buffer_offset = 0;
+    host_endpoint[EP_NUMBER].source_buffer_bytes = transfer_bytes;
+    host_endpoint[EP_NUMBER].source_buffer_address = source_buffer_address;
     host_endpoint[EP_NUMBER].full_async_packets = full_async_packets;
-    host_endpoint[EP_NUMBER].part_packet_size = part_packet_size;
+    host_endpoint[EP_NUMBER].last_packet_size = last_packet_size;
     host_endpoint[EP_NUMBER].start_time_now = get_absolute_time();
     host_endpoint[EP_NUMBER].transfer_duration = 0;
-    host_endpoint[EP_NUMBER].buffer_offset = 0;
-       
+          
     DEBUG_TEXT = "Start Async Transfer \tSending First %d/%d Bytes";
     
     DEBUG_SHOW (1, "USB", DEBUG_TEXT, first_packet_size, transfer_bytes);
 
     do {  
 
-        host_endpoint[EP_NUMBER].usb_buffer[dpram_offset] = source_buffer[host_endpoint[EP_NUMBER].buffer_offset];
+        dpram_buffer[offset] = source_buffer[offset];
 
-    } while (++host_endpoint[EP_NUMBER].buffer_offset < first_packet_size);
+    } while (++offset < first_packet_size);
+
+    host_endpoint[EP_NUMBER].source_buffer_offset = offset; // check +1
 
     send_data_packet(EP_NUMBER, first_packet_size, false, true, last_packet);
  

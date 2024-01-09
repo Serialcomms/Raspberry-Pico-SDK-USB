@@ -46,7 +46,7 @@ static inline uint32_t endpoint_base_config(uint8_t TRANSFER_TYPE, uint32_t addr
 void setup_host_endpoint_0(void *completion_handler_address) {
 
   host_endpoint[0].packet_id = USB_BUF_CTRL_DATA0_PID;
-  host_endpoint[0].usb_buffer = &usb_dpram->ep0_buf_a[0];
+  host_endpoint[0].dpram_address = &usb_dpram->ep0_buf_a[0];
   host_endpoint[0].completion_handler = completion_handler_address;
 
 }
@@ -54,7 +54,7 @@ void setup_host_endpoint_0(void *completion_handler_address) {
 void setup_pico_endpoint_0(void *completion_handler_address) {
 
   pico_endpoint[0].packet_id = USB_BUF_CTRL_DATA0_PID;
-  pico_endpoint[0].usb_buffer = &usb_dpram->ep0_buf_a[0];
+  pico_endpoint[0].dpram_address = &usb_dpram->ep0_buf_a[0];
   pico_endpoint[0].completion_handler = completion_handler_address;
 
 }
@@ -67,10 +67,10 @@ void usb_setup_host_endpoint(uint8_t EP_NUMBER, uint16_t TRANSFER_TYPE, void *co
   valid_host_endpoint[EP_NUMBER] = true; 
 
   host_endpoint[EP_NUMBER].packet_id = USB_BUF_CTRL_DATA0_PID;
-  host_endpoint[EP_NUMBER].usb_buffer = &usb_dpram->epx_data[64 * 2 * EP_OFFSET];
+  host_endpoint[EP_NUMBER].dpram_address = &usb_dpram->epx_data[64 * 2 * EP_OFFSET];
   host_endpoint[EP_NUMBER].completion_handler = completion_handler_address;
 
-  uint32_t address_base_offset = usb_buffer_offset(host_endpoint[EP_NUMBER].usb_buffer); 
+  uint32_t address_base_offset = usb_buffer_offset(host_endpoint[EP_NUMBER].dpram_address); 
   uint32_t ep_control_register = endpoint_base_config(TRANSFER_TYPE, address_base_offset);
 
   usb_dpram->ep_ctrl[EP_OFFSET].in = ep_control_register;

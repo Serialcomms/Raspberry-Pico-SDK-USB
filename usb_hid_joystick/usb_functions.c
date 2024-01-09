@@ -39,4 +39,6 @@ void  __not_in_flash_func (ep_handler_to_host_ep1)(uint8_t EP_NUMBER) {
     DEBUG_TEXT = "Buffer Status Handler \tCleared Buffer Status, Bit Mask=%08x";
     DEBUG_SHOW (1, "IRQ", DEBUG_TEXT, USB_BUFF_STATUS_EP1_IN_BITS);
 
+    DEBUG_TEXT = "Joystick Buffer \tAddress=%08X, Offset=%d";
+    DEBUG_SHOW (1, "JOY", DEBUG_TEXT, host_endpoint[EP_NUMBER].source_buffer_address, host_endpoint[EP_NUMBER].source_buffer_offset);
 }

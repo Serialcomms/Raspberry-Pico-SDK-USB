@@ -26,19 +26,19 @@ struct source_data_queue {
 
 struct host_endpoint_profile {
 
-    uint8_t  packet_size;
+    uint8_t  packet_size; 
     uint8_t  full_async_packets;
-    uint8_t  part_packet_size;
-    uint8_t *usb_buffer;
-    uint16_t buffer_length;
-    uint32_t buffer_offset;
+    uint8_t  last_packet_size;
+    uint16_t async_bytes;
     uint32_t packet_id;
     uint32_t control_register;
     uint32_t address_base_offset;
-    uint32_t data_buffer_address;
+    uint16_t source_buffer_bytes;
+    uint16_t source_buffer_offset;
+    void    *source_buffer_address;
+    void    *dpram_address;
     uint32_t transfer_duration;
-    //queue_t source_data;
-
+  
     absolute_time_t start_time_now;
     absolute_time_t start_time_end;
      
