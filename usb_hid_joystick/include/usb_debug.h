@@ -29,8 +29,6 @@ unsigned char *concatenate(uint8_t *string1, uint8_t *string2);
 
 extern uint8_t DEBUG_STRING_BUFFER[100];
 
-volatile void wait_for_transmit_fifo_empty();
-
 void DEBUG_PRINT(uint8_t *debug_text, ...);
 
 void DEBUG_SHOW(uint8_t debug_level, uint8_t *prefix_text, uint8_t *debug_text, ...);
