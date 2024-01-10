@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include "pico/stdlib.h"
 #include "include/usb_debug.h"
+#include "include/setup_strings.h"
 #include "include/status_screen.h"
 
 static uint8_t *DEBUG_TEXT = DEBUG_STRING_BUFFER;
@@ -30,15 +31,21 @@ void start_status_screen() {
 
 clear_status_screen();
 
-DEBUG_TEXT = "USB Device SDK\tHardware example starting";
+
+
+DEBUG_TEXT = "SDK/USB Joystick\tSimulation starting";
 DEBUG_SHOW (1, "SDK", DEBUG_TEXT);
 
-busy_wait_ms(6000);
+busy_wait_ms(3000);
 
-DEBUG_TEXT = "USB Device SDK\tHardware example initialising";
+DEBUG_TEXT = "SDK/USB Joystick\tSimulation initialising";
 DEBUG_SHOW (1, "SDK", DEBUG_TEXT);
 
-busy_wait_ms(4000);
+generate_serial_number_string(false);
+
+show_serial_number_string();
+
+busy_wait_ms(2000);
 
 }
 

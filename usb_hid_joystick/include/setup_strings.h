@@ -2,9 +2,12 @@
 void show_string_buffer();
 void clear_string_buffer();
 
+uint8_t *read_rp2040_board_id();
 uint8_t *read_rp2040_rom_version();
 uint8_t *read_rp2040_chip_version();
-uint8_t generate_serial_number_string();
+
+uint8_t generate_serial_number_string(bool show_string) ;
+
 uint8_t build_string_descriptor(uint8_t *ascii_string);
 
 void show_serial_number_string();

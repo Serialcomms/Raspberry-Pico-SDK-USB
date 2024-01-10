@@ -18,8 +18,8 @@ uint8_t DEBUG_STRING_BUFFER[100];
 
 static const uint8_t debug_threshold = 0;
 
-// critical section prevents IRQ-generated debug lines from intruding on non-IRQ generated debug lines.
-// accept any latency penalty incurred for debug purposes.  
+// critical section prevents IRQ-generated debug lines from intruding on any non-IRQ generated debug lines.
+// accept any latency penalty incurred for debug purposes only. 
 
 void __not_in_flash_func(DEBUG_SHOW)(uint8_t debug_level, uint8_t *prefix_text, uint8_t *debug_text, ...) {
  

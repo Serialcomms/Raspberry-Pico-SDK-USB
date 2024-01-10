@@ -165,7 +165,7 @@ void __not_in_flash_func (isr_usbctrl()) {           // USB interrupt handler IR
     }
 }
 
-unsigned char *endpoint_irq_pending(uint32_t buffer_status) {
+volatile uint8_t *endpoint_irq_pending(uint32_t buffer_status) {
 
     return buffer_status & 0x03 ? "TRUE" : "FALSE" ;   
 }

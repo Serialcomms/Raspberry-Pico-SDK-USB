@@ -24,7 +24,7 @@ add_executable(usb_hid_joystick
         status_screen.c
         )
 
-target_link_libraries(usb_hid_joystick PRIVATE pico_stdlib hardware_resets hardware_irq)
+target_link_libraries(usb_hid_joystick PRIVATE pico_stdlib pico_unique_id hardware_resets hardware_irq)
 
 pico_add_extra_outputs(usb_hid_joystick)
 

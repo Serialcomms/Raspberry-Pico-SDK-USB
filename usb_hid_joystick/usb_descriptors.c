@@ -5,7 +5,6 @@
 #undef LIB_TINYUSB_HOST
 #undef LIB_TINYUSB_DEVICE
 
-
 uint8_t pico_device_descriptor[] = {
 
 0x12,        // bLength // 18 bytes
@@ -58,7 +57,7 @@ uint8_t pico_config_descriptor[] = {
 0x05,        //   bDescriptorType (Endpoint)
 0x81,        //   bEndpointAddress (IN/D2H)
 0x03,        //   bmAttributes (Interrupt)
-0x08, 0x00,  //   wMaxPacketSize 8      // JM Change to 64
+0x08, 0x00,  //   wMaxPacketSize 8     
 0x0A,        //   bInterval 10 (unit depends on device speed)
 
 // 34 bytes
