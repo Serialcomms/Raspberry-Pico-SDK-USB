@@ -26,6 +26,8 @@ int main(void) {
     DEBUG_TEXT = "Pico Initialising\tUSB Device - HID Joystick Device Function";
     DEBUG_SHOW (1 , "SDK", DEBUG_TEXT);
    
+    init_debug_critical_section();
+    
     usb_setup_endpoint_0();
 
     usb_device_init();

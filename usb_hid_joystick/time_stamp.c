@@ -15,6 +15,12 @@
 #include "hardware/divider.h"
 #include "include/time_stamp.h"
 
+void new_timestamp() {
+
+//time
+
+}
+
 void __time_critical_func(TIMESTAMP())    {
 
     static uint64_t TIMENOW64;

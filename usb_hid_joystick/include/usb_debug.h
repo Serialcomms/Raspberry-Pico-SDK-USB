@@ -1,5 +1,8 @@
 
 #include "pico/stdlib.h" 
+
+void init_debug_critical_section();
+
 void show_buffer_control(uint8_t EP);
 
 volatile uint8_t *sie_trans_complete();
