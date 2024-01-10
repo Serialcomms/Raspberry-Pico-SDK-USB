@@ -3,9 +3,7 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-
-#include <stdio.h>
-#include <pico/stdlib.h>                    
+             
 #include "include/usb_debug.h"
 #include "include/setup_device.h"
 #include "include/usb_transfer.h"

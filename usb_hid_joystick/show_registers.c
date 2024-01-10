@@ -1,10 +1,11 @@
 #include <stdio.h>
-#include <string.h>                         // For memcpy
+
+#include "hardware/regs/usb.h"             
+#include "hardware/structs/usb.h"           
+
 #include "include/time_stamp.h"
 #include "include/usb_endpoints.h"
 #include "include/show_registers.h"
-#include "hardware/regs/usb.h"              // USB register definitions from pico-sdk
-#include "hardware/structs/usb.h"           // USB hardware struct definitions from pico-sdk
 
 void show_usb_registers() {
 

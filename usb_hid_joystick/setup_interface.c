@@ -1,10 +1,7 @@
 
-#include <stdio.h>
-#include <string.h>                         
-#include <pico/stdlib.h>                   
 #include "include/usb_debug.h"
-#include "include/setup_packet.h"
 #include "include/usb_transfer.h"
+#include "include/setup_packet.h"
 #include "include/setup_interface.h"
 #include "include/usb_descriptors.h"
 

@@ -1,12 +1,9 @@
 
-#include <stdio.h>
-#include <stdlib.h>
+#include "hardware/regs/usb.h"         
+#include "hardware/structs/usb.h"
 
 #include "include/usb_debug.h"
 #include "include/sie_errors.h"
-
-#include "hardware/regs/usb.h"              // USB register definitions from pico-sdk
-#include "hardware/structs/usb.h"           // USB hardware struct definitions from pico-sdk
 
 #define usb_hardware_set   ((usb_hw_t *)hw_set_alias_untyped(usb_hw))
 #define usb_hardware_clear ((usb_hw_t *)hw_clear_alias_untyped(usb_hw))

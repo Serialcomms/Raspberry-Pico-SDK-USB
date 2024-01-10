@@ -1,6 +1,3 @@
-
-#include <stdio.h>
-#include "pico/stdlib.h" 
 #include "include/usb_debug.h"
 #include "include/sie_errors.h"                   
 #include "include/setup_packet.h"

@@ -1,6 +1,6 @@
 
-#include <stdio.h>
-#include <string.h>                        
+//#include <stdio.h>
+//#include <string.h>                        
 #include <math.h>
 #include "pico/stdlib.h"                
 #include "include/usb_debug.h"

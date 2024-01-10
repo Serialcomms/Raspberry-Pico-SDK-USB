@@ -1,7 +1,10 @@
 #include <stdio.h>
-#include <string.h>                         // For strlen
-#include "pico/stdlib.h"                    // for printf
+#include <string.h>                       
+#include <malloc.h>
 #include "pico/unique_id.h"
+#include "hardware/clocks.h"
+#include "hardware/structs/clocks.h"
+
 #include "include/usb_debug.h"
 #include "include/time_stamp.h"
 #include "include/usb_transfer.h"
@@ -11,6 +14,9 @@
 
 #undef LIB_TINYUSB_HOST
 #undef LIB_TINYUSB_DEVICE
+
+uint32_t PICO_CLOCK_SYS;
+uint32_t PICO_CLOCK_USB;
 
 static uint8_t *DEBUG_TEXT = DEBUG_STRING_BUFFER;
 
@@ -71,7 +77,6 @@ void send_device_string_to_host(uint8_t string_index) {
     }
 
 }
-
 
 uint8_t build_string_descriptor(uint8_t *ascii_string) {
 
@@ -138,14 +143,16 @@ void usb_start_string_transfer(uint8_t *string_descriptor, uint8_t string_length
 
 }
 
-uint8_t generate_serial_number_string(bool show_string) {
+uint8_t generate_serial_number_string(bool show_string_length) {
   
   snprintf(serial_number, 32, "%s%s%s%s%s%s", 
-  "CHIP_", read_rp2040_chip_version(), "_ROM_", read_rp2040_rom_version(), "_ID_", read_rp2040_board_id());
+  "CHIP_", read_rp2040_chip_version(), 
+  "_ROM_", read_rp2040_rom_version(), 
+  "_ID_",  read_rp2040_board_id());
   
   uint8_t serial_number_length = build_string_descriptor(serial_number);
 
-  if (show_string) {
+  if (show_string_length) {
 
     DEBUG_TEXT = "Pico Serial String \tSerial Number Length = %d" ;
     DEBUG_SHOW (1, "USB", DEBUG_TEXT, serial_number_length);
@@ -205,6 +212,60 @@ uint8_t *read_rp2040_board_id() {
   pico_get_unique_board_id_string(board_id, 16);
 
   return board_id;
+
+}
+
+uint32_t read_total_heap() {
+
+  extern char __StackLimit, __bss_end__;
+
+  return &__StackLimit  - &__bss_end__;
+
+}
+
+uint32_t read_free_heap(void) {
+
+  struct mallinfo m = mallinfo();
+
+  return read_total_heap() - m.uordblks;
+
+}
+
+void show_free_total_heap() {
+
+  DEBUG_TEXT = "Pico Memory Heap \tTotal Bytes=%d, Free Bytes=%d" ;
+  DEBUG_SHOW (1, "MEM", DEBUG_TEXT, read_total_heap(), read_free_heap());
+
+}
+
+void show_pico_clocks() {
+
+  DEBUG_TEXT = "Pico Clocks (MHz)\tOscillator=%d, System=%d, Peripheral=%d, USB=%d" ;
+  DEBUG_SHOW (1, "MEM", DEBUG_TEXT, read_clock_osc(), read_clock_sys(), read_clock_per(), read_clock_usb());
+
+}
+
+uint32_t read_clock_sys() {
+
+  return frequency_count_mhz(CLOCKS_FC0_SRC_VALUE_CLK_SYS);
+
+}
+
+uint32_t read_clock_usb() {
+
+  return frequency_count_mhz(CLOCKS_FC0_SRC_VALUE_CLK_USB);
+
+}
+
+uint32_t read_clock_per() {
+
+  return frequency_count_mhz(CLOCKS_FC0_SRC_VALUE_CLK_PERI);
+
+}
+
+uint32_t read_clock_osc() {
+
+  return frequency_count_mhz(CLOCKS_FC0_SRC_VALUE_ROSC_CLKSRC);
 
 }
 

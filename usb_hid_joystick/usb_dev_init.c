@@ -1,4 +1,4 @@
-#include <stdio.h>
+//#include <stdio.h>
 #include <string.h>                         // For memcpy
 #include "pico/stdlib.h"                    // for printf
 #include "pico/binary_info.h"

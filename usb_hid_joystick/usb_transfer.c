@@ -1,15 +1,18 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>                     
-#include "pico/stdlib.h" 
+//#include <stdio.h>
+//#include <stdlib.h>
+//#include <string.h>                     
+//#include "pico/stdlib.h" 
+
+#include "hardware/divider.h"               
+#include "hardware/regs/usb.h"             
+#include "hardware/structs/usb.h"  
+
 #include "include/usb_debug.h"
 #include "include/sie_errors.h" 
 #include "include/usb_transfer.h"
 #include "include/usb_endpoints.h"
 #include "include/show_registers.h"
-#include "hardware/divider.h"               
-#include "hardware/regs/usb.h"             
-#include "hardware/structs/usb.h"          
+        
 
 #define usb_hardware_set   ((usb_hw_t *)hw_set_alias_untyped(usb_hw))
 #define usb_hardware_clear ((usb_hw_t *)hw_clear_alias_untyped(usb_hw))

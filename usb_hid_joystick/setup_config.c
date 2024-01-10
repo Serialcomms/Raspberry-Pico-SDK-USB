@@ -1,6 +1,4 @@
 
-#include <stdio.h>
-#include <stdlib.h>
 #include "include/usb_debug.h"
 #include "include/setup_config.h"
 #include "include/usb_transfer.h"

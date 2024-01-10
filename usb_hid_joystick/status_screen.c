@@ -31,21 +31,18 @@ void start_status_screen() {
 
 clear_status_screen();
 
-
-
-DEBUG_TEXT = "SDK/USB Joystick\tSimulation starting";
-DEBUG_SHOW (1, "SDK", DEBUG_TEXT);
-
-busy_wait_ms(3000);
-
-DEBUG_TEXT = "SDK/USB Joystick\tSimulation initialising";
+DEBUG_TEXT = "Pico SDK/USB \t\tJoystick Simulation Starting";
 DEBUG_SHOW (1, "SDK", DEBUG_TEXT);
 
 generate_serial_number_string(false);
 
 show_serial_number_string();
 
-busy_wait_ms(2000);
+show_pico_clocks();
+
+show_free_total_heap();
+
+busy_wait_ms(5000);
 
 }
 
