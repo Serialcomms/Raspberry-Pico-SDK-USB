@@ -16,6 +16,7 @@
 #undef LIB_TINYUSB_DEVICE
 
 uint8_t DEBUG_STRING_BUFFER[100];
+
 static const uint8_t debug_threshold = 0;
 
 void __not_in_flash_func(DEBUG_SHOW)(uint8_t debug_level, uint8_t *prefix_text, uint8_t *debug_text, ...) {
@@ -30,10 +31,8 @@ void __not_in_flash_func(DEBUG_SHOW)(uint8_t debug_level, uint8_t *prefix_text, 
 
     TIMESTAMP();
 
-    printf(prefix_text);
+    printf("%s%s", prefix_text, ":\t");
     
-    printf(":\t");
-
     va_list args;
 
     va_start(args, debug_text);
@@ -190,7 +189,6 @@ volatile uint8_t *buffer_control_out_avail(uint8_t EP) {
 
     return usb_dpram->ep_buf_ctrl[EP].out & USB_BUF_CTRL_AVAIL ? "Y" : "N" ;
 }
-
 
 void show_buffer_control(uint8_t EP) {
 
