@@ -25,30 +25,7 @@ static uint8_t *DEBUG_TEXT = DEBUG_STRING_BUFFER;
 #define usb_hardware_set   ((usb_hw_t *)hw_set_alias_untyped(usb_hw))
 #define usb_hardware_clear ((usb_hw_t *)hw_clear_alias_untyped(usb_hw))
 
-void  __not_in_flash_func (buffer_endpoint_status_host)(uint8_t EP_NUMBER) {
-
-    void *handler_address = host_endpoint[EP_NUMBER].completion_handler;
-
-    buffer_completion_handler buffer_completion_function = handler_address;
-
-    if (handler_address) {
-
-        buffer_completion_function(EP_NUMBER);
-
-    } else {
-
-        buffer_completion_default(EP_NUMBER, 0);
-    }
-
-}
-
 void  __not_in_flash_func (usb_handle_buffer_status_host)(uint8_t EP_NUMBER) {
-
-    if (EP_NUMBER > 0) {
-
-        buffer_endpoint_status_host(EP_NUMBER);
-
-    } else {
 
     void *handler_address = host_endpoint[EP_NUMBER].completion_handler;     
 
@@ -62,9 +39,6 @@ void  __not_in_flash_func (usb_handle_buffer_status_host)(uint8_t EP_NUMBER) {
 
         buffer_completion_default(EP_NUMBER, 0);
     }
-
-}
-
 
 }
 
@@ -162,7 +136,7 @@ void __not_in_flash_func (isr_usbctrl()) {           // USB interrupt handler IR
     if (IRQ_STATUS & USB_INTS_BUFF_STATUS_BITS) { 
 
         DEBUG_TEXT = "USB Buffer Completion\tBuffer Status Register=%08x";
-        DEBUG_SHOW (1, "IRQ", DEBUG_TEXT, BUF_STATUS);
+        DEBUG_SHOW (8, "IRQ", DEBUG_TEXT, BUF_STATUS);
         
         IRQ_HANDLED |= USB_INTS_BUFF_STATUS_BITS;
 

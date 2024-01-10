@@ -15,11 +15,8 @@ int main(void) {
 
     irq_set_enabled(UART0_IRQ, true);
     uart_set_fifo_enabled(uart0, true);
-    
-    irq_set_enabled(UART1_IRQ, true);
-    uart_set_fifo_enabled(uart1, true);
 
-    stdio_init_all();
+    stdio_uart_init();
 
     busy_wait_ms(100);
 
@@ -27,7 +24,6 @@ int main(void) {
 
     start_status_screen();
 
-    
     DEBUG_TEXT = "Pico Initialising\tUSB Device - HID Joystick Device Function";
     DEBUG_SHOW (1 , "SDK", DEBUG_TEXT);
 
