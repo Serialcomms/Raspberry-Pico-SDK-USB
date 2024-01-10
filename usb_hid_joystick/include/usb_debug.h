@@ -29,7 +29,6 @@ unsigned char *concatenate(uint8_t *string1, uint8_t *string2);
 
 extern uint8_t DEBUG_STRING_BUFFER[100];
 
-void DEBUG_PRINT(uint8_t *debug_text, ...);
+void __not_in_flash_func(DEBUG_SHOW)(uint8_t debug_level, uint8_t *prefix_text, uint8_t *debug_text, ...);
 
-void DEBUG_SHOW(uint8_t debug_level, uint8_t *prefix_text, uint8_t *debug_text, ...);
 
