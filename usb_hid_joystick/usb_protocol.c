@@ -4,8 +4,6 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-//#include <stdio.h>
-//#include <string.h>                         
 #include "include/usb_debug.h"
 #include "include/setup_device.h"
 #include "include/setup_config.h"

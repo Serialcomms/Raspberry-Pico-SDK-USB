@@ -1,6 +1,4 @@
 
-//#include <stdio.h>
-//#include <string.h>                         // For memcpy/memset
 #include "pico/stdlib.h"
 #include "pico/types.h"
 #include "include/usb_debug.h"

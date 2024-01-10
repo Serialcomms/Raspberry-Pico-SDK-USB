@@ -1,8 +1,6 @@
 #include <stdio.h>
-
 #include "hardware/regs/usb.h"             
 #include "hardware/structs/usb.h"           
-
 #include "include/time_stamp.h"
 #include "include/usb_endpoints.h"
 #include "include/show_registers.h"

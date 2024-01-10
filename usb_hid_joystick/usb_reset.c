@@ -1,6 +1,5 @@
 
 #include <stdio.h>
-//#include <string.h>                         // For memcpy
 #include "include/usb_reset.h"
 #include "include/usb_debug.h"
 #include "include/setup_device.h"

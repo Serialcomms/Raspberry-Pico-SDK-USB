@@ -1,7 +1,3 @@
-//#include <stdio.h>
-//#include <stdlib.h>
-//#include <string.h>                     
-//#include "pico/stdlib.h" 
 
 #include "hardware/divider.h"               
 #include "hardware/regs/usb.h"             
@@ -13,7 +9,6 @@
 #include "include/usb_endpoints.h"
 #include "include/show_registers.h"
         
-
 #define usb_hardware_set   ((usb_hw_t *)hw_set_alias_untyped(usb_hw))
 #define usb_hardware_clear ((usb_hw_t *)hw_clear_alias_untyped(usb_hw))
 
@@ -43,7 +38,6 @@ void send_async_packet(uint8_t EP_NUMBER) {
     send_data_packet(EP_NUMBER, async_packet_size, false, last_packet);
 
 }
-
 
 void send_data_packet(uint8_t EP_NUMBER, uint8_t data_packet_size, bool wait_for_buffers, bool last_packet) {
 

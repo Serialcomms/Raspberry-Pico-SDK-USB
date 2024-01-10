@@ -1,9 +1,7 @@
 
-//#include <stdio.h>
-//#include <string.h>                         
 #include "include/usb_debug.h"
-#include "include/usb_functions.h"
 #include "include/usb_transfer.h"
+#include "include/usb_functions.h"
 #include "include/usb_endpoints.h"
 #include "include/show_registers.h"
 

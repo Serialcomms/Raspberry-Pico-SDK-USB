@@ -1,10 +1,9 @@
-//#include <stdio.h>
+
 #include "include/usb_debug.h"
 #include "include/usb_dev_init.h"
-#include "include/status_screen.h"
-
-#include "include/usb_endpoints.h"
 #include "include/usb_joystick.h"
+#include "include/usb_endpoints.h"
+#include "include/status_screen.h"
 
 #undef LIB_TINYUSB_HOST
 #undef LIB_TINYUSB_DEVICE

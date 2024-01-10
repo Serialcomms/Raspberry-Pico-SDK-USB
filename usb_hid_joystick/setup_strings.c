@@ -245,25 +245,25 @@ void show_pico_clocks() {
 
 }
 
-uint32_t read_clock_sys() {
+uint16_t read_clock_sys() {
 
   return frequency_count_mhz(CLOCKS_FC0_SRC_VALUE_CLK_SYS);
 
 }
 
-uint32_t read_clock_usb() {
+uint16_t read_clock_usb() {
 
   return frequency_count_mhz(CLOCKS_FC0_SRC_VALUE_CLK_USB);
 
 }
 
-uint32_t read_clock_per() {
+uint16_t read_clock_per() {
 
   return frequency_count_mhz(CLOCKS_FC0_SRC_VALUE_CLK_PERI);
 
 }
 
-uint32_t read_clock_osc() {
+uint16_t read_clock_osc() {
 
   return frequency_count_mhz(CLOCKS_FC0_SRC_VALUE_ROSC_CLKSRC);
 

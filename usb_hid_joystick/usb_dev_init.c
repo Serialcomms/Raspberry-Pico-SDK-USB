@@ -1,6 +1,6 @@
-//#include <stdio.h>
-#include <string.h>                         // For memcpy
-#include "pico/stdlib.h"                    // for printf
+
+#include <string.h>                         // For memset
+#include "pico/stdlib.h"                   
 #include "pico/binary_info.h"
 #include "include/usb_dev_init.h"
 #include "hardware/irq.h"                   // For interrupt enable and numbers
