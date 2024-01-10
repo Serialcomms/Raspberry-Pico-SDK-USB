@@ -25,7 +25,16 @@ static bool DEBUG_BUSY;
 
 void __not_in_flash_func(DEBUG_IRQ)(uint8_t debug_level, uint8_t *prefix_text, uint8_t *debug_text, ...) {
 
-//struct critical_section debug_critical_section;
+struct critical_section debug_critical_section;
+
+critical_section_init(&debug_critical_section);
+
+critical_section_enter_blocking(&debug_critical_section);
+
+critical_section_exit(&debug_critical_section);
+
+critical_section_deinit(&debug_critical_section);
+
 
 }
 
@@ -36,7 +45,11 @@ static void __not_in_flash_func(DEBUG_BLOCKING)(uint8_t debug_level, uint8_t *pr
 
 void __not_in_flash_func (DEBUG_SHOW)(uint8_t debug_level, uint8_t *prefix_text, uint8_t *debug_text, ...) {
  
-    DEBUG_BUSY = true;
+    struct critical_section debug_critical_section;
+
+    critical_section_init(&debug_critical_section);
+
+    critical_section_enter_blocking(&debug_critical_section);
 
     fflush(stdout);
 
@@ -58,7 +71,9 @@ void __not_in_flash_func (DEBUG_SHOW)(uint8_t debug_level, uint8_t *prefix_text,
 
     fflush(stdout);
 
-    DEBUG_BUSY = false;
+    critical_section_exit(&debug_critical_section);
+
+    critical_section_deinit(&debug_critical_section);
   
 }
 
