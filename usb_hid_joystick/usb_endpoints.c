@@ -121,10 +121,9 @@ void usb_setup_function_endpoints() {
 
   usb_setup_host_endpoint(1, USB_TRANSFER_TYPE_INTERRUPT, &ep_handler_to_host_ep1);
 
-  DEBUG_TEXT = "Endpoint Setup\t\tUSB dpram size = %d/%04X";
-  DEBUG_SHOW ("USB", DEBUG_TEXT, usb_dpram_size, usb_dpram_size);
+  usb_hw->inte |= USB_INTE_BUFF_STATUS_BITS;
 
-  DEBUG_TEXT = "Endpoint Setup\t\tUSB dpram epx size = %d/%04X";
-  DEBUG_SHOW ("USB", DEBUG_TEXT, usb_dpram_epx_size, usb_dpram_epx_size);
+  DEBUG_TEXT = "Pico Request Handler \tEnabling Buffer Status Completion IRQ=%08X";
+  DEBUG_SHOW ("EPx", DEBUG_TEXT, usb_hw->inte);
 
 }

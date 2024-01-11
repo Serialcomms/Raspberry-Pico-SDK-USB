@@ -21,7 +21,7 @@ switch (setup_command->request) {
 
         send_ack_handshake_to_host(0, true);
 
-        show_buffer_control(0);
+       // show_buffer_control(0);
 
     break;
 
