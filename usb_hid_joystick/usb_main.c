@@ -25,19 +25,21 @@ int main(void) {
 
     start_status_screen();
 
-    DEBUG_TEXT = "Pico Initialising\tUSB Device - HID Joystick Device Function";
-    DEBUG_SHOW ("SDK", DEBUG_TEXT);
-   
-    
-    
     usb_setup_endpoint_0();
 
     usb_device_init();
 
-    busy_wait_ms(5000);
+    busy_wait_ms(3000);
+
+    DEBUG_TEXT = "Pico SDK/USB \t\tJoystick Simulation Starting";
+    DEBUG_SHOW ("SDK", DEBUG_TEXT);
+
+    busy_wait_ms(2000);
 
     DEBUG_TEXT = "Simulation Starting\tUSB Joystick with controls and buttons";
     DEBUG_SHOW ("SDK" , DEBUG_TEXT);
+
+    busy_wait_ms(1000);
 
     while (1) {  
 

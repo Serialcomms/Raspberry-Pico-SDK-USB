@@ -32,7 +32,7 @@ void start_status_screen() {
 
 clear_status_screen();
 
-DEBUG_TEXT = "Pico SDK/USB \t\tJoystick Simulation Starting";
+DEBUG_TEXT = "Pico Initialising\tUSB Device - HID Joystick Device Function";
 DEBUG_SHOW ("SDK", DEBUG_TEXT);
 
 generate_serial_number_string(false);
@@ -43,7 +43,7 @@ show_pico_clocks();
 
 show_free_total_heap();
 
-busy_wait_ms(5000);
+busy_wait_ms(3000);
 
 }
 

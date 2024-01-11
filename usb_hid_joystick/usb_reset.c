@@ -29,7 +29,7 @@ void usb_bus_reset() {
   DEBUG_TEXT = "Bus Reset \t\tProcesssing USB Bus Reset,  Pico Device Address=%d ";
   DEBUG_SHOW   ("USB", DEBUG_TEXT, DEVICE_ADDRESS);
 
-  reset_endpoint_pids();
+  reset_endpoints();
 
   clear_sie_status_register();
   
@@ -53,14 +53,41 @@ void usb_bus_reset() {
 
 }
 
-void reset_endpoint_pids() {
+void reset_endpoints() {
 
   uint8_t ep_number;
 
     do {
 
-      host_endpoint[ep_number].packet_id = 0x0000;
-      pico_endpoint[ep_number].packet_id = 0x0000;
+      host_endpoint[ep_number].async_bytes = 0;
+      pico_endpoint[ep_number].async_bytes = 0;
+      
+      host_endpoint[ep_number].async_mode = false;
+      pico_endpoint[ep_number].async_mode = false;
+
+      host_endpoint[ep_number].double_buffered = false;
+      pico_endpoint[ep_number].double_buffered = false;
+
+      host_endpoint[ep_number].transfer_bytes = 0;
+      pico_endpoint[ep_number].transfer_bytes = 0;
+
+      host_endpoint[ep_number].transfer_duration = 0;
+      pico_endpoint[ep_number].transfer_duration = 0;
+
+      host_endpoint[ep_number].start_time_now = 0;
+      pico_endpoint[ep_number].start_time_now = 0;
+
+      host_endpoint[ep_number].start_time_end = 0;
+      pico_endpoint[ep_number].start_time_end = 0;
+
+      host_endpoint[ep_number].last_packet_size = 0;
+      pico_endpoint[ep_number].last_packet_size = 0;
+
+      host_endpoint[ep_number].source_buffer_offset = 0;
+      pico_endpoint[ep_number].source_buffer_offset = 0;
+
+      host_endpoint[ep_number].packet_id = USB_BUF_CTRL_DATA0_PID;
+      pico_endpoint[ep_number].packet_id = USB_BUF_CTRL_DATA0_PID;
 
     } while (++ep_number < 16);
 

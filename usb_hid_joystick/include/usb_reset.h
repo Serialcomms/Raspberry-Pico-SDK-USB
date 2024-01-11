@@ -1,6 +1,6 @@
 void usb_bus_reset();
 
-void reset_endpoint_pids();
+void reset_endpoints();
 
 void enable_setup_interrupts();
 
