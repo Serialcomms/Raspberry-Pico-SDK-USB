@@ -17,7 +17,7 @@ uint8_t *read_rp2040_chip_version() {
 
   uint8_t chip_version = rp2040_chip_version() ;
  
-  if ((chip_version > 0) && (chip_version < count_of(rp2040_chip_versions) + 1)) {
+  if (chip_version && chip_version <= count_of(rp2040_chip_versions)) {
 
     return rp2040_chip_versions[chip_version];
     
@@ -31,18 +31,18 @@ uint8_t *read_rp2040_chip_version() {
 
 uint8_t *read_rp2040_rom_version() {
 
-  uint8_t rom_version = rp2040_rom_version() ;
-  
-  if ((rom_version > 0) && (rom_version < count_of(rp2040_rom_versions) + 1)) {
+    uint8_t rom_version = rp2040_rom_version();
 
-    return rp2040_rom_versions[rom_version];
-    
-  } else {
+    if (rom_version && rom_version <= count_of(rp2040_rom_versions)) {
 
-    return rp2040_rom_versions[0];
+        return rp2040_rom_versions[rom_version];
 
-  }
-  
+    } else {
+
+        return rp2040_rom_versions[0];
+
+    }   
+
 }
 
 uint8_t *read_rp2040_board_id() {
