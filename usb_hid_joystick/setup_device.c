@@ -18,7 +18,7 @@ void set_pico_device_address(uint16_t DEVICE_ADDRESS) {
   set_device_address(DEVICE_ADDRESS);
 
   DEBUG_TEXT = "Setup Device Handler\tDevice Address Changed, Pico New Address=%d";
-  DEBUG_SHOW (1, "DEV", DEBUG_TEXT, get_device_address());
+  DEBUG_SHOW ("DEV", DEBUG_TEXT, get_device_address());
 
 }
 
@@ -30,7 +30,7 @@ void send_device_descriptor_to_host(uint16_t request_packet_size) {
   // send first 8 descriptor bytes only before device is addressed
 
   DEBUG_TEXT = "Pico Device Descriptor\tSend to Host, Packet Size=%d, Bytes=%d/%d ";
-  DEBUG_SHOW (1, "EP0", DEBUG_TEXT, ep0_packet_size(), descriptor_bytes, descriptor_length) ; 
+  DEBUG_SHOW ("EP0", DEBUG_TEXT, ep0_packet_size(), descriptor_bytes, descriptor_length) ; 
   
   synchronous_transfer_to_host(0, ep0_packet_size(), device_descriptor, descriptor_bytes);
 

@@ -72,7 +72,7 @@ void send_device_string_to_host(uint8_t string_index) {
     } else {
 
       DEBUG_TEXT = "Pico Strings Handler \tString Array Empty";
-      DEBUG_SHOW (9, "ERR", DEBUG_TEXT);
+      DEBUG_SHOW ("ERR", DEBUG_TEXT);
 
     }
 
@@ -86,7 +86,7 @@ uint8_t build_string_descriptor(uint8_t *ascii_string) {
     uint8_t ascii_char;
 
     DEBUG_TEXT = "String Descriptor \t%s (%d ASCII Bytes)";
-    DEBUG_SHOW (1, "USB", DEBUG_TEXT, ascii_string, string_length);
+    DEBUG_SHOW ("USB", DEBUG_TEXT, ascii_string, string_length);
 
     clear_string_buffer();
 
@@ -121,12 +121,12 @@ void usb_start_string_transfer(uint8_t *string_descriptor, uint8_t string_length
         if (string_index) {
 
           DEBUG_TEXT = "USB String Transfer\t%s (%d Unicode Bytes)+2 Bytes=%d";
-          DEBUG_SHOW (1, "EP0", DEBUG_TEXT, pico_string_descriptors[string_index], string_length-2, string_length );
+          DEBUG_SHOW ("EP0", DEBUG_TEXT, pico_string_descriptors[string_index], string_length-2, string_length );
         
         } else {
 
           DEBUG_TEXT = "USB String Transfer\tString Length = %d Bytes";
-          DEBUG_SHOW (1, "EP0", DEBUG_TEXT, string_length) ;
+          DEBUG_SHOW ("EP0", DEBUG_TEXT, string_length) ;
     
         }
 
@@ -137,7 +137,7 @@ void usb_start_string_transfer(uint8_t *string_descriptor, uint8_t string_length
     } else {
 
     DEBUG_TEXT = "Pico Request Handler \tGET PICO STRINGS, Empty String" ;
-    DEBUG_SHOW (1, "USB", DEBUG_TEXT);
+    DEBUG_SHOW ("USB", DEBUG_TEXT);
 
     }
 
@@ -155,7 +155,7 @@ uint8_t generate_serial_number_string(bool show_string_length) {
   if (show_string_length) {
 
     DEBUG_TEXT = "Pico Serial String \tSerial Number Length = %d" ;
-    DEBUG_SHOW (1, "USB", DEBUG_TEXT, serial_number_length);
+    DEBUG_SHOW ("USB", DEBUG_TEXT, serial_number_length);
 
   }
 
@@ -169,7 +169,7 @@ void show_serial_number_string() {
   uint8_t *serial_string = serial_number;
 
   DEBUG_TEXT = "Pico Serial String \tSerial Number = %s" ;
-  DEBUG_SHOW (1, "USB", DEBUG_TEXT, serial_string);
+  DEBUG_SHOW ("USB", DEBUG_TEXT, serial_string);
 
 }
 
@@ -234,14 +234,14 @@ uint32_t read_free_heap(void) {
 void show_free_total_heap() {
 
   DEBUG_TEXT = "Pico Memory Heap \tTotal Bytes=%d, Free Bytes=%d" ;
-  DEBUG_SHOW (1, "MEM", DEBUG_TEXT, read_total_heap(), read_free_heap());
+  DEBUG_SHOW ("MEM", DEBUG_TEXT, read_total_heap(), read_free_heap());
 
 }
 
 void show_pico_clocks() {
 
   DEBUG_TEXT = "Pico Clocks (MHz)\tOscillator=%d, System=%d, Peripheral=%d, USB=%d" ;
-  DEBUG_SHOW (1, "MEM", DEBUG_TEXT, read_clock_osc(), read_clock_sys(), read_clock_per(), read_clock_usb());
+  DEBUG_SHOW ("CLK", DEBUG_TEXT, read_clock_osc(), read_clock_sys(), read_clock_per(), read_clock_usb());
 
 }
 

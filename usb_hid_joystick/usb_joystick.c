@@ -55,13 +55,13 @@ joystick_report[5] = buttons;
 
 DEBUG_TEXT = "HID Report Bytes\tEPX Address=%08X,\tData = %02X, %02X, %02X, %02X, %02X, %02X";
 
-DEBUG_SHOW (1, "HID", DEBUG_TEXT, joystick_report,  
+DEBUG_SHOW ("HID", DEBUG_TEXT, joystick_report,  
 joystick_report[0], joystick_report[1], joystick_report[2], joystick_report[3],
 joystick_report[4], joystick_report[5], joystick_report[6], joystick_report[7]); 
 
 DEBUG_TEXT = "HID Report Bytes\ti=%d, Angle=%d, Rudder=%d, Pointer x/y = %d/%d  ";
 
-DEBUG_SHOW (1, "JOY" , DEBUG_TEXT, i, angle, rudder, pointer_x, pointer_y);
+DEBUG_SHOW ("JOY" , DEBUG_TEXT, i, angle, rudder, pointer_x, pointer_y);
 
 start_async_transfer_to_host(1, 8, joystick_report, 6);
 

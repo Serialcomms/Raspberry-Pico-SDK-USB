@@ -16,20 +16,12 @@
 
 uint8_t DEBUG_STRING_BUFFER[100];
 
-static const uint8_t debug_threshold = 0;
-
 static struct critical_section debug_critical_section;
 
-void init_debug_critical_section() {
-
-    critical_section_init(&debug_critical_section);
-
-}
-
-void __not_in_flash_func(DEBUG_SHOW)(uint8_t debug_level, uint8_t *prefix_text, uint8_t *debug_text, ...) {
+void __not_in_flash_func(DEBUG_SHOW)(uint8_t *prefix_text, uint8_t *debug_text, ...) {
  
     critical_section_enter_blocking(&debug_critical_section);
-
+  
     fflush(stdout);
 
     TIMESTAMP();
@@ -50,6 +42,12 @@ void __not_in_flash_func(DEBUG_SHOW)(uint8_t debug_level, uint8_t *prefix_text, 
 
     critical_section_exit(&debug_critical_section);
   
+}
+
+void init_debug_critical_section() {
+
+    critical_section_init(&debug_critical_section);
+
 }
 
 unsigned char *ep_text(uint8_t EP_NUMBER) {
@@ -109,6 +107,7 @@ unsigned char *concatenate(uint8_t *string1, uint8_t *string2) {
 
     return strings;
 }
+
 
 
 volatile uint8_t *sie_status_any_error() {

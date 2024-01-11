@@ -32,7 +32,7 @@ void start_status_screen() {
 clear_status_screen();
 
 DEBUG_TEXT = "Pico SDK/USB \t\tJoystick Simulation Starting";
-DEBUG_SHOW (1, "SDK", DEBUG_TEXT);
+DEBUG_SHOW ("SDK", DEBUG_TEXT);
 
 generate_serial_number_string(false);
 

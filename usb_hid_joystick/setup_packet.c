@@ -21,7 +21,7 @@ void usb_handle_setup_packet() {
     volatile bool sie_errors = check_sie_errors();
 
     DEBUG_TEXT = "Setup Packet Handler\tPico Device Address = %d";
-    DEBUG_SHOW (1, "USB", DEBUG_TEXT, get_device_address());
+    DEBUG_SHOW ("USB", DEBUG_TEXT, get_device_address());
 
     setup_command = prepare_setup_packet();
 
@@ -57,16 +57,16 @@ struct usb_setup_command prepare_setup_packet() {
     setup_command.length = setup_packet[7] << 8 | setup_packet[6];
 
     DEBUG_TEXT = "Setup Packet Handler\tSetup Bytes = %02X, %02X, %02X, %02X, %02X, %02X, %02X, %02X";
-    DEBUG_SHOW (1, "USB", DEBUG_TEXT,
+    DEBUG_SHOW ("USB", DEBUG_TEXT,
     setup_packet[0], setup_packet[1], setup_packet[2], setup_packet[3], 
     setup_packet[4], setup_packet[5], setup_packet[6], setup_packet[7]);
 
     DEBUG_TEXT = "Setup Packet Handler\t%s, Recipient=%02X, Request=%02X, Length=%d";
-    DEBUG_SHOW (1, "USB", DEBUG_TEXT, setup_command.direction? "Pico > Host":"Host > Pico" ,
+    DEBUG_SHOW ("USB", DEBUG_TEXT, setup_command.direction? "Pico > Host":"Host > Pico" ,
     setup_command.recipient, setup_command.request, setup_command.length);
 
     DEBUG_TEXT = "Setup Packet Handler\tDesc. Index=%02X, Type=%04X, Value=%04X, Index=%04X";
-    DEBUG_SHOW (1, "USB", DEBUG_TEXT, 
+    DEBUG_SHOW ("USB", DEBUG_TEXT, 
     setup_command.descriptor_index, setup_command.descriptor_type, setup_command.value, setup_command.index);
 
     return setup_command;
@@ -102,6 +102,6 @@ void usb_setup_interface(struct usb_setup_command *setup_command) {
 void usb_setup_unknown(uint8_t recipient) {
 
     DEBUG_TEXT = "Unhandled device setup request, recipient=%02X";
-    DEBUG_SHOW (9, "ERR", DEBUG_TEXT, recipient);
+    DEBUG_SHOW ("ERR", DEBUG_TEXT, recipient);
 
 }

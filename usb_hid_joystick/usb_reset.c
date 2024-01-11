@@ -27,7 +27,7 @@ void usb_bus_reset() {
   uint8_t DEVICE_ADDRESS = get_device_address();
 
   DEBUG_TEXT = "Bus Reset \t\tProcesssing USB Bus Reset,  Pico Device Address=%d ";
-  DEBUG_SHOW   (1, "USB", DEBUG_TEXT, DEVICE_ADDRESS);
+  DEBUG_SHOW   ("USB", DEBUG_TEXT, DEVICE_ADDRESS);
 
   reset_endpoint_pids();
 
@@ -62,7 +62,7 @@ void enable_setup_interrupts() {
   usb_hardware_set->sie_ctrl = USB_SIE_CTRL_EP0_INT_1BUF_BITS; // 0x20000000, set bit in BUFF_STATUS for every EP0 buffer completion
 
   DEBUG_TEXT = "Bus Reset \t\tEnabling Setup Interrupt,\tRegister=%08X";
-  DEBUG_SHOW (1, "USB", DEBUG_TEXT, usb_hw->inte);
+  DEBUG_SHOW ("USB", DEBUG_TEXT, usb_hw->inte);
 
 }
 

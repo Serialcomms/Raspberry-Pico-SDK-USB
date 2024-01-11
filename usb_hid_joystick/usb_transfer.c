@@ -47,7 +47,7 @@ void send_data_packet(uint8_t EP_NUMBER, uint8_t data_packet_size, bool wait_for
     if (last_packet) buffer_dispatch |= USB_BUF_CTRL_LAST;
 
     DEBUG_TEXT = "Sending Data Packet \tData Packet Size=%d Bytes,      Packet ID (PID)=%d" ;
-    DEBUG_SHOW (1, ep_text(EP_NUMBER), DEBUG_TEXT, data_packet_size, DATA_PID/8192);
+    DEBUG_SHOW (ep_text(EP_NUMBER), DEBUG_TEXT, data_packet_size, DATA_PID/8192);
 
     usb_dpram->ep_buf_ctrl[EP_NUMBER].in = data_packet_size | buffer_dispatch;
 
@@ -72,7 +72,7 @@ void synchronous_transfer_to_host(uint8_t EP_NUMBER, uint8_t packet_size, uint8_
     uint8_t *usb_dpram_data     = host_endpoint[EP_NUMBER].dpram_address;
 
     DEBUG_TEXT = "Synchronous Transfer \tFull (%d Byte) Packets to Send=%d, Remainder=%d";
-    DEBUG_SHOW (1, "USB", DEBUG_TEXT, full_packet_size, full_packets, last_packet_size);
+    DEBUG_SHOW ("USB", DEBUG_TEXT, full_packet_size, full_packets, last_packet_size);
 
     bool last_packet = (transfer_bytes == full_packet_size) ? true : false;
 
@@ -97,21 +97,21 @@ void synchronous_transfer_to_host(uint8_t EP_NUMBER, uint8_t packet_size, uint8_
     if (last_packet_size) {
 
         DEBUG_TEXT = "Synchronous Transfer \tDPRAM Data Remaining, bytes=%d";
-        DEBUG_SHOW (1, "USB", DEBUG_TEXT, dpram_offset + 1);
+        DEBUG_SHOW ("USB", DEBUG_TEXT, dpram_offset + 1);
 
         send_data_packet(EP_NUMBER, last_packet_size, true, true);
 
     }
 
     DEBUG_TEXT = "Synchronous Transfer \tWaiting for Transaction Completion";
-    DEBUG_SHOW (1, "USB", DEBUG_TEXT);
+    DEBUG_SHOW ("USB", DEBUG_TEXT);
 
     usb_wait_for_transaction_completion(EP_NUMBER, true);
 
     transfer_duration = absolute_time_diff_us(start_time_now, get_absolute_time());
 
     DEBUG_TEXT = "Synchronous Transfer \tBuffer Offset=%d, Transfer Duration=%lldµs";
-    DEBUG_SHOW (1, "USB", DEBUG_TEXT, buffer_offset, transfer_duration);
+    DEBUG_SHOW ("USB", DEBUG_TEXT, buffer_offset, transfer_duration);
 
 }
 
@@ -136,7 +136,7 @@ void start_async_transfer_to_host(uint8_t EP_NUMBER, uint8_t packet_size, void *
     host_endpoint[EP_NUMBER].start_time_now = get_absolute_time();
           
     DEBUG_TEXT = "Start Async Transfer \tSending First %d/%d Bytes";  
-    DEBUG_SHOW (1, "USB", DEBUG_TEXT, first_packet_size, transfer_bytes);
+    DEBUG_SHOW ("USB", DEBUG_TEXT, first_packet_size, transfer_bytes);
 
     do {  
 
@@ -163,7 +163,7 @@ void usb_start_transfer_host_to_pico(uint8_t EP_NUMBER, uint16_t buffer_length) 
     usb_dpram->ep_buf_ctrl[EP_NUMBER].out = buffer_dispatch;
 
     DEBUG_TEXT = "USB Data Transfer \tHost to Pico, PID=%08X, Length=%d";
-    DEBUG_SHOW (1, "USB", DEBUG_TEXT, DATA_PID, buffer_length);
+    DEBUG_SHOW ("USB", DEBUG_TEXT, DATA_PID, buffer_length);
 
 }
 
@@ -190,10 +190,10 @@ void receive_status_transaction_from_host(uint8_t EP_NUMBER, bool clear_buffer_s
     }
 
     DEBUG_TEXT = "USB Data Transfer \tReceive Status Transaction,\tRegister=%08X";
-    DEBUG_SHOW (1, "USB", DEBUG_TEXT, buffer_control);
+    DEBUG_SHOW ("USB", DEBUG_TEXT, buffer_control);
 
     DEBUG_TEXT = "USB Data Transfer \tBuffer Mask=%08X,\t Status Register=%08X";
-    DEBUG_SHOW (1, "USB", DEBUG_TEXT, buffer_status_mask, buffer_status);
+    DEBUG_SHOW ("USB", DEBUG_TEXT, buffer_status_mask, buffer_status);
 
 }
 
@@ -215,7 +215,7 @@ void send_ack_handshake_to_host(uint8_t EP_NUMBER, bool clear_buffer_status) {
     if (clear_buffer_status) usb_hardware_clear->buf_status = buffer_status_mask;
 
     DEBUG_TEXT = "ACK Handshake (Host)\tSending ACK to Host, PID=%d, Register=%08X";
-    DEBUG_SHOW (1, "ACK", DEBUG_TEXT, USB_BUF_CTRL_DATA1_PID/8192, buffer_control);
+    DEBUG_SHOW ("ACK", DEBUG_TEXT, USB_BUF_CTRL_DATA1_PID/8192, buffer_control);
 
 }
 
@@ -224,7 +224,7 @@ uint32_t toggle_data_pid(uint32_t data_pid) {
     uint32_t new_pid = data_pid ? USB_BUF_CTRL_DATA0_PID : USB_BUF_CTRL_DATA1_PID;
 
     DEBUG_TEXT = "USB Data Transfer \tToggling Old PID=%d > New PID=%d";
-    DEBUG_SHOW (1, "USB", DEBUG_TEXT , data_pid/8192, new_pid/8192);
+    DEBUG_SHOW ("USB", DEBUG_TEXT , data_pid/8192, new_pid/8192);
 
     return new_pid;
 
@@ -277,20 +277,20 @@ void usb_wait_for_buffer_completion(uint8_t EP_NUMBER, uint32_t buffer_mask, boo
         sie_status_error_handler();
 
         DEBUG_TEXT = "SIE Error/s \tWaited %lld µs for Buffer\tMask=%08X,\t Register=%08X";
-        DEBUG_SHOW (9, "SIE", DEBUG_TEXT, wait_duration, buffer_mask, buffer_done);
+        DEBUG_SHOW ("SIE", DEBUG_TEXT, wait_duration, buffer_mask, buffer_done);
        
     }
 
     if (wait_timeout) {
 
         DEBUG_TEXT = "Wait Timeout Error\tBuffer Completion Wait Timeout, Duration=%lld µs";
-        DEBUG_SHOW (9, "TIM", DEBUG_TEXT, wait_duration);
+        DEBUG_SHOW ("TIM", DEBUG_TEXT, wait_duration);
 
         DEBUG_TEXT = "Wait Timeout Error\tBuffer Mask=%08X,\t Buffer Status=%08X";
-        DEBUG_SHOW (9, "TIM", DEBUG_TEXT, buffer_mask, buffer_done);
+        DEBUG_SHOW ("TIM", DEBUG_TEXT, buffer_mask, buffer_done);
 
         DEBUG_TEXT = "Wait Timeout Error\tSIE Error Status=%08X";
-        DEBUG_SHOW (9, "TIM", DEBUG_TEXT, sie_errors);
+        DEBUG_SHOW ("TIM", DEBUG_TEXT, sie_errors);
 
 
     } else {
@@ -300,19 +300,19 @@ void usb_wait_for_buffer_completion(uint8_t EP_NUMBER, uint32_t buffer_mask, boo
             buffer_status = usb_hw->buf_status;
 
             DEBUG_TEXT = "Buffer Status\t\tClearing,\tMask=%08X, Register=%08X";
-            DEBUG_SHOW (1, "USB", DEBUG_TEXT , buffer_mask, buffer_status);
+            DEBUG_SHOW ("USB", DEBUG_TEXT , buffer_mask, buffer_status);
 
             usb_hardware_clear->buf_status = buffer_mask;
 
             buffer_status = usb_hw->buf_status;
 
             DEBUG_TEXT = "Buffer Status\t\tCleared, \tMask=%08X, Register=%08X";
-            DEBUG_SHOW (1, "USB", DEBUG_TEXT , buffer_mask, buffer_status);
+            DEBUG_SHOW ("USB", DEBUG_TEXT , buffer_mask, buffer_status);
 
         }
 
         DEBUG_TEXT = "Buffer Status\t\tComplete, \tBuffer Status Wait Duration=%lldµs";
-        DEBUG_SHOW (1, "USB", DEBUG_TEXT ,wait_duration );
+        DEBUG_SHOW ("USB", DEBUG_TEXT ,wait_duration );
 
     }
     
@@ -344,13 +344,13 @@ void usb_wait_for_transaction_completion(uint8_t EP_NUMBER, bool completion_clea
     if (wait_timeout) {
 
         DEBUG_TEXT = "Wait Timeout Error\tTransaction Completion Wait Timeout, Duration=%lld µs";
-        DEBUG_SHOW (1, "USB", DEBUG_TEXT , wait_duration);
+        DEBUG_SHOW ("USB", DEBUG_TEXT , wait_duration);
 
 
     } else {
 
         DEBUG_TEXT = "Transaction Complete\tWait Duration=%lld µs";
-        DEBUG_SHOW (1, "SIE", DEBUG_TEXT , wait_duration);
+        DEBUG_SHOW ("SIE", DEBUG_TEXT , wait_duration);
 
     }
 
@@ -360,7 +360,7 @@ void usb_wait_for_transaction_completion(uint8_t EP_NUMBER, bool completion_clea
         usb_hardware_clear->sie_status = USB_SIE_STATUS_TRANS_COMPLETE_BITS;
 
         DEBUG_TEXT = "Transaction Complete\tClearing SIE Status";
-        DEBUG_SHOW (1, "SIE", DEBUG_TEXT);
+        DEBUG_SHOW ("SIE", DEBUG_TEXT);
 
         usb_wait_for_buffer_completion_host_to_pico(EP_NUMBER, true);
 

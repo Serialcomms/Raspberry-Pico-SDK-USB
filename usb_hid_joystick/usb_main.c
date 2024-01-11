@@ -12,6 +12,8 @@ static uint8_t *DEBUG_TEXT = DEBUG_STRING_BUFFER;
 
 int main(void) {
 
+    init_debug_critical_section();
+    
     irq_set_enabled(UART0_IRQ, true);
     uart_set_fifo_enabled(uart0, true);
 
@@ -24,9 +26,9 @@ int main(void) {
     start_status_screen();
 
     DEBUG_TEXT = "Pico Initialising\tUSB Device - HID Joystick Device Function";
-    DEBUG_SHOW (1 , "SDK", DEBUG_TEXT);
+    DEBUG_SHOW ("SDK", DEBUG_TEXT);
    
-    init_debug_critical_section();
+    
     
     usb_setup_endpoint_0();
 
@@ -35,7 +37,7 @@ int main(void) {
     busy_wait_ms(5000);
 
     DEBUG_TEXT = "Simulation Starting\tUSB Joystick with controls and buttons";
-    DEBUG_SHOW (1 , "SDK" , DEBUG_TEXT);
+    DEBUG_SHOW ("SDK" , DEBUG_TEXT);
 
     while (1) {  
 

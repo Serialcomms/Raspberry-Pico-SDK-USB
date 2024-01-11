@@ -30,9 +30,9 @@ void  __not_in_flash_func (ep_handler_to_host_ep1)(uint8_t EP_NUMBER) {
     usb_hardware_clear->buf_status = USB_BUFF_STATUS_EP1_IN_BITS;
 
     DEBUG_TEXT = "Buffer Status Handler \tCompletion Handler for Endpoint %d";
-    DEBUG_SHOW (1, "IRQ", DEBUG_TEXT, EP_NUMBER);
+    DEBUG_SHOW ("IRQ", DEBUG_TEXT, EP_NUMBER);
 
     DEBUG_TEXT = "Buffer Status Handler \tCleared Buffer Status, Bit Mask=%08x";
-    DEBUG_SHOW (1, "IRQ", DEBUG_TEXT, USB_BUFF_STATUS_EP1_IN_BITS);
+    DEBUG_SHOW ("IRQ", DEBUG_TEXT, USB_BUFF_STATUS_EP1_IN_BITS);
 
 }
