@@ -3,6 +3,8 @@
 
 void set_device_address(uint8_t DEVICE_ADDRESS);
 
+void set_ep0_buffer_interrupts(bool enable_interrupts);
+
 void send_data_packet(uint8_t EP_NUMBER, uint8_t packet_size, bool wait_for_buffer, bool last_packet);
 
 void send_async_packet(uint8_t EP_NUMBER);
@@ -23,6 +25,3 @@ void send_ack_handshake_to_host(uint8_t EP_NUMBER, bool reset_buf_status);
 uint8_t get_device_address();
 
 uint32_t toggle_data_pid(uint32_t data_pid);
-
-
-

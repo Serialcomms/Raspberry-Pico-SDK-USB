@@ -35,7 +35,17 @@ void usb_bus_reset() {
   
   clear_buffer_status_register();
   
-  if (!DEVICE_ADDRESS) enable_setup_interrupts();
+  if (get_device_address() == 0) {
+
+    enable_setup_interrupts();
+
+  } else {
+
+    disable_setup_interrupts();
+
+    set_ep0_buffer_interrupts(false);
+
+  }
 
   busy_wait_ms(2);
 
@@ -58,11 +68,20 @@ void reset_endpoint_pids() {
 
 void enable_setup_interrupts() {
 
-  usb_hardware_set->inte = USB_INTS_SETUP_REQ_BITS ;
-  usb_hardware_set->sie_ctrl = USB_SIE_CTRL_EP0_INT_1BUF_BITS; // 0x20000000, set bit in BUFF_STATUS for every EP0 buffer completion
-
+  usb_hardware_set->inte = USB_INTS_SETUP_REQ_BITS;
+  
   DEBUG_TEXT = "Bus Reset \t\tEnabling Setup Interrupt,\tRegister=%08X";
   DEBUG_SHOW ("USB", DEBUG_TEXT, usb_hw->inte);
+
+}
+
+void disable_setup_interrupts() {
+
+  usb_hardware_clear->inte = USB_INTS_SETUP_REQ_BITS;
+  
+  DEBUG_TEXT = "Bus Reset \t\tDisabling Setup Interrupt,\tRegister=%08X";
+  DEBUG_SHOW ("USB", DEBUG_TEXT, usb_hw->inte);
+
 
 }
 

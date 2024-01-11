@@ -384,3 +384,18 @@ uint8_t get_device_address() {
     return usb_hw->dev_addr_ctrl & 0x7f;
 
 }
+
+void set_ep0_buffer_interrupts(bool enable_interrupts) {
+
+    if (enable_interrupts) {
+
+        usb_hardware_set->sie_ctrl = USB_SIE_CTRL_EP0_INT_1BUF_BITS;
+
+    } else {
+
+        usb_hardware_clear->sie_ctrl = USB_SIE_CTRL_EP0_INT_1BUF_BITS;
+
+    }
+
+    // 0x20000000, set bit in BUFF_STATUS for every EP0 buffer completion
+}

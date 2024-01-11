@@ -55,10 +55,9 @@ void send_hid_descriptors_to_host() {
     DEBUG_TEXT = "Pico HID Report \tSend Descriptor to Host,\tBytes=%d";
     DEBUG_SHOW ("HID", DEBUG_TEXT , report_length);
 
-    //synchronous_transfer_to_host(0, ep0_packet_size(), report_descriptor, report_length);
-
     start_async_transfer_to_host(0, ep0_packet_size(), report_descriptor, report_length);
 
-   // receive_status_transaction_from_host(0, true);
+    // synchronous_transfer_to_host(0, ep0_packet_size(), report_descriptor, report_length);
+    // receive_status_transaction_from_host(0, true);
 
 }

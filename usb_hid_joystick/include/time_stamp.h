@@ -1,2 +1,2 @@
 
-void TIMESTAMP(void);
+void TIMESTAMP();

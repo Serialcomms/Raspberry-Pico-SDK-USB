@@ -14,11 +14,6 @@ typedef void (*buffer_completion_handler)(uint8_t EP_NUMBER);
 extern buffer_completion_handler buffer_completion_handler_pico[16];
 extern buffer_completion_handler buffer_completion_handler_host[16];
 
-struct source_data_queue {
-
-
-};
-
 struct endpoint_profile {
 
     boolean     async_mode;
@@ -43,22 +38,3 @@ struct endpoint_profile {
 
 extern struct endpoint_profile host_endpoint[16];
 extern struct endpoint_profile pico_endpoint[16];
-
-
-/* Struct in which we keep the endpoint configuration
-struct endpoint_profile_lowlevel {
-
-    const struct usb_endpoint_descriptor *descriptor;
-    
-    usb_ep_handler handler;
-
-    // Pointers to endpoint + buffer control registers in the USB controller DPSRAM
- 
-    volatile uint32_t *endpoint_control;
-    volatile uint32_t *buffer_control;
-    volatile uint8_t *data_buffer;
-
-    // Toggle after each packet (unless replying to a SETUP)
-    uint8_t next_pid;
-};
-*/
