@@ -8,7 +8,8 @@ add_executable(usb_hid_joystick
         usb_dev_init.c     
         usb_endpoints.c
         usb_functions.c
-        usb_descriptors.c  
+        usb_descriptors.c 
+        pico_info.c 
         time_stamp.c  
         sie_errors.c 
         setup_packet.c

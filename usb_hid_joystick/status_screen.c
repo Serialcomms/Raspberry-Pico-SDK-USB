@@ -9,6 +9,7 @@
 
 #include <stdio.h>
 #include "pico/stdlib.h"
+#include "include/pico_info.h"
 #include "include/usb_debug.h"
 #include "include/setup_strings.h"
 #include "include/status_screen.h"
