@@ -72,13 +72,6 @@ void usb_setup_device_request_to_pico(struct usb_setup_command *setup_command) {
 
             usb_setup_function_endpoints();
 
-            // required = enable buffer status interrupts
-
-          //  usb_hw->inte |= USB_INTE_BUFF_STATUS_BITS ;
-
-          //  DEBUG_TEXT = "Pico Request Handler \tEnabling Buffer Status Completion IRQ=%08X";
-          //  DEBUG_SHOW ("HID", DEBUG_TEXT, usb_hw->inte);
-
             send_ack_handshake_to_host(0, true); // VERY IMPORTANT, otherwise Host will issue BUS RESET
 
         break;

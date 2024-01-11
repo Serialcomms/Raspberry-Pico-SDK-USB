@@ -67,7 +67,7 @@ if (show_debug) {
 
 }
 
-start_async_transfer_to_host(1, 8, joystick_report, 6);
+start_async_transfer_to_host(1, joystick_report, 6);
 
 gpio_put(PICO_DEFAULT_LED_PIN, !gpio_get(PICO_DEFAULT_LED_PIN));
 

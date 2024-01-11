@@ -30,9 +30,9 @@ void send_device_descriptor_to_host(uint16_t request_packet_size) {
   // send first 8 descriptor bytes only before device is addressed
 
   DEBUG_TEXT = "Pico Device Descriptor\tSend to Host, Packet Size=%d, Bytes=%d/%d ";
-  DEBUG_SHOW ("EP0", DEBUG_TEXT, ep0_packet_size(), descriptor_bytes, descriptor_length) ; 
+  DEBUG_SHOW ("EP0", DEBUG_TEXT, ep0_packet_size(), descriptor_bytes, descriptor_length); 
   
-  synchronous_transfer_to_host(0, ep0_packet_size(), device_descriptor, descriptor_bytes);
+  synchronous_transfer_to_host(0, device_descriptor, descriptor_bytes);
 
   receive_status_transaction_from_host(0, true);
 

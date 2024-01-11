@@ -18,8 +18,8 @@ struct endpoint_profile {
 
     boolean     async_mode;
     boolean     double_buffered;
-    uint8_t     packet_size; 
-    uint8_t     last_packet_size;
+    uint16_t    last_packet_size;
+    uint16_t    max_packet_size;
     uint16_t    async_bytes;
     uint32_t    packet_id;
     uint32_t    control_register;

@@ -15,7 +15,7 @@ void send_device_configuration_to_host(uint16_t command_length) {
   DEBUG_TEXT = "Pico Device Config \tConfiguration Descriptor, Sending %d/%d Bytes";
   DEBUG_SHOW ("EP0", DEBUG_TEXT, descriptor_bytes, config_total_length());
 
-  synchronous_transfer_to_host(0, ep0_packet_size(), config_descriptor, descriptor_bytes);
+  synchronous_transfer_to_host(0, config_descriptor, descriptor_bytes);
 
   DEBUG_TEXT = "Device Configuration \tReceive Status Transaction ACK from host";
   DEBUG_SHOW ("EP0", DEBUG_TEXT);
