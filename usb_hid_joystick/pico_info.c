@@ -13,27 +13,11 @@ static uint8_t *DEBUG_TEXT = DEBUG_STRING_BUFFER;
 uint8_t *rp2040_rom_versions[] =  { "?", "V1", "V2", "V3" };
 uint8_t *rp2040_chip_versions[] = { "?", "B0/B1", "B2" };
 
-uint8_t *read_rp2040_chip_version() {
-
-  uint8_t chip_version = rp2040_chip_version() ;
- 
-  if (chip_version && chip_version <= count_of(rp2040_chip_versions)) {
-
-    return rp2040_chip_versions[chip_version];
-    
-  } else {
-
-    return rp2040_chip_versions[0];
-
-  }
-  
-}
-
 uint8_t *read_rp2040_rom_version() {
 
     uint8_t rom_version = rp2040_rom_version();
 
-    if (rom_version && rom_version <= count_of(rp2040_rom_versions)) {
+    if (rom_version && rom_version < count_of(rp2040_rom_versions)) {
 
         return rp2040_rom_versions[rom_version];
 
@@ -43,6 +27,22 @@ uint8_t *read_rp2040_rom_version() {
 
     }   
 
+}
+
+uint8_t *read_rp2040_chip_version() {
+
+  uint8_t chip_version = rp2040_chip_version() ;
+ 
+  if (chip_version && chip_version < count_of(rp2040_chip_versions)) {
+
+    return rp2040_chip_versions[chip_version];
+    
+  } else {
+
+    return rp2040_chip_versions[0];
+
+  }
+  
 }
 
 uint8_t *read_rp2040_board_id() {
@@ -63,7 +63,7 @@ uint32_t read_total_heap() {
 
 }
 
-uint32_t read_free_heap(void) {
+uint32_t read_free_heap() {
 
   struct mallinfo m = mallinfo();
 
