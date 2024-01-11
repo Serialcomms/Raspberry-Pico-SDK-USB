@@ -5,6 +5,7 @@
 #include "include/setup_device.h"
 #include "include/usb_endpoints.h"
 #include "include/usb_functions.h"
+#include "include/usb_descriptors.h"
 
 #undef LIB_TINYUSB_HOST
 #undef LIB_TINYUSB_DEVICE
@@ -42,6 +43,7 @@ void setup_host_endpoint_0(void *completion_handler_address) {
 
   host_endpoint[0].async_mode = false;
   host_endpoint[0].packet_id = USB_BUF_CTRL_DATA0_PID;
+  host_endpoint[0].packet_size = ep0_packet_size();
   host_endpoint[0].dpram_address = &usb_dpram->ep0_buf_a[0];
   host_endpoint[0].completion_handler = completion_handler_address;
 
@@ -51,6 +53,7 @@ void setup_pico_endpoint_0(void *completion_handler_address) {
 
   pico_endpoint[0].async_mode = false;
   pico_endpoint[0].packet_id = USB_BUF_CTRL_DATA0_PID;
+  pico_endpoint[0].packet_size = ep0_packet_size();
   pico_endpoint[0].dpram_address = &usb_dpram->ep0_buf_a[0];
   pico_endpoint[0].completion_handler = completion_handler_address;
 
@@ -109,7 +112,7 @@ void usb_setup_pico_endpoint(uint8_t EP_NUMBER, uint16_t TRANSFER_TYPE, void *co
 
 void usb_setup_endpoint_0() {
 
-  setup_host_endpoint_0(NULL);
+  setup_host_endpoint_0(&ep_handler_to_host_ep0);
   setup_pico_endpoint_0(NULL);
 
 }

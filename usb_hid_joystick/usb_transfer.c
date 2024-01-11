@@ -32,6 +32,9 @@ void send_async_packet(uint8_t EP_NUMBER) {
 
     } while (++offset < async_packet_size);
 
+    DEBUG_TEXT = "Sending Async Packet \tBuffer Offset=%d, Async Bytes=%d" ;
+    DEBUG_SHOW (ep_text(EP_NUMBER), DEBUG_TEXT, source_buffer_offset, async_bytes);
+
     host_endpoint[EP_NUMBER].async_bytes -= offset;
     host_endpoint[EP_NUMBER].source_buffer_offset += offset;
 
@@ -66,7 +69,7 @@ void synchronous_transfer_to_host(uint8_t EP_NUMBER, uint8_t packet_size, uint8_
     uint8_t  dpram_offset = 0;
     uint32_t buffer_offset = 0;
     uint64_t transfer_duration = 0;
-    uint8_t  full_packet_size = MIN(packet_size, 64);
+    uint8_t  full_packet_size   = MIN(packet_size, 64);
     uint8_t  full_packets       = transfer_bytes / full_packet_size;
     uint8_t  last_packet_size   = transfer_bytes - (full_packets * full_packet_size);
     uint8_t *usb_dpram_data     = host_endpoint[EP_NUMBER].dpram_address;
@@ -329,7 +332,7 @@ void usb_wait_for_transaction_completion(uint8_t EP_NUMBER, bool completion_clea
    
     do { 
 
-        busy_wait_at_least_cycles(8);
+       // busy_wait_at_least_cycles(8);
 
         wait_timeout = time_reached(wait_time_end);
 

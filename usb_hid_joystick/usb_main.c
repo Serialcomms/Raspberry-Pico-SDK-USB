@@ -43,7 +43,7 @@ int main(void) {
 
         busy_wait_ms(333);
 
-        send_joystick_movement();
+        send_joystick_movement(false);
 
     }
 }

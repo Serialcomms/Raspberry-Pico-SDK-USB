@@ -1,1 +1,1 @@
-void send_joystick_movement();
+void send_joystick_movement(bool show_debug);
