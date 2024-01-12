@@ -15,7 +15,23 @@
 static uint8_t *DEBUG_TEXT = DEBUG_STRING_BUFFER;
 
 
-void send_sync_packet(uint8_t EP_NUMBER) {
+void send_sync_packet(uint8_t EP_NUMBER, uint8_t data_packet_size, bool last_packet) {
+
+    uint32_t DATA_PID = host_endpoint[EP_NUMBER].packet_id;
+    uint32_t buffer_dispatch = DATA_PID | USB_BUF_CTRL_AVAIL | USB_BUF_CTRL_FULL; 
+
+    host_endpoint[EP_NUMBER].buffer_complete = false;
+
+    if (last_packet) buffer_dispatch |= USB_BUF_CTRL_LAST;
+
+    DEBUG_TEXT = "Sending Data Packet \tSync Data Packet Size=%d Bytes,      Packet ID (PID)=%d" ;
+    DEBUG_SHOW (ep_text(EP_NUMBER), DEBUG_TEXT, data_packet_size, DATA_PID/8192);
+
+    usb_dpram->ep_buf_ctrl[EP_NUMBER].in = data_packet_size | buffer_dispatch;
+
+    host_endpoint[EP_NUMBER].packet_id = toggle_data_pid(DATA_PID);
+
+    usb_wait_for_buffer_empty_to_host(EP_NUMBER);
 
 }
 
@@ -100,7 +116,9 @@ void synchronous_transfer_to_host(uint8_t EP_NUMBER, uint8_t *buffer_data, uint1
 
         if (dpram_offset == full_packet_size - 1) { 
 
-            send_data_packet(EP_NUMBER, full_packet_size, true, last_packet);
+            //send_data_packet(EP_NUMBER, full_packet_size, true, last_packet);
+
+            send_sync_packet(EP_NUMBER, full_packet_size, last_packet);
         
         }  
 
