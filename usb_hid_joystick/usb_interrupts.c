@@ -101,6 +101,24 @@ void __not_in_flash_func (usb_handle_buffer_status()) {
 
 }
 
+void __not_in_flash_func (usb_handle_transaction_complete()) {
+
+    uint8_t EP_NUMBER = 0;
+
+    do {
+
+        host_endpoint[EP_NUMBER].transaction_complete = 
+        usb_dpram->ep_buf_ctrl[EP_NUMBER].in & USB_BUF_CTRL_LAST;
+        
+        pico_endpoint[EP_NUMBER].transaction_complete = 
+        usb_dpram->ep_buf_ctrl[EP_NUMBER].out & USB_BUF_CTRL_LAST;
+
+    } while (++EP_NUMBER < 16);
+
+    usb_hardware_clear->sie_status = USB_SIE_STATUS_TRANS_COMPLETE_BITS;
+
+}
+
 void __not_in_flash_func (isr_usbctrl()) {           // USB interrupt handler IRQ5
    
     uint32_t IRQ_HANDLED = 0;
@@ -151,11 +169,9 @@ void __not_in_flash_func (isr_usbctrl()) {           // USB interrupt handler IR
         DEBUG_TEXT = "USB Protocol\t\tTransaction Complete, Register = %08X";
         DEBUG_SHOW ("IRQ", DEBUG_TEXT , SIE_STATUS);
 
-        usb_hardware_clear->sie_status = USB_SIE_STATUS_TRANS_COMPLETE_BITS;
-
         IRQ_HANDLED |= USB_INTS_TRANS_COMPLETE_BITS;
 
-        // to do
+        usb_handle_transaction_complete();
 
     }
 

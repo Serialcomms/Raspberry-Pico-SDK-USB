@@ -18,6 +18,8 @@
 #undef LIB_TINYUSB_HOST
 #undef LIB_TINYUSB_DEVICE
 
+bool USB_CONFIGURED;
+
 static uint8_t *DEBUG_TEXT = DEBUG_STRING_BUFFER;
 
 void usb_get_descriptor(volatile struct usb_setup_command *setup_command) {
@@ -59,7 +61,7 @@ void usb_setup_device_request_to_pico(struct usb_setup_command *setup_command) {
 
             set_pico_device_address(setup_command->value);
 
-            set_ep0_buffer_interrupts(true);
+            set_ep0_buffer_status(true);
 
             set_transaction_complete_interrupts(false);
 
@@ -75,6 +77,10 @@ void usb_setup_device_request_to_pico(struct usb_setup_command *setup_command) {
             usb_setup_function_endpoints();
 
             send_ack_handshake_to_host(0, true); // VERY IMPORTANT, otherwise Host will issue BUS RESET
+
+            busy_wait_ms(1);
+
+            USB_CONFIGURED = true;
 
         break;
 

@@ -3,7 +3,9 @@
 
 void set_device_address(uint8_t DEVICE_ADDRESS);
 
-void set_ep0_buffer_interrupts(bool enable_interrupts);
+volatile bool get_ep0_buffer_status();
+
+void set_ep0_buffer_status(bool enable_interrupts);
 
 void set_transaction_complete_interrupts(bool enable_interrupts);
 
@@ -23,6 +25,8 @@ void usb_wait_for_transaction_completion(uint8_t EP_NUMBER, bool completion_clea
 void receive_status_transaction_from_host(uint8_t EP_NUMBER, bool clear_buffer_status);
 
 void send_ack_handshake_to_host(uint8_t EP_NUMBER, bool reset_buf_status);
+
+void usb_wait_for_last_packet_to_host(uint8_t EP_NUMBER);
 
 uint8_t get_device_address();
 

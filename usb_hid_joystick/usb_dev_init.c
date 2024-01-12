@@ -31,7 +31,7 @@ memset(usb_dpram, 0, sizeof(*usb_dpram));               // Clear down dpram to k
 USB_REGISTER_VALUE |= USB_MAIN_CTRL_CONTROLLER_EN_BITS; // Enable the USB controller in device mode 
 MUX_REGISTER_VALUE |= USB_USB_MUXING_TO_PHY_BITS;
 MUX_REGISTER_VALUE |= USB_USB_MUXING_SOFTCON_BITS;
-IRQ_REGISTER_VALUE |= USB_INTS_BUS_RESET_BITS;          // bus reset only until reset complete
+IRQ_REGISTER_VALUE |= USB_INTS_BUS_RESET_BITS;          // bus reset IRQ only until reset complete
 SIE_REGISTER_VALUE |= USB_SIE_CTRL_PULLUP_EN_BITS;      // Present full speed device by enabling pull up on DP
 //SIE_REGISTER_VALUE |= USB_SIE_CTRL_KEEP_ALIVE_EN_BITS;  // Enable Keep-Alive Packets
 SIE_REGISTER_VALUE |= USB_SIE_STATUS_DATA_SEQ_ERROR_BITS;
@@ -43,10 +43,6 @@ usb_hw->sie_ctrl = SIE_REGISTER_VALUE;
 usb_hw->muxing = MUX_REGISTER_VALUE;
 usb_hw->inte = IRQ_REGISTER_VALUE;
 usb_hw->pwr = PWR_REGISTER_VALUE;                       
-
-gpio_init(PICO_DEFAULT_LED_PIN);
-gpio_set_dir(PICO_DEFAULT_LED_PIN, GPIO_OUT);
-gpio_put(PICO_DEFAULT_LED_PIN, 1);
 
 busy_wait_ms(101);
 

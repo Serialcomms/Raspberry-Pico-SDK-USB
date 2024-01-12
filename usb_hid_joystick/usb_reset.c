@@ -43,7 +43,7 @@ void usb_bus_reset() {
 
     disable_setup_interrupts();
 
-    set_ep0_buffer_interrupts(false);
+    set_ep0_buffer_status(false);
 
   }
 

@@ -14,6 +14,12 @@
 
 static uint8_t *DEBUG_TEXT = DEBUG_STRING_BUFFER;
 
+
+void send_sync_packet(uint8_t EP_NUMBER) {
+
+}
+
+
 void send_async_packet(uint8_t EP_NUMBER) {
 
     uint8_t offset = 0;
@@ -61,8 +67,7 @@ void send_data_packet(uint8_t EP_NUMBER, uint8_t data_packet_size, bool wait_for
     if (wait_for_buffers) {
 
         usb_wait_for_buffer_completion_pico_to_host(EP_NUMBER, true);
-
-    }
+    } 
        
 } 
 
@@ -110,10 +115,13 @@ void synchronous_transfer_to_host(uint8_t EP_NUMBER, uint8_t *buffer_data, uint1
 
     }
 
-    DEBUG_TEXT = "Synchronous Transfer \tWaiting for Transaction Completion";
+   // DEBUG_TEXT = "Synchronous Transfer \tWaiting for Transaction Completion";
+    DEBUG_TEXT = "Synchronous Transfer \tWaiting for Last Packet";
     DEBUG_SHOW ("USB", DEBUG_TEXT);
 
-    usb_wait_for_transaction_completion(EP_NUMBER, true);
+    //usb_wait_for_transaction_completion(EP_NUMBER, true);
+
+    usb_wait_for_last_packet_to_host(EP_NUMBER);
 
     transfer_duration = absolute_time_diff_us(start_time_now, get_absolute_time());
 
@@ -227,6 +235,33 @@ void send_ack_handshake_to_host(uint8_t EP_NUMBER, bool clear_buffer_status) {
 
 }
 
+void usb_wait_for_buffer_empty_to_host(uint8_t EP_NUMBER) {
+
+    volatile bool wait_timeout;
+    volatile bool sie_errors;
+    
+    volatile uint32_t buffer_empty;
+    volatile uint32_t buffer_status;
+   
+    uint64_t wait_duration = 0;
+    absolute_time_t wait_time_now = get_absolute_time();
+    absolute_time_t wait_time_end = make_timeout_time_us(100000);
+    
+    do { 
+
+        busy_wait_at_least_cycles(8);
+
+        sie_errors = check_sie_errors();
+
+        buffer_empty = !usb_dpram->ep_buf_ctrl[EP_NUMBER].in & USB_BUF_CTRL_FULL;
+
+        wait_timeout = time_reached(wait_time_end);
+
+    } while (!sie_errors && !buffer_empty && !wait_timeout);
+
+
+}
+
 uint32_t toggle_data_pid(uint32_t data_pid) {
 
     uint32_t new_pid = data_pid ? USB_BUF_CTRL_DATA0_PID : USB_BUF_CTRL_DATA1_PID;
@@ -337,11 +372,9 @@ void usb_wait_for_transaction_completion(uint8_t EP_NUMBER, bool completion_clea
    
     do { 
 
-       // busy_wait_at_least_cycles(8);
-
         wait_timeout = time_reached(wait_time_end);
 
-        transaction_complete = usb_hw->sie_status & USB_SIE_STATUS_TRANS_COMPLETE_BITS;
+        transaction_complete = host_endpoint[EP_NUMBER].transaction_complete;
        
     } while (!wait_timeout && !transaction_complete);
 
@@ -376,12 +409,47 @@ void usb_wait_for_transaction_completion(uint8_t EP_NUMBER, bool completion_clea
 
 }
 
+void usb_wait_for_last_packet_to_host(uint8_t EP_NUMBER) {
+
+    uint64_t wait_duration = 0;
+    volatile bool wait_timeout;  
+    volatile bool last_received;
+  
+    absolute_time_t wait_time_now = get_absolute_time();
+    absolute_time_t wait_time_end = make_timeout_time_us(100000);
+
+    do { 
+
+        wait_timeout = time_reached(wait_time_end);
+
+        last_received = usb_dpram->ep_buf_ctrl[EP_NUMBER].in & USB_BUF_CTRL_LAST;
+       
+    } while (!wait_timeout && !last_received);
+
+        wait_duration = absolute_time_diff_us(wait_time_now, get_absolute_time());
+
+
+    if (wait_timeout) {
+
+        DEBUG_TEXT = "Wait Timeout Error\tLast Packet Wait Timeout, Duration=%lld µs";
+        DEBUG_SHOW ("USB", DEBUG_TEXT , wait_duration);
+
+
+    } else {
+
+        DEBUG_TEXT = "Wait Last Packet\tWait Duration=%lld µs";
+        DEBUG_SHOW ("SIE", DEBUG_TEXT , wait_duration);
+
+    }
+
+}
+
 void usb_wait_for_host_ack(uint8_t EP_NUMBER) {
 
+    uint64_t wait_duration = 0;
     volatile bool wait_timeout;  
     volatile bool ack_received;
-  
-    uint64_t wait_duration = 0;
+    
     absolute_time_t wait_time_now = get_absolute_time();
     absolute_time_t wait_time_end = make_timeout_time_us(100000);
    
@@ -430,7 +498,12 @@ uint8_t get_device_address() {
 
 }
 
-void set_ep0_buffer_interrupts(bool enable_interrupts) {
+volatile bool get_ep0_buffer_status() {
+
+    return usb_hardware_set->sie_ctrl & USB_SIE_CTRL_EP0_INT_1BUF_BITS;
+}
+
+void set_ep0_buffer_status(bool enable_interrupts) {
 
     if (enable_interrupts) {
 
