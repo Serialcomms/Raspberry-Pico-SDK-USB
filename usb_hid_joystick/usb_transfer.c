@@ -82,6 +82,7 @@ void synchronous_transfer_to_host(uint8_t EP_NUMBER, uint8_t *buffer_data, uint1
     absolute_time_t start_time_now = get_absolute_time();
 
     host_endpoint[EP_NUMBER].async_mode = false;
+    host_endpoint[EP_NUMBER].async_bytes = 0;
 
     do {  
 
@@ -120,15 +121,15 @@ void synchronous_transfer_to_host(uint8_t EP_NUMBER, uint8_t *buffer_data, uint1
 
 void start_async_transfer_to_host(uint8_t EP_NUMBER, void *source_buffer_address, uint16_t transfer_bytes) {
 
-    uint8_t offset = 0;
+    uint8_t  offset = 0;
     uint16_t full_packet_size   = MIN(host_endpoint[EP_NUMBER].max_packet_size, 64);   
     uint16_t first_packet_size  = MIN(transfer_bytes, full_packet_size);
     uint16_t async_bytes        = transfer_bytes - first_packet_size;
     uint16_t full_async_packets = async_bytes / full_packet_size;
-    uint16_t last_packet_size = async_bytes - (full_async_packets * full_packet_size);
-    uint8_t *source_buffer = source_buffer_address;
-    uint8_t *dpram_buffer = host_endpoint[EP_NUMBER].dpram_address;
-    bool last_packet = (transfer_bytes <= full_packet_size) ? true : false;
+    uint16_t last_packet_size   = async_bytes - (full_async_packets * full_packet_size);
+    uint8_t *source_buffer      = source_buffer_address;
+    uint8_t *dpram_buffer       = host_endpoint[EP_NUMBER].dpram_address;
+    bool     last_packet        = (transfer_bytes <= full_packet_size) ? true : false;
 
     host_endpoint[EP_NUMBER].async_mode = true;
     host_endpoint[EP_NUMBER].async_bytes = async_bytes;
@@ -279,7 +280,7 @@ void usb_wait_for_buffer_completion(uint8_t EP_NUMBER, uint32_t buffer_mask, boo
 
         sie_status_error_handler();
 
-        DEBUG_TEXT = "SIE Error/s \tWaited %lld µs for Buffer\tMask=%08X,\t Register=%08X";
+        DEBUG_TEXT = "Serial Interface Engine\tWaited %lld µs for Buffer\tMask=%08X,\t Register=%08X";
         DEBUG_SHOW ("SIE", DEBUG_TEXT, wait_duration, buffer_mask, buffer_done);
        
     }
@@ -398,4 +399,18 @@ void set_ep0_buffer_interrupts(bool enable_interrupts) {
     }
 
     // 0x20000000, set bit in BUFF_STATUS for every EP0 buffer completion
+}
+
+void set_transaction_complete_interrupts(bool enable_interrupts) {
+
+    if (enable_interrupts) {
+
+        usb_hardware_set->sie_ctrl = USB_SIE_STATUS_TRANS_COMPLETE_BITS;
+
+    } else {
+
+        usb_hardware_clear->sie_ctrl = USB_SIE_STATUS_TRANS_COMPLETE_BITS;
+
+    }
+
 }

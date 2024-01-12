@@ -58,7 +58,7 @@ void __not_in_flash_func (usb_handle_buffer_status_pico)(uint8_t EP_NUMBER) {
 
 void __not_in_flash_func (buffer_completion_default)(uint8_t EP_NUMBER, uint8_t direction_bit) {
 
-    uint32_t buffer_status_bit = (1 << (2 * EP_NUMBER)) + direction_bit;
+    uint32_t buffer_status_bit = 1 << ((2 * EP_NUMBER) + direction_bit);
 
     usb_hardware_clear->buf_status = buffer_status_bit;
    

@@ -5,6 +5,8 @@ void set_device_address(uint8_t DEVICE_ADDRESS);
 
 void set_ep0_buffer_interrupts(bool enable_interrupts);
 
+void set_transaction_complete_interrupts(bool enable_interrupts);
+
 void send_data_packet(uint8_t EP_NUMBER, uint8_t packet_size, bool wait_for_buffer, bool last_packet);
 
 void send_async_packet(uint8_t EP_NUMBER);

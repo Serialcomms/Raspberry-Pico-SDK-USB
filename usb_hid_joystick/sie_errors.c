@@ -20,7 +20,7 @@ volatile bool check_sie_errors() {
 
     if (sie_errors) {
 
-        DEBUG_TEXT = "SIE Error\tSerial Interface Engine, Error = %08X";
+        DEBUG_TEXT = "Serial Interface Engine\t, SIE Error = %08X";
         DEBUG_SHOW ("SIE", DEBUG_TEXT, sie_errors);
 
         return true;
