@@ -63,8 +63,6 @@ void usb_setup_device_request_to_pico(struct usb_setup_command *setup_command) {
 
             set_ep0_buffer_status(true);
 
-            set_transaction_complete_interrupts(false);
-
         break;
 
     //  case USB_REQUEST_SET_DESCRIPTOR:     break;

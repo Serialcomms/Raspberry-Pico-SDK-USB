@@ -7,8 +7,6 @@ volatile bool get_ep0_buffer_status();
 
 void set_ep0_buffer_status(bool enable_interrupts);
 
-void set_transaction_complete_interrupts(bool enable_interrupts);
-
 void send_data_packet(uint8_t EP_NUMBER, uint8_t packet_size, bool wait_for_buffer, bool last_packet);
 
 void send_async_packet(uint8_t EP_NUMBER);
@@ -16,12 +14,10 @@ void send_async_packet(uint8_t EP_NUMBER);
 void synchronous_transfer_to_host(uint8_t EP_NUMBER, uint8_t *buffer_data, uint16_t buffer_length);
 void start_async_transfer_to_host(uint8_t EP_NUMBER, void *source_buffer_address, uint16_t transfer_bytes);
 
-void usb_wait_for_buffer_empty_to_host(uint8_t EP_NUMBER);
+void usb_wait_for_buffer_available_to_host(uint8_t EP_NUMBER);
 void usb_wait_for_buffer_completion_pico_to_host(uint8_t EP_NUMBER, bool buffer_clear);
 void usb_wait_for_buffer_completion_host_to_pico(uint8_t EP_NUMBER, bool buffer_clear);
 void usb_wait_for_buffer_completion(uint8_t EP_NUMBER, uint32_t buffer_mask, bool buffer_status_clear);
-
-void usb_wait_for_transaction_completion(uint8_t EP_NUMBER, bool completion_clear);
 
 void receive_status_transaction_from_host(uint8_t EP_NUMBER, bool clear_buffer_status);
 
