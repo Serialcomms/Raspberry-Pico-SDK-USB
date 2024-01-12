@@ -44,7 +44,6 @@ void setup_host_endpoint_0(void *completion_handler_address) {
   host_endpoint[0].async_bytes = 0;
   host_endpoint[0].async_mode = false;
   host_endpoint[0].buffer_complete = false;
-  host_endpoint[0].transaction_complete = false;
   host_endpoint[0].packet_id = USB_BUF_CTRL_DATA0_PID;
   host_endpoint[0].max_packet_size = ep0_packet_size();
   host_endpoint[0].dpram_address = &usb_dpram->ep0_buf_a[0];
@@ -57,7 +56,6 @@ void setup_pico_endpoint_0(void *completion_handler_address) {
   pico_endpoint[0].async_bytes = 0;
   pico_endpoint[0].async_mode = false;
   pico_endpoint[0].buffer_complete = false;
-  pico_endpoint[0].transaction_complete = false;
   pico_endpoint[0].packet_id = USB_BUF_CTRL_DATA0_PID;
   pico_endpoint[0].max_packet_size = ep0_packet_size();
   pico_endpoint[0].dpram_address = &usb_dpram->ep0_buf_a[0];
@@ -74,7 +72,6 @@ void usb_setup_host_endpoint(uint8_t EP_NUMBER, uint16_t TRANSFER_TYPE, void *co
   host_endpoint[EP_NUMBER].async_bytes = 0;
   host_endpoint[EP_NUMBER].async_mode = false;
   host_endpoint[EP_NUMBER].buffer_complete = false;
-  host_endpoint[EP_NUMBER].transaction_complete = false;
   host_endpoint[EP_NUMBER].max_packet_size = 8;
   host_endpoint[EP_NUMBER].packet_id = USB_BUF_CTRL_DATA0_PID;
   host_endpoint[EP_NUMBER].dpram_address = &usb_dpram->epx_data[64 * 2 * EP_OFFSET];
@@ -101,7 +98,6 @@ void usb_setup_pico_endpoint(uint8_t EP_NUMBER, uint16_t TRANSFER_TYPE, void *co
   pico_endpoint[EP_NUMBER].async_bytes = 0;
   pico_endpoint[EP_NUMBER].async_mode = false;
   pico_endpoint[EP_NUMBER].buffer_complete = false;
-  pico_endpoint[EP_NUMBER].transaction_complete = false;
   pico_endpoint[EP_NUMBER].max_packet_size = 8;
   pico_endpoint[EP_NUMBER].packet_id = USB_BUF_CTRL_DATA0_PID;
   pico_endpoint[EP_NUMBER].dpram_address = &usb_dpram->epx_data[(64 * 2 * EP_OFFSET) + 0x0780];  // second half of available dpram

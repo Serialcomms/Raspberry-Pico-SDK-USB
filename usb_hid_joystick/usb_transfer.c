@@ -95,14 +95,13 @@ void synchronous_transfer_to_host(uint8_t EP_NUMBER, uint8_t *buffer_data, uint1
     uint16_t last_packet_size   = transfer_bytes - (full_packets * full_packet_size);
     uint8_t  *usb_dpram_data    = host_endpoint[EP_NUMBER].dpram_address;
 
-    DEBUG_TEXT = "Synchronous Transfer \tFull (%d Byte) Packets to Send=%d, Remainder=%d";
+    DEBUG_TEXT = "Synchronous Transfer \tFull (%d Byte) Packets to Send=%d, Remainder Bytes=%d";
     DEBUG_SHOW ("USB", DEBUG_TEXT, full_packet_size, full_packets, last_packet_size);
 
     bool last_packet = (transfer_bytes == full_packet_size) ? true : false;
 
     absolute_time_t start_time_now = get_absolute_time();
 
-    host_endpoint[EP_NUMBER].transaction_complete = false;
     host_endpoint[EP_NUMBER].async_mode = false;
     host_endpoint[EP_NUMBER].async_bytes = 0;
 
@@ -122,7 +121,7 @@ void synchronous_transfer_to_host(uint8_t EP_NUMBER, uint8_t *buffer_data, uint1
     
     if (last_packet_size) {
 
-        DEBUG_TEXT = "Synchronous Transfer \tDPRAM Data Remaining, bytes=%d";
+        DEBUG_TEXT = "Synchronous Transfer \tDPRAM Data Remaining, Bytes=%d";
         DEBUG_SHOW ("USB", DEBUG_TEXT, dpram_offset + 1);
 
         send_sync_packet(EP_NUMBER, last_packet_size, last_packet);
@@ -154,7 +153,6 @@ void start_async_transfer_to_host(uint8_t EP_NUMBER, void *source_buffer_address
     host_endpoint[EP_NUMBER].source_buffer_address = source_buffer_address;
     host_endpoint[EP_NUMBER].last_packet_size = last_packet_size;
     host_endpoint[EP_NUMBER].transfer_duration = 0;
-    host_endpoint[EP_NUMBER].transaction_complete = false;
     host_endpoint[EP_NUMBER].start_time_now = get_absolute_time();
           
     DEBUG_TEXT = "Start Async Transfer \tSending First %d/%d Bytes";  
