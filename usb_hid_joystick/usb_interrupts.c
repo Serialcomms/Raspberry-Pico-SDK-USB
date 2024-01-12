@@ -29,6 +29,8 @@ void  __not_in_flash_func (usb_handle_buffer_status_host)(uint8_t EP_NUMBER) {
 
     buffer_completion_handler buffer_completion_function = handler_address;
 
+    host_endpoint[EP_NUMBER].buffer_complete = true;
+
     if (handler_address) {
 
         buffer_completion_function(EP_NUMBER);
@@ -45,6 +47,8 @@ void __not_in_flash_func (usb_handle_buffer_status_pico)(uint8_t EP_NUMBER) {
     void *handler_address = pico_endpoint[EP_NUMBER].completion_handler;
 
     buffer_completion_handler buffer_completion_function = handler_address;
+
+    pico_endpoint[EP_NUMBER].buffer_complete = true;
 
     if (handler_address) {
 
@@ -155,7 +159,7 @@ void __not_in_flash_func (isr_usbctrl()) {           // USB interrupt handler IR
 
     }
 
-    if (IRQ_STATUS ^  IRQ_HANDLED) {
+    if (IRQ_STATUS ^ IRQ_HANDLED) {
 
         DEBUG_TEXT = "Unhandled IRQ 0x%08x";
         DEBUG_SHOW ("IRQ", DEBUG_TEXT , (uint) (IRQ_STATUS ^ IRQ_HANDLED));

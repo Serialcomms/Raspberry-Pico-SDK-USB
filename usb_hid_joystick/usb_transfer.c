@@ -47,6 +47,8 @@ void send_data_packet(uint8_t EP_NUMBER, uint8_t data_packet_size, bool wait_for
     uint32_t DATA_PID = host_endpoint[EP_NUMBER].packet_id;
     uint32_t buffer_dispatch = DATA_PID | USB_BUF_CTRL_AVAIL | USB_BUF_CTRL_FULL; 
 
+    host_endpoint[EP_NUMBER].buffer_complete = false;
+
     if (last_packet) buffer_dispatch |= USB_BUF_CTRL_LAST;
 
     DEBUG_TEXT = "Sending Data Packet \tData Packet Size=%d Bytes,      Packet ID (PID)=%d" ;
@@ -81,6 +83,7 @@ void synchronous_transfer_to_host(uint8_t EP_NUMBER, uint8_t *buffer_data, uint1
 
     absolute_time_t start_time_now = get_absolute_time();
 
+    host_endpoint[EP_NUMBER].transaction_complete = false;
     host_endpoint[EP_NUMBER].async_mode = false;
     host_endpoint[EP_NUMBER].async_bytes = 0;
 
@@ -137,6 +140,7 @@ void start_async_transfer_to_host(uint8_t EP_NUMBER, void *source_buffer_address
     host_endpoint[EP_NUMBER].source_buffer_address = source_buffer_address;
     host_endpoint[EP_NUMBER].last_packet_size = last_packet_size;
     host_endpoint[EP_NUMBER].transfer_duration = 0;
+    host_endpoint[EP_NUMBER].transaction_complete = false;
     host_endpoint[EP_NUMBER].start_time_now = get_absolute_time();
           
     DEBUG_TEXT = "Start Async Transfer \tSending First %d/%d Bytes";  
@@ -269,7 +273,7 @@ void usb_wait_for_buffer_completion(uint8_t EP_NUMBER, uint32_t buffer_mask, boo
         sie_errors = check_sie_errors();
 
         buffer_done = usb_hw->buf_status & buffer_mask;
-   
+
         wait_timeout = time_reached(wait_time_end);
 
     } while (!sie_errors && !buffer_done && !wait_timeout);
@@ -367,6 +371,46 @@ void usb_wait_for_transaction_completion(uint8_t EP_NUMBER, bool completion_clea
         DEBUG_SHOW ("SIE", DEBUG_TEXT);
 
         usb_wait_for_buffer_completion_host_to_pico(EP_NUMBER, true);
+
+    }
+
+}
+
+void usb_wait_for_host_ack(uint8_t EP_NUMBER) {
+
+    volatile bool wait_timeout;  
+    volatile bool ack_received;
+  
+    uint64_t wait_duration = 0;
+    absolute_time_t wait_time_now = get_absolute_time();
+    absolute_time_t wait_time_end = make_timeout_time_us(100000);
+   
+    do { 
+
+       // busy_wait_at_least_cycles(8);
+
+        wait_timeout = time_reached(wait_time_end);
+
+        //ack_received = usb_hw->sie_status & USB_SIE_STATUS_TRANS_COMPLETE_BITS;
+
+        ack_received = usb_dpram->ep_buf_ctrl[EP_NUMBER].out & USB_BUF_CTRL_AVAIL;
+       
+    } while (!wait_timeout && !ack_received);
+
+    
+    wait_duration = absolute_time_diff_us(wait_time_now, get_absolute_time());
+
+
+    if (wait_timeout) {
+
+        DEBUG_TEXT = "Wait Timeout Error\tTransaction Completion Wait Timeout, Duration=%lld µs";
+        DEBUG_SHOW ("USB", DEBUG_TEXT , wait_duration);
+
+
+    } else {
+
+        DEBUG_TEXT = "Transaction Complete\tWait Duration=%lld µs";
+        DEBUG_SHOW ("SIE", DEBUG_TEXT , wait_duration);
 
     }
 
