@@ -6,6 +6,7 @@
 #include "include/usb_endpoints.h"
 #include "include/status_screen.h"
 #include "include/usb_protocol.h"
+#include "include/usb_common.h"
 
 #undef LIB_TINYUSB_HOST
 #undef LIB_TINYUSB_DEVICE
@@ -14,14 +15,16 @@ static uint8_t *DEBUG_TEXT = DEBUG_STRING_BUFFER;
 
 int main(void) {
 
-    USB_CONFIGURED = false;
+    USB_DEVICE_CONFIGURED = false;
+
+    init_debug_critical_section();
 
     gpio_init(PICO_DEFAULT_LED_PIN);
+
     gpio_set_dir(PICO_DEFAULT_LED_PIN, GPIO_OUT);
    
-    init_debug_critical_section();
-    
     irq_set_enabled(UART0_IRQ, true);
+   
     uart_set_fifo_enabled(uart0, true);
 
     stdio_uart_init();
@@ -38,19 +41,19 @@ int main(void) {
 
     busy_wait_ms(3000);
 
-    if (USB_CONFIGURED) {
+    if (USB_DEVICE_CONFIGURED) {
 
-    gpio_put(PICO_DEFAULT_LED_PIN, 1);        
+        gpio_put(PICO_DEFAULT_LED_PIN, 1);        
 
-    DEBUG_TEXT = "Pico SDK/USB \t\tJoystick Simulation Starting";
-    DEBUG_SHOW ("SDK", DEBUG_TEXT);
+        DEBUG_TEXT = "Pico SDK/USB \t\tJoystick Simulation Starting";
+        DEBUG_SHOW ("SDK", DEBUG_TEXT);
 
-    busy_wait_ms(2000);
+        busy_wait_ms(2000);
 
-    DEBUG_TEXT = "Simulation Starting\tUSB Joystick with controls and buttons";
-    DEBUG_SHOW ("SDK" , DEBUG_TEXT);
+        DEBUG_TEXT = "Simulation Starting\tUSB Joystick with controls and buttons";
+        DEBUG_SHOW ("SDK" , DEBUG_TEXT);
 
-    busy_wait_ms(1000);
+        busy_wait_ms(1000);
 
     while (1) {  
 
@@ -76,10 +79,8 @@ int main(void) {
 
         gpio_put(PICO_DEFAULT_LED_PIN, 0);
 
+        }
+
     }
 
-
-    }
-
- 
 }

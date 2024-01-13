@@ -91,7 +91,7 @@ void synchronous_transfer_to_host(uint8_t EP_NUMBER, uint8_t *buffer_data, uint1
     uint16_t last_packet_size   = transfer_bytes - (full_packets * full_packet_size);
     uint8_t  *usb_dpram_data    = host_endpoint[EP_NUMBER].dpram_address;
 
-    DEBUG_TEXT = "Synchronous Transfer \tFull (%d Byte) Packets to Send=%d, Remainder Bytes=%d";
+    DEBUG_TEXT = "Synchronous Transfer \tFull (%d Byte) Packets to Send=%d, Last Packet Size=%d";
     DEBUG_SHOW ("USB", DEBUG_TEXT, full_packet_size, full_packets, last_packet_size);
 
     bool last_packet = (transfer_bytes == full_packet_size) ? true : false;
@@ -216,12 +216,12 @@ void usb_wait_for_buffer_available_to_host(uint8_t EP_NUMBER) {
 
     if (wait_timeout) {
 
-        DEBUG_TEXT = "Buffer Wait Timeout\tWaited %d µs for buffer available";
+        DEBUG_TEXT = "Buffer Wait Timeout\tWaited %d µs for buffer available to CPU";
         DEBUG_SHOW ("TIM", DEBUG_TEXT, wait_duration);
 
     } else {
 
-        DEBUG_TEXT = "Buffer Wait Complete\tWaited %d µs for buffer available";
+        DEBUG_TEXT = "Buffer Wait Complete\tWaited %d µs for buffer available to CPU";
         DEBUG_SHOW ("TIM", DEBUG_TEXT, wait_duration);
 
     }
@@ -230,7 +230,7 @@ void usb_wait_for_buffer_available_to_host(uint8_t EP_NUMBER) {
 
 void usb_wait_for_buffer_completion_pico_to_host(uint8_t EP_NUMBER, bool buffer_status_clear) {
     
-    uint32_t buffer_mask = (1 << (EP_NUMBER * 2u) + 0);
+    uint32_t buffer_mask = (1 << (EP_NUMBER * 2u) + 1);
 
     usb_wait_for_buffer_completion(EP_NUMBER, buffer_mask, buffer_status_clear);
 
@@ -270,6 +270,3 @@ void usb_wait_for_last_packet_to_host(uint8_t EP_NUMBER) {
     }
 
 }
-
-
-

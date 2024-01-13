@@ -6,6 +6,7 @@
 #include "include/setup_device.h"
 #include "include/setup_packet.h"
 #include "include/show_registers.h"
+#include "include/usb_protocol.h"
 #include "include/usb_endpoints.h"
 #include "include/usb_transmit.h"
 #include "include/usb_receive.h"
@@ -13,20 +14,14 @@
 
 #include "include/usb_descriptors.h"
 #include "hardware/resets.h"
-#include "hardware/regs/usb.h"
-#include "hardware/structs/usb.h"
-
-#undef LIB_TINYUSB_HOST
-#undef LIB_TINYUSB_DEVICE
-
-#define usb_hardware_set   ((usb_hw_t *)hw_set_alias_untyped(usb_hw))
-#define usb_hardware_clear ((usb_hw_t *)hw_clear_alias_untyped(usb_hw))
 
 const io_rw_32 CLEAR_ALL_BITS = 0xFFFFFFFF; 
 
 static uint8_t *DEBUG_TEXT = DEBUG_STRING_BUFFER;
 
 void usb_bus_reset() { 
+
+  USB_DEVICE_CONFIGURED = false;
 
   uint8_t DEVICE_ADDRESS = get_device_address();
 
@@ -54,6 +49,8 @@ void usb_bus_reset() {
   busy_wait_ms(2);
 
   receive_status_transaction_from_host(0, true);
+
+  //busy_wait_ms(1000);
 
 }
 

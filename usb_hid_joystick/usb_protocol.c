@@ -18,10 +18,7 @@
 #include "include/usb_endpoints.h"
 #include "include/usb_descriptors.h"
 
-#undef LIB_TINYUSB_HOST
-#undef LIB_TINYUSB_DEVICE
-
-bool USB_CONFIGURED;
+//bool USB_CONFIGURED;
 
 static uint8_t *DEBUG_TEXT = DEBUG_STRING_BUFFER;
 
@@ -56,6 +53,7 @@ void usb_setup_device_request_to_pico(struct usb_setup_command *setup_command) {
 
     //  case USB_REQUEST_CLEAR_FEATURE:   break;
     //  case USB_REQUEST_SET_FEATURE:     break;
+    //  case USB_REQUEST_SET_DESCRIPTOR:  break;
           
         case USB_REQUEST_SET_ADDRESS:   // 5  
 
@@ -68,8 +66,6 @@ void usb_setup_device_request_to_pico(struct usb_setup_command *setup_command) {
 
         break;
 
-    //  case USB_REQUEST_SET_DESCRIPTOR:     break;
-
         case USB_REQUEST_SET_CONFIGURATION:  // 9   // Expected to start HID sequence
 
             DEBUG_TEXT = "Pico Request Handler \tSET CONFIGURATION REQUEST (HID), Value=%d";
@@ -80,8 +76,6 @@ void usb_setup_device_request_to_pico(struct usb_setup_command *setup_command) {
             send_ack_handshake_to_host(0, true); // VERY IMPORTANT, otherwise Host will issue BUS RESET
 
             busy_wait_ms(1);
-
-            USB_CONFIGURED = true;
 
         break;
 

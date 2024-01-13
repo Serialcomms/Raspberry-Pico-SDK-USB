@@ -1,3 +1,4 @@
+
 #include "pico/stdlib.h"
 
 #include "include/usb_debug.h"
@@ -6,6 +7,8 @@
 
 #undef LIB_TINYUSB_HOST
 #undef LIB_TINYUSB_DEVICE
+
+bool USB_DEVICE_CONFIGURED;
 
 static uint8_t *DEBUG_TEXT = DEBUG_STRING_BUFFER;
 
@@ -20,6 +23,11 @@ void usb_wait_for_buffer_completion(uint8_t EP_NUMBER, uint32_t buffer_mask, boo
     uint64_t wait_duration = 0;
     absolute_time_t wait_time_now = get_absolute_time();
     absolute_time_t wait_time_end = make_timeout_time_us(100000);
+
+    buffer_done = usb_hw->buf_status & buffer_mask;
+
+    DEBUG_TEXT = "Serial Interface Engine\tWaiting for Buffer Mask=%08X,\t Register=%08X";
+    DEBUG_SHOW ("SIE", DEBUG_TEXT, wait_duration, buffer_mask, buffer_done);
     
     do { 
 
