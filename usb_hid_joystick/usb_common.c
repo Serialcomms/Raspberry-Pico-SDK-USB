@@ -4,6 +4,9 @@
 #include "include/usb_common.h"
 #include "include/sie_errors.h"
 
+#undef LIB_TINYUSB_HOST
+#undef LIB_TINYUSB_DEVICE
+
 static uint8_t *DEBUG_TEXT = DEBUG_STRING_BUFFER;
 
 void usb_wait_for_buffer_completion(uint8_t EP_NUMBER, uint32_t buffer_mask, bool buffer_status_clear) {
@@ -93,11 +96,6 @@ uint8_t get_device_address() {
 
     return usb_hw->dev_addr_ctrl & 0x7f;
 
-}
-
-volatile bool get_ep0_buffer_status() {
-
-    return usb_hardware_set->sie_ctrl & USB_SIE_CTRL_EP0_INT_1BUF_BITS;
 }
 
 void set_ep0_buffer_status(bool enable_interrupts) {

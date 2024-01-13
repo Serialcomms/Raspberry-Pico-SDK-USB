@@ -165,8 +165,6 @@ void show_serial_number_string() {
 
 }
 
-
-
 void clear_string_buffer() {
 
   uint8_t zero = 0x00; 
@@ -180,7 +178,6 @@ void clear_string_buffer() {
   } 
     
 }
-
 
 void show_string_buffer() {
     

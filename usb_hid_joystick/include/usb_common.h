@@ -1,3 +1,4 @@
+
 #include "hardware/regs/usb.h"             
 #include "hardware/structs/usb.h" 
 
@@ -8,8 +9,6 @@
 #define usb_hardware_clear ((usb_hw_t *)hw_clear_alias_untyped(usb_hw))
 
 uint8_t get_device_address();
-
-volatile bool get_ep0_buffer_status();
 
 uint32_t toggle_data_pid(uint32_t data_pid);
 

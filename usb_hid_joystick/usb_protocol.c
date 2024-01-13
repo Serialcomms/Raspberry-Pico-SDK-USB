@@ -147,7 +147,7 @@ void error_unknown_descriptor_type(uint8_t descriptor_type) {
 
 } 
 
-unsigned char *config_dt_to_string(uint8_t descriptor_type) {
+uint8_t *config_dt_to_string(uint8_t descriptor_type) {
 
     switch (descriptor_type) {
 

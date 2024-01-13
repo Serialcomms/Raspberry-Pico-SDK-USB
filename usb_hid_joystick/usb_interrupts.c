@@ -9,19 +9,11 @@
 #include "include/usb_interrupts.h"
 #include "include/usb_endpoints.h"
 #include "include/usb_functions.h"
+#include "include/usb_common.h"
 
 #include "hardware/irq.h"                   // For interrupt enable and numbers
-#include "hardware/resets.h"                // For resetting the USB controller
-#include "hardware/regs/usb.h"              // USB register definitions from pico-sdk
-#include "hardware/structs/usb.h"           // USB hardware struct definitions from pico-sdk
-
-#undef LIB_TINYUSB_HOST
-#undef LIB_TINYUSB_DEVICE
 
 static uint8_t *DEBUG_TEXT = DEBUG_STRING_BUFFER;
-
-#define usb_hardware_set   ((usb_hw_t *)hw_set_alias_untyped(usb_hw))
-#define usb_hardware_clear ((usb_hw_t *)hw_clear_alias_untyped(usb_hw))
 
 void  __not_in_flash_func (usb_handle_buffer_status_host)(uint8_t EP_NUMBER) {
 
