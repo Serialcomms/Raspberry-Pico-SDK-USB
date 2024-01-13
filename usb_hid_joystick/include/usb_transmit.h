@@ -12,5 +12,3 @@ void usb_wait_for_buffer_completion_pico_to_host(uint8_t EP_NUMBER, bool buffer_
 void send_ack_handshake_to_host(uint8_t EP_NUMBER, bool reset_buf_status);
 
 void usb_wait_for_last_packet_to_host(uint8_t EP_NUMBER);
-
-

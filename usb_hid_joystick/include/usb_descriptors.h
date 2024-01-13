@@ -4,13 +4,6 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-//#ifndef _USB_COMMON_H
-//#define _USB_COMMON_H
-//#endif
-
-//#include "pico/types.h"
-//#include "hardware/structs/usb.h"
-
 extern uint8_t pico_device_descriptor[];
 extern uint8_t pico_config_descriptor[];
 extern uint8_t pico_hid_report_descriptor[];

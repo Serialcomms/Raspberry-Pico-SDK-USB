@@ -1,5 +1,4 @@
 
-
 struct usb_setup_command {
 
     uint8_t descriptor_type;
