@@ -24,7 +24,7 @@ struct endpoint_profile {
     uint16_t    max_packet_size;
     uint16_t    async_bytes;
     uint32_t    packet_id;
-    uint32_t    control_register;
+    //uint32_t    control_register;
     uint32_t    address_base_offset;
     uint16_t    transfer_bytes;
     uint32_t    transfer_duration;

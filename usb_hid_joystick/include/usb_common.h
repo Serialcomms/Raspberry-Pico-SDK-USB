@@ -9,9 +9,11 @@
 
 uint8_t get_device_address();
 
+volatile bool get_ep0_buffer_status();
+
 uint32_t toggle_data_pid(uint32_t data_pid);
 
-volatile bool get_ep0_buffer_status();
+void set_ep0_buffer_status(bool enable_interrupts);
 
 void usb_wait_for_buffer_completion(uint8_t EP_NUMBER, uint32_t buffer_mask, bool buffer_status_clear);
 

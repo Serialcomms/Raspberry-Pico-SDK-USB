@@ -1,6 +1,4 @@
 
-void set_ep0_buffer_status(bool enable_interrupts);
-
 void send_data_packet(uint8_t EP_NUMBER, uint8_t packet_size, bool wait_for_buffer, bool last_packet);
 
 void send_async_packet(uint8_t EP_NUMBER);
@@ -10,8 +8,6 @@ void start_async_transfer_to_host(uint8_t EP_NUMBER, void *source_buffer_address
 
 void usb_wait_for_buffer_available_to_host(uint8_t EP_NUMBER);
 void usb_wait_for_buffer_completion_pico_to_host(uint8_t EP_NUMBER, bool buffer_clear);
-void usb_wait_for_buffer_completion_host_to_pico(uint8_t EP_NUMBER, bool buffer_clear);
-void usb_wait_for_buffer_completion(uint8_t EP_NUMBER, uint32_t buffer_mask, bool buffer_status_clear);
 
 void send_ack_handshake_to_host(uint8_t EP_NUMBER, bool reset_buf_status);
 

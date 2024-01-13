@@ -236,16 +236,6 @@ void usb_wait_for_buffer_completion_pico_to_host(uint8_t EP_NUMBER, bool buffer_
 
 }
 
-void usb_wait_for_buffer_completion_host_to_pico(uint8_t EP_NUMBER, bool buffer_status_clear) {
-
-    uint32_t buffer_mask = (1 << (EP_NUMBER * 2u) + 1); 
-
-    usb_wait_for_buffer_completion(EP_NUMBER, buffer_mask, buffer_status_clear);
-    
-}
-
-
-
 void usb_wait_for_last_packet_to_host(uint8_t EP_NUMBER) {
 
     uint64_t wait_duration = 0;
@@ -282,23 +272,4 @@ void usb_wait_for_last_packet_to_host(uint8_t EP_NUMBER) {
 }
 
 
-volatile bool get_ep0_buffer_status() {
-
-    return usb_hardware_set->sie_ctrl & USB_SIE_CTRL_EP0_INT_1BUF_BITS;
-}
-
-void set_ep0_buffer_status(bool enable_interrupts) {
-
-    if (enable_interrupts) {
-
-        usb_hardware_set->sie_ctrl = USB_SIE_CTRL_EP0_INT_1BUF_BITS;
-
-    } else {
-
-        usb_hardware_clear->sie_ctrl = USB_SIE_CTRL_EP0_INT_1BUF_BITS;
-
-    }
-
-    // 0x20000000, set bit in BUFF_STATUS for every EP0 buffer completion
-}
 

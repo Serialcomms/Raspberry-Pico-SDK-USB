@@ -1,8 +1,9 @@
 #include "pico/stdlib.h"
-#include "include/sie_errors.h"
+
 #include "include/usb_debug.h"
 #include "include/usb_common.h"
- 
+#include "include/sie_errors.h"
+
 static uint8_t *DEBUG_TEXT = DEBUG_STRING_BUFFER;
 
 void usb_wait_for_buffer_completion(uint8_t EP_NUMBER, uint32_t buffer_mask, bool buffer_status_clear) {
@@ -88,9 +89,28 @@ uint32_t toggle_data_pid(uint32_t data_pid) {
 
 }
 
-
 uint8_t get_device_address() {
 
     return usb_hw->dev_addr_ctrl & 0x7f;
 
+}
+
+volatile bool get_ep0_buffer_status() {
+
+    return usb_hardware_set->sie_ctrl & USB_SIE_CTRL_EP0_INT_1BUF_BITS;
+}
+
+void set_ep0_buffer_status(bool enable_interrupts) {
+
+    if (enable_interrupts) {
+
+        usb_hardware_set->sie_ctrl = USB_SIE_CTRL_EP0_INT_1BUF_BITS;
+
+    } else {
+
+        usb_hardware_clear->sie_ctrl = USB_SIE_CTRL_EP0_INT_1BUF_BITS;
+
+    }
+
+    // 0x20000000, set bit in BUFF_STATUS for every EP0 buffer completion
 }
