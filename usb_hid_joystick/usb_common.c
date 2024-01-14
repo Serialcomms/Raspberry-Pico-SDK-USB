@@ -89,6 +89,16 @@ void usb_wait_for_buffer_completion(uint8_t EP_NUMBER, uint32_t buffer_mask, boo
     
 }
 
+void __not_in_flash_func (clear_buffer_status)(uint32_t buffer_status_bits) {
+
+    usb_hardware_clear->buf_status = buffer_status_bits;
+
+    DEBUG_TEXT = "Buffer Status Handler \tCleared Buffer Status, Bit Mask=%08x";
+    DEBUG_SHOW ("IRQ", DEBUG_TEXT, buffer_status_bits);
+
+
+}
+
 uint32_t toggle_data_pid(uint32_t data_pid) {
 
     uint32_t new_pid = data_pid ? USB_BUF_CTRL_DATA0_PID : USB_BUF_CTRL_DATA1_PID;

@@ -61,7 +61,7 @@ void send_async_packet(uint8_t EP_NUMBER) {
 void send_data_packet(uint8_t EP_NUMBER, uint8_t data_packet_size, bool wait_for_buffers, bool last_packet) {
 
     uint32_t DATA_PID = host_endpoint[EP_NUMBER].packet_id;
-    uint32_t buffer_dispatch = DATA_PID | USB_BUF_CTRL_AVAIL | USB_BUF_CTRL_FULL; 
+    uint32_t buffer_dispatch = DATA_PID | USB_BUF_CTRL_FULL; 
 
     host_endpoint[EP_NUMBER].buffer_complete = false;
 
@@ -71,7 +71,11 @@ void send_data_packet(uint8_t EP_NUMBER, uint8_t data_packet_size, bool wait_for
     DEBUG_SHOW (ep_text(EP_NUMBER), DEBUG_TEXT, data_packet_size, DATA_PID/8192);
 
     usb_dpram->ep_buf_ctrl[EP_NUMBER].in = data_packet_size | buffer_dispatch;
+    
+    busy_wait_at_least_cycles(3);
 
+    usb_dpram->ep_buf_ctrl[EP_NUMBER].in = data_packet_size | buffer_dispatch | USB_BUF_CTRL_AVAIL;
+    
     host_endpoint[EP_NUMBER].packet_id = toggle_data_pid(DATA_PID);
 
     if (wait_for_buffers) {
@@ -170,16 +174,29 @@ void start_async_transfer_to_host(uint8_t EP_NUMBER, void *source_buffer_address
 
 void send_ack_handshake_to_host(uint8_t EP_NUMBER, bool clear_buffer_status) {
 
+    // bit 0 = EP0_IN
+    // bit 1 = EP0_OUT
+    // bit 2 = EP1_IN
+    // bit 3 = EP1_OUT
+
+    uint8_t shift_left_bits = (2 * EP_NUMBER) + 0;
+
     uint32_t buffer_control = 0;
     uint32_t buffer_dispatch = 0;
-    uint32_t buffer_status_mask = (1 << (EP_NUMBER * 2u));
+    uint32_t buffer_status_mask = 1 << shift_left_bits;
 
+    uint16_t ZER0_LENGTH_PACKET = 0;
+
+    buffer_dispatch |= ZER0_LENGTH_PACKET;
     buffer_dispatch |= USB_BUF_CTRL_LAST;
     buffer_dispatch |= USB_BUF_CTRL_FULL;
-    buffer_dispatch |= USB_BUF_CTRL_AVAIL;
     buffer_dispatch |= USB_BUF_CTRL_DATA1_PID;
     
     usb_dpram->ep_buf_ctrl[EP_NUMBER].in = buffer_dispatch;
+
+    busy_wait_at_least_cycles(3);
+
+    usb_dpram->ep_buf_ctrl[EP_NUMBER].in = buffer_dispatch | USB_BUF_CTRL_AVAIL;
 
     buffer_control = usb_dpram->ep_buf_ctrl[EP_NUMBER].in;
 
@@ -194,7 +211,7 @@ void usb_wait_for_buffer_available_to_host(uint8_t EP_NUMBER) {
     
     volatile bool sie_errors;
     volatile bool wait_timeout;
-    volatile uint32_t buffer_available;
+    volatile uint32_t buffer_unavailable;
    
     uint64_t wait_duration = 0;
     absolute_time_t wait_time_now = get_absolute_time();
@@ -206,11 +223,11 @@ void usb_wait_for_buffer_available_to_host(uint8_t EP_NUMBER) {
 
         sie_errors = check_sie_errors();
 
-        buffer_available = usb_dpram->ep_buf_ctrl[EP_NUMBER].in & USB_BUF_CTRL_AVAIL;
-
         wait_timeout = time_reached(wait_time_end);
 
-    } while (!sie_errors && buffer_available && !wait_timeout);
+        buffer_unavailable = usb_dpram->ep_buf_ctrl[EP_NUMBER].in & USB_BUF_CTRL_AVAIL;
+
+    } while (!sie_errors && !wait_timeout && buffer_unavailable);
 
         wait_duration = absolute_time_diff_us(wait_time_now, get_absolute_time());
 
@@ -229,8 +246,15 @@ void usb_wait_for_buffer_available_to_host(uint8_t EP_NUMBER) {
 }
 
 void usb_wait_for_buffer_completion_pico_to_host(uint8_t EP_NUMBER, bool buffer_status_clear) {
+
+    // bit 0 = EP0_IN
+    // bit 1 = EP0_OUT
+    // bit 2 = EP1_IN
+    // bit 3 = EP1_OUT
+
+    uint8_t shift_left_bits = (2 * EP_NUMBER) + 1;
     
-    uint32_t buffer_mask = (1 << (EP_NUMBER * 2u) + 1);
+    uint32_t buffer_mask = 1 << shift_left_bits;
 
     usb_wait_for_buffer_completion(EP_NUMBER, buffer_mask, buffer_status_clear);
 

@@ -25,11 +25,9 @@ void  __not_in_flash_func (ep_handler_to_host_ep0)(uint8_t EP_NUMBER) {
 
         if (host_endpoint[0].async_bytes) {
 
-            usb_wait_for_buffer_completion_pico_to_host(0, false);
+            clear_buffer_status(USB_BUFF_STATUS_EP0_IN_BITS);
 
             send_async_packet(0);
-
-           // usb_wait_for_buffer_completion_pico_to_host(0, true);
 
         } else {
 
@@ -45,18 +43,14 @@ void  __not_in_flash_func (ep_handler_to_host_ep0)(uint8_t EP_NUMBER) {
 
     } else {
 
-        DEBUG_TEXT = "Buffer Status Handler \tAsync Mode=False, Waiting for Buffer";
+        DEBUG_TEXT = "Buffer Status Handler \tAsync Mode=False, Continuing";
         DEBUG_SHOW ("IRQ", DEBUG_TEXT);
 
-        usb_wait_for_buffer_completion_pico_to_host(0, true);
+        clear_buffer_status(USB_BUFF_STATUS_EP0_IN_BITS);
+
+      //  usb_wait_for_buffer_completion_pico_to_host(0, true);
     }
  
-
-    usb_hardware_clear->buf_status = USB_BUFF_STATUS_EP0_IN_BITS;
-
-    DEBUG_TEXT = "Buffer Status Handler \tCleared Buffer Status, Bit Mask=%08x";
-    DEBUG_SHOW ("IRQ", DEBUG_TEXT, USB_BUFF_STATUS_EP0_IN_BITS);
-
 }
 
 void  __not_in_flash_func (ep_handler_to_host_ep1)(uint8_t EP_NUMBER) {

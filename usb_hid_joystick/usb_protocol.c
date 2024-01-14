@@ -18,15 +18,13 @@
 #include "include/usb_endpoints.h"
 #include "include/usb_descriptors.h"
 
-//bool USB_CONFIGURED;
-
 static uint8_t *DEBUG_TEXT = DEBUG_STRING_BUFFER;
 
 void usb_get_descriptor(volatile struct usb_setup_command *setup_command) {
 
     static uint16_t get_descriptor_count;
 
-    receive_status_transaction_from_host(0, true); 
+    //receive_status_transaction_from_host(0, true);
 
     DEBUG_TEXT = "Pico Request Handler \tGET DESCRIPTOR TYPE=%s, Count=%d";
     DEBUG_SHOW ("USB", DEBUG_TEXT, config_dt_to_string(setup_command->descriptor_type), ++get_descriptor_count );
@@ -79,7 +77,6 @@ void usb_setup_device_request_to_pico(struct usb_setup_command *setup_command) {
 
         break;
 
-
         default:
 
             DEBUG_TEXT = "Pico Request Handler \tUNKNOWN USB SET REQUEST";
@@ -96,6 +93,8 @@ void usb_setup_device_respond_to_host(struct usb_setup_command *setup_command) {
     static uint16_t get_status_count;
     static uint16_t get_unknown_count;
     static uint16_t get_configuration_count;
+
+    receive_status_transaction_from_host(0, true);
     
     switch(setup_command->request) {
 

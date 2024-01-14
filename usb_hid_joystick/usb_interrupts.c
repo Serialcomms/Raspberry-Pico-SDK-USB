@@ -11,7 +11,7 @@
 #include "include/usb_functions.h"
 #include "include/usb_common.h"
 
-#include "hardware/irq.h"                   // For interrupt enable and numbers
+#include "hardware/irq.h"                 
 
 static uint8_t *DEBUG_TEXT = DEBUG_STRING_BUFFER;
 
@@ -98,9 +98,9 @@ void __not_in_flash_func (isr_usbctrl()) {           // USB interrupt handler IR
    
     uint32_t IRQ_HANDLED = 0;
     io_rw_32 IRQ_STATUS = usb_hw->ints;
-    io_rw_32 SIE_STATUS = usb_hw->sie_status;
+    //io_rw_32 SIE_STATUS = usb_hw->sie_status;
     io_rw_32 BUF_STATUS = usb_hw->buf_status;
-    io_rw_32 BUF_HANDLE = usb_hw->buf_cpu_should_handle;
+    //io_rw_32 BUF_HANDLE = usb_hw->buf_cpu_should_handle;
 
     if (IRQ_STATUS & USB_INTS_BUS_RESET_BITS) {          
 
