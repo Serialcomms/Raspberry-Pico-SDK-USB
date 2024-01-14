@@ -41,7 +41,7 @@ int main(void) {
 
     busy_wait_ms(3000);
 
-    if (USB_DEVICE_CONFIGURED) {
+    if (true) {
 
         gpio_put(PICO_DEFAULT_LED_PIN, 1);        
 
@@ -68,6 +68,8 @@ int main(void) {
 
     DEBUG_TEXT = "USB Device Failure\tError Initialising USB";
     DEBUG_SHOW ("ERR" , DEBUG_TEXT);
+
+    //show_free_total_heap();
 
         while (1) {  
 

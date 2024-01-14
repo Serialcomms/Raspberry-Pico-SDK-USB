@@ -24,12 +24,10 @@ void usb_get_descriptor(volatile struct usb_setup_command *setup_command) {
 
     static uint16_t get_descriptor_count;
 
-    //receive_status_transaction_from_host(0, true);
-
     DEBUG_TEXT = "Pico Request Handler \tGET DESCRIPTOR TYPE=%s, Count=%d";
     DEBUG_SHOW ("USB", DEBUG_TEXT, config_dt_to_string(setup_command->descriptor_type), ++get_descriptor_count );
 
-    DEBUG_TEXT = "Pico Request Handler \tEndpoint Buffer Status=%08X";
+    DEBUG_TEXT = "Pico Request Handler \tEndpoint Buffer Status Register=%08X";
     DEBUG_SHOW ("IRQ", DEBUG_TEXT, usb_hw->buf_status);
 
     switch (setup_command->descriptor_type) {
@@ -81,6 +79,8 @@ void usb_setup_device_request_to_pico(struct usb_setup_command *setup_command) {
 
             DEBUG_TEXT = "Pico Request Handler \tUNKNOWN USB SET REQUEST";
             DEBUG_SHOW ("ERR", DEBUG_TEXT);
+
+            send_ack_handshake_to_host(0, true); // VERY IMPORTANT, otherwise Host will issue BUS RESET
 
         break;
 

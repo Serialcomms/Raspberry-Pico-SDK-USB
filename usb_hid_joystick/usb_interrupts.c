@@ -17,7 +17,7 @@ static uint8_t *DEBUG_TEXT = DEBUG_STRING_BUFFER;
 
 void  __not_in_flash_func (usb_handle_buffer_status_host)(uint8_t EP_NUMBER) {
 
-    void *handler_address = host_endpoint[EP_NUMBER].completion_handler;     
+    void *handler_address = host_endpoint[EP_NUMBER].completion_handler;
 
     buffer_completion_handler buffer_completion_function = handler_address;
 

@@ -115,7 +115,14 @@ void usb_wait_for_host_ack(uint8_t EP_NUMBER) {
 
 void usb_wait_for_buffer_completion_host_to_pico(uint8_t EP_NUMBER, bool buffer_status_clear) {
 
-    uint32_t buffer_mask = (1 << (EP_NUMBER * 2u) + 1); 
+    // bit 0 = EP0_IN
+    // bit 1 = EP0_OUT
+    // bit 2 = EP1_IN
+    // bit 3 = EP1_OUT
+
+    uint8_t shift_left_bits = (2 * EP_NUMBER) + 1;
+    
+    uint32_t buffer_mask = 1 << shift_left_bits;
 
     usb_wait_for_buffer_completion(EP_NUMBER, buffer_mask, buffer_status_clear);
     

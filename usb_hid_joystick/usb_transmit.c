@@ -185,9 +185,9 @@ void send_ack_handshake_to_host(uint8_t EP_NUMBER, bool clear_buffer_status) {
     uint32_t buffer_dispatch = 0;
     uint32_t buffer_status_mask = 1 << shift_left_bits;
 
-    uint16_t ZER0_LENGTH_PACKET = 0;
+    uint16_t ZERO_LENGTH_PACKET = 0;
 
-    buffer_dispatch |= ZER0_LENGTH_PACKET;
+    buffer_dispatch |= ZERO_LENGTH_PACKET;
     buffer_dispatch |= USB_BUF_CTRL_LAST;
     buffer_dispatch |= USB_BUF_CTRL_FULL;
     buffer_dispatch |= USB_BUF_CTRL_DATA1_PID;
@@ -252,7 +252,9 @@ void usb_wait_for_buffer_completion_pico_to_host(uint8_t EP_NUMBER, bool buffer_
     // bit 2 = EP1_IN
     // bit 3 = EP1_OUT
 
-    uint8_t shift_left_bits = (2 * EP_NUMBER) + 1;
+    uint32_t buffer_bits = (2 << EP_NUMBER);
+
+    uint8_t shift_left_bits = (2 * EP_NUMBER) + 0;
     
     uint32_t buffer_mask = 1 << shift_left_bits;
 
