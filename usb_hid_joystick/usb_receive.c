@@ -10,9 +10,6 @@
 #include "include/usb_endpoints.h"
 #include "include/show_registers.h"
 
-//#define usb_hardware_set   ((usb_hw_t *)hw_set_alias_untyped(usb_hw))
-//#define usb_hardware_clear ((usb_hw_t *)hw_clear_alias_untyped(usb_hw))
-
 static uint8_t *DEBUG_TEXT = DEBUG_STRING_BUFFER;
 
 void receive_status_transaction_from_host(uint8_t EP_NUMBER, bool clear_buffer_status) {
@@ -22,20 +19,28 @@ void receive_status_transaction_from_host(uint8_t EP_NUMBER, bool clear_buffer_s
     // bit 2 = EP1_IN
     // bit 3 = EP1_OUT
 
-    uint32_t buffer_status = 0;
-    uint32_t buffer_control = 0;
-    uint32_t buffer_dispatch = 0;
-    uint16_t ZER0_LENGTH_PACKET = 0;
+    io_rw_32 buffer_status = 0;
+    io_rw_32 buffer_control = 0;
+    io_rw_32 buffer_dispatch = 0;
+    uint32_t ZER0_LENGTH_PACKET = 0;
     
-    uint8_t shift_left_bits = (2 * EP_NUMBER) + 1;
+    uint8_t shift_left_bits = (2u * EP_NUMBER) + 1;
 
     uint32_t buffer_status_mask = 1 << shift_left_bits;
+
+    buffer_control = usb_dpram->ep_buf_ctrl[EP_NUMBER].out;
+
+    DEBUG_TEXT = "USB Data Transfer \tReceive Status Transaction Start, Register=%08X";
+    DEBUG_SHOW ("USB", DEBUG_TEXT, buffer_status);
+
+    DEBUG_TEXT = "USB Data Transfer \tReceive Status Transaction Start,     Mask=%08X";
+    DEBUG_SHOW ("USB", DEBUG_TEXT, buffer_status_mask);
     
     buffer_dispatch = ZER0_LENGTH_PACKET | USB_BUF_CTRL_DATA1_PID;      // PID1 expected from host
     
-    usb_dpram->ep_buf_ctrl[EP_NUMBER].out = buffer_dispatch;
+   // usb_dpram->ep_buf_ctrl[EP_NUMBER].out = buffer_dispatch;
 
-    busy_wait_at_least_cycles(3);
+  //  busy_wait_at_least_cycles(3);
 
     usb_dpram->ep_buf_ctrl[EP_NUMBER].out = buffer_dispatch | USB_BUF_CTRL_AVAIL;
     
@@ -45,14 +50,13 @@ void receive_status_transaction_from_host(uint8_t EP_NUMBER, bool clear_buffer_s
 
        usb_hardware_clear->buf_status = buffer_status_mask;
 
-       buffer_status =  usb_hw->buf_status;
+       buffer_status = usb_hw->buf_status;
     }
 
-    DEBUG_TEXT = "USB Data Transfer \tReceive Status Transaction,\tRegister=%08X";
-    DEBUG_SHOW ("USB", DEBUG_TEXT, buffer_control);
+    buffer_control = usb_dpram->ep_buf_ctrl[EP_NUMBER].out;
 
-    DEBUG_TEXT = "USB Data Transfer \tBuffer Mask=%08X,\t Status Register=%08X";
-    DEBUG_SHOW ("USB", DEBUG_TEXT, buffer_status_mask, buffer_status);
+    DEBUG_TEXT = "USB Data Transfer \tReceive Status Transaction End,   Register=%08X";
+    DEBUG_SHOW ("USB", DEBUG_TEXT, buffer_status);
 
 }
 
@@ -120,7 +124,7 @@ void usb_wait_for_buffer_completion_host_to_pico(uint8_t EP_NUMBER, bool buffer_
     // bit 2 = EP1_IN
     // bit 3 = EP1_OUT
 
-    uint8_t shift_left_bits = (2 * EP_NUMBER) + 1;
+    uint8_t shift_left_bits = (2u * EP_NUMBER) + 1;
     
     uint32_t buffer_mask = 1 << shift_left_bits;
 

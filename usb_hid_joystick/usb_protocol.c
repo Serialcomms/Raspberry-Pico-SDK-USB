@@ -67,9 +67,9 @@ void usb_setup_device_request_to_pico(struct usb_setup_command *setup_command) {
             DEBUG_TEXT = "Pico Request Handler \tSET CONFIGURATION REQUEST (HID), Value=%d";
             DEBUG_SHOW ("HID", DEBUG_TEXT, setup_command->value);
 
-            usb_setup_function_endpoints();
+            send_ack_handshake_to_host(0, true); // VERY IMPORTANT, otherwise Host will issue hang / BUS RESET
 
-            send_ack_handshake_to_host(0, true); // VERY IMPORTANT, otherwise Host will issue BUS RESET
+            usb_setup_function_endpoints();
 
             busy_wait_ms(1);
 
@@ -92,6 +92,7 @@ void usb_setup_device_respond_to_host(struct usb_setup_command *setup_command) {
 
     static uint16_t get_status_count;
     static uint16_t get_unknown_count;
+    static uint16_t get_descriptor_count;
     static uint16_t get_configuration_count;
 
     receive_status_transaction_from_host(0, true);
@@ -108,6 +109,9 @@ void usb_setup_device_respond_to_host(struct usb_setup_command *setup_command) {
 
         case USB_REQUEST_GET_DESCRIPTOR:        // 6
 
+            DEBUG_TEXT = "Pico Request Handler \tGET PICO USB DESCRIPTOR, Count=%d";
+            DEBUG_SHOW ("USB", DEBUG_TEXT, ++get_descriptor_count);
+
             usb_get_descriptor(setup_command);
 
         break;
@@ -115,7 +119,7 @@ void usb_setup_device_respond_to_host(struct usb_setup_command *setup_command) {
 
         case USB_REQUEST_GET_CONFIGURATION:     // 8
 
-            DEBUG_TEXT = "Pico Request Handler \tGET PICO DEVICE CONFIGURATION, Count=%d";
+            DEBUG_TEXT = "Pico Request Handler \tGET PICO USB CONFIGURATION, Count=%d";
             DEBUG_SHOW ("USB", DEBUG_TEXT, ++get_configuration_count);
   
         break;

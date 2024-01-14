@@ -7,6 +7,7 @@
 #include "include/status_screen.h"
 #include "include/usb_protocol.h"
 #include "include/usb_common.h"
+#include "include/pico_device.h"
 
 #undef LIB_TINYUSB_HOST
 #undef LIB_TINYUSB_DEVICE
@@ -39,9 +40,9 @@ int main(void) {
 
     usb_device_init();
 
-    busy_wait_ms(3000);
+    busy_wait_ms(5000);
 
-    if (true) {
+    if (device_enumerated()) {
 
         gpio_put(PICO_DEFAULT_LED_PIN, 1);        
 
@@ -68,6 +69,8 @@ int main(void) {
 
     DEBUG_TEXT = "USB Device Failure\tError Initialising USB";
     DEBUG_SHOW ("ERR" , DEBUG_TEXT);
+
+    show_device_enumerated();
 
     //show_free_total_heap();
 

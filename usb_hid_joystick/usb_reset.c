@@ -11,6 +11,7 @@
 #include "include/usb_transmit.h"
 #include "include/usb_receive.h"
 #include "include/usb_common.h"
+#include "include/pico_device.h"
 
 #include "include/usb_descriptors.h"
 #include "hardware/resets.h"
@@ -29,6 +30,8 @@ void usb_bus_reset() {
   DEBUG_SHOW   ("USB", DEBUG_TEXT, DEVICE_ADDRESS);
 
   reset_endpoints();
+
+  reset_usb_device();
 
   clear_sie_status_register();
   

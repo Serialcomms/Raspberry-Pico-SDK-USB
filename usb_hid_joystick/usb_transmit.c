@@ -13,7 +13,7 @@ static uint8_t *DEBUG_TEXT = DEBUG_STRING_BUFFER;
 void send_sync_packet(uint8_t EP_NUMBER, uint8_t data_packet_size, bool last_packet) {
 
     uint32_t DATA_PID = host_endpoint[EP_NUMBER].packet_id;
-    uint32_t buffer_dispatch = DATA_PID | USB_BUF_CTRL_AVAIL | USB_BUF_CTRL_FULL; 
+    uint32_t buffer_dispatch = data_packet_size | DATA_PID | USB_BUF_CTRL_FULL; 
 
     host_endpoint[EP_NUMBER].buffer_complete = false;
 
@@ -22,7 +22,11 @@ void send_sync_packet(uint8_t EP_NUMBER, uint8_t data_packet_size, bool last_pac
     DEBUG_TEXT = "Sending Data Packet \tSync Data Packet Size=%d Bytes,      Packet ID (PID)=%d" ;
     DEBUG_SHOW (ep_text(EP_NUMBER), DEBUG_TEXT, data_packet_size, DATA_PID/8192);
 
-    usb_dpram->ep_buf_ctrl[EP_NUMBER].in = data_packet_size | buffer_dispatch;
+    usb_dpram->ep_buf_ctrl[EP_NUMBER].in = buffer_dispatch;
+    
+    busy_wait_at_least_cycles(3);
+
+    usb_dpram->ep_buf_ctrl[EP_NUMBER].in = buffer_dispatch | USB_BUF_CTRL_AVAIL;
 
     host_endpoint[EP_NUMBER].packet_id = toggle_data_pid(DATA_PID);
 
@@ -61,7 +65,8 @@ void send_async_packet(uint8_t EP_NUMBER) {
 void send_data_packet(uint8_t EP_NUMBER, uint8_t data_packet_size, bool wait_for_buffers, bool last_packet) {
 
     uint32_t DATA_PID = host_endpoint[EP_NUMBER].packet_id;
-    uint32_t buffer_dispatch = DATA_PID | USB_BUF_CTRL_FULL; 
+
+    uint32_t buffer_dispatch = data_packet_size | DATA_PID | USB_BUF_CTRL_FULL; 
 
     host_endpoint[EP_NUMBER].buffer_complete = false;
 
@@ -70,11 +75,11 @@ void send_data_packet(uint8_t EP_NUMBER, uint8_t data_packet_size, bool wait_for
     DEBUG_TEXT = "Sending Data Packet \tData Packet Size=%d Bytes,      Packet ID (PID)=%d" ;
     DEBUG_SHOW (ep_text(EP_NUMBER), DEBUG_TEXT, data_packet_size, DATA_PID/8192);
 
-    usb_dpram->ep_buf_ctrl[EP_NUMBER].in = data_packet_size | buffer_dispatch;
+    usb_dpram->ep_buf_ctrl[EP_NUMBER].in = buffer_dispatch;
     
     busy_wait_at_least_cycles(3);
 
-    usb_dpram->ep_buf_ctrl[EP_NUMBER].in = data_packet_size | buffer_dispatch | USB_BUF_CTRL_AVAIL;
+    usb_dpram->ep_buf_ctrl[EP_NUMBER].in = buffer_dispatch | USB_BUF_CTRL_AVAIL;
     
     host_endpoint[EP_NUMBER].packet_id = toggle_data_pid(DATA_PID);
 
@@ -85,7 +90,7 @@ void send_data_packet(uint8_t EP_NUMBER, uint8_t data_packet_size, bool wait_for
        
 } 
 
-void synchronous_transfer_to_host(uint8_t EP_NUMBER, uint8_t *buffer_data, uint16_t transfer_bytes) {
+void synchronous_transfer_to_host(uint8_t EP_NUMBER, uint8_t *buffer_data, uint16_t transfer_bytes, uint8_t transfer_id) {
 
     uint8_t  dpram_offset       = 0;
     uint32_t buffer_offset      = 0;
@@ -102,9 +107,11 @@ void synchronous_transfer_to_host(uint8_t EP_NUMBER, uint8_t *buffer_data, uint1
 
     absolute_time_t start_time_now = get_absolute_time();
 
-    host_endpoint[EP_NUMBER].async_mode = false;
     host_endpoint[EP_NUMBER].async_bytes = 0;
+    host_endpoint[EP_NUMBER].async_mode = false;
+    host_endpoint[EP_NUMBER].transfer_id = transfer_id;
     host_endpoint[EP_NUMBER].transfer_complete = false;
+
 
     do {  
 
@@ -136,7 +143,7 @@ void synchronous_transfer_to_host(uint8_t EP_NUMBER, uint8_t *buffer_data, uint1
 
 }
 
-void start_async_transfer_to_host(uint8_t EP_NUMBER, void *source_buffer_address, uint16_t transfer_bytes) {
+void start_async_transfer_to_host(uint8_t EP_NUMBER, void *source_buffer_address, uint16_t transfer_bytes, uint8_t transfer_id) {
 
     uint8_t  offset = 0;
     uint16_t full_packet_size   = MIN(host_endpoint[EP_NUMBER].max_packet_size, 64);   
@@ -150,6 +157,7 @@ void start_async_transfer_to_host(uint8_t EP_NUMBER, void *source_buffer_address
 
     host_endpoint[EP_NUMBER].async_mode = true;
     host_endpoint[EP_NUMBER].async_bytes = async_bytes;
+    host_endpoint[EP_NUMBER].transfer_id = transfer_id;
     host_endpoint[EP_NUMBER].transfer_bytes = transfer_bytes;
     host_endpoint[EP_NUMBER].transfer_complete = false;
     host_endpoint[EP_NUMBER].bytes_transferred = 0;
@@ -180,11 +188,13 @@ void send_ack_handshake_to_host(uint8_t EP_NUMBER, bool clear_buffer_status) {
     // bit 2 = EP1_IN
     // bit 3 = EP1_OUT
 
-    uint8_t shift_left_bits = (2 * EP_NUMBER) + 0;
+    // uint32_t buffer_status_mask = (1 << (EP_NUMBER * 2u));
+
+    uint8_t shift_left_bits = (2u * EP_NUMBER) + 0;
 
     uint32_t buffer_control = 0;
     uint32_t buffer_dispatch = 0;
-    uint32_t buffer_status_mask = 1 << shift_left_bits;
+    uint32_t buffer_status_mask = 1u << shift_left_bits;
 
     uint16_t ZERO_LENGTH_PACKET = 0;
 

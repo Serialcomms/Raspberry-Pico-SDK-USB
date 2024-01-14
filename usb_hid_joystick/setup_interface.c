@@ -7,6 +7,7 @@
 #include "include/setup_packet.h"
 #include "include/setup_interface.h"
 #include "include/usb_descriptors.h"
+#include "include/pico_device.h"
 
 static uint8_t *DEBUG_TEXT = DEBUG_STRING_BUFFER;
 
@@ -22,7 +23,10 @@ switch (setup_command->request) {
         DEBUG_TEXT = "Setup Interface \tSetting Idle, Request=%d";
         DEBUG_SHOW ("HID", DEBUG_TEXT, setup_command->request);
 
-        send_ack_handshake_to_host(0, true);
+        pico_usb_device.HID_SET_IDLE_RECEIVED = true;
+
+      // send_ack_handshake_to_host(0, true);
+      // now done by competion handler. 
 
     break;
 
@@ -53,14 +57,17 @@ void send_hid_descriptors_to_host() {
     uint16_t  report_length = hid_report_descriptor_size();
     uint8_t  *report_descriptor = pico_hid_report_descriptor;
 
-    DEBUG_TEXT = "Pico HID Report \tSend Descriptor to Host,\tBytes=%d";
+    DEBUG_TEXT = "Pico HID Report \tSend HID Descriptor to Host,\tBytes=%d";
     DEBUG_SHOW ("HID", DEBUG_TEXT , report_length);
 
-    start_async_transfer_to_host(0, report_descriptor, report_length);
+   // start_async_transfer_to_host(0, report_descriptor, report_length, 1);
 
-  //  synchronous_transfer_to_host(0, report_descriptor, report_length);
+    synchronous_transfer_to_host(0, report_descriptor, report_length, 1);
 
-  //  receive_status_transaction_from_host(0, true);
+    receive_status_transaction_from_host(0, true);
+
+    pico_usb_device.HID_REPORT_DESCRIPTOR_SENT = true;
+
 
  //  if (wait_for_synchronous_transfer_to_host(0)) USB_DEVICE_CONFIGURED = true;
 

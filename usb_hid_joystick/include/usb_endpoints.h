@@ -19,17 +19,20 @@ struct endpoint_profile {
     boolean     double_buffered;
     boolean     buffer_complete;
     boolean     transfer_complete;
-    uint16_t    last_packet_size;
+
     uint16_t    max_packet_size;
+    uint16_t    last_packet_size;
     uint16_t    async_bytes;
     uint32_t    packet_id;
-    uint32_t    address_base_offset;
+    uint16_t    transfer_id;
     uint16_t    transfer_bytes;
     uint32_t    transfer_duration;
     uint16_t    bytes_transferred;
+    uint32_t    address_base_offset;
     uint16_t    source_buffer_offset;
     void        *dpram_address; 
     void        *source_buffer_address;
+
     absolute_time_t start_time_now;
     absolute_time_t start_time_end;
      

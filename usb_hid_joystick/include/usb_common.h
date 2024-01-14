@@ -20,3 +20,5 @@ void __not_in_flash_func (clear_buffer_status)(uint32_t buffer_status_bits);
 
 void usb_wait_for_buffer_completion(uint8_t EP_NUMBER, uint32_t buffer_mask, bool buffer_status_clear);
 
+void wait_for_transaction_completion(bool clear_transaction);
+

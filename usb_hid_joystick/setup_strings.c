@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <string.h>                       
+#include <string.h>
 #include "pico/stdlib.h"
 #include "include/pico_info.h"
 #include "include/usb_debug.h"
@@ -122,7 +122,7 @@ void usb_start_string_transfer(uint8_t *string_descriptor, uint8_t string_length
     
         }
 
-        synchronous_transfer_to_host(0, string_descriptor, string_length);
+        synchronous_transfer_to_host(0, string_descriptor, string_length, 1);
 
         receive_status_transaction_from_host(0, true);
 
