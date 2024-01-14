@@ -26,6 +26,7 @@ struct endpoint_profile {
     uint32_t    address_base_offset;
     uint16_t    transfer_bytes;
     uint32_t    transfer_duration;
+    uint16_t    bytes_transferred;
     uint16_t    source_buffer_offset;
     void        *dpram_address; 
     void        *source_buffer_address;

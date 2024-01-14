@@ -48,7 +48,7 @@ void send_async_packet(uint8_t EP_NUMBER) {
 
     } while (++offset < async_packet_size);
 
-    DEBUG_TEXT = "Sending Async Packet \tBuffer Offset=%d, Async Bytes=%d" ;
+    DEBUG_TEXT = "Sending Async Packet \tBuffer Offset=%d, Async Packet Bytes=%d" ;
     DEBUG_SHOW (ep_text(EP_NUMBER), DEBUG_TEXT, source_buffer_offset, async_bytes);
 
     host_endpoint[EP_NUMBER].async_bytes -= offset;
@@ -152,6 +152,7 @@ void start_async_transfer_to_host(uint8_t EP_NUMBER, void *source_buffer_address
     host_endpoint[EP_NUMBER].async_bytes = async_bytes;
     host_endpoint[EP_NUMBER].transfer_bytes = transfer_bytes;
     host_endpoint[EP_NUMBER].transfer_complete = false;
+    host_endpoint[EP_NUMBER].bytes_transferred = 0;
     host_endpoint[EP_NUMBER].source_buffer_address = source_buffer_address;
     host_endpoint[EP_NUMBER].last_packet_size = last_packet_size;
     host_endpoint[EP_NUMBER].transfer_duration = 0;
