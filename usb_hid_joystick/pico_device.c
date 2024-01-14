@@ -3,14 +3,13 @@
 #include "include/usb_debug.h"
 #include "include/pico_device.h"
 
-//struct pico_device_profile pico_device;
+struct pico_device_profile pico_usb_device;
 
-// void *handler_address = host_endpoint[EP_NUMBER].completion_handler;
+void create_usb_device() {
 
-// buffer_completion_handler buffer_completion_function = handler_address;
+    pico_usb_device.DEVICE_ADDRESSED = false;
+    pico_usb_device.DEVICE_CONFIGURED = false;
 
-//struct pico_device_profile *pico_usb_device = pico_device;
+}
 
-//pico_device.ADDRESSED = true;
 
-//struct pico_device_profile pico_usb_device = pico_device;
