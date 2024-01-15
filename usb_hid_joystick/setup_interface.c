@@ -5,8 +5,8 @@
 #include "include/usb_receive.h"
 #include "include/setup_packet.h"
 #include "include/setup_interface.h"
-#include "include/usb_endpoints.h"
 #include "include/usb_descriptors.h"
+#include "include/usb_endpoints.h"
 #include "include/pico_device.h"
 
 static uint8_t *DEBUG_TEXT = DEBUG_STRING_BUFFER;

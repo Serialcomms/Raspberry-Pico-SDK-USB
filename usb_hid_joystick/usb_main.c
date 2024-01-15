@@ -10,7 +10,7 @@
 #include "include/pico_device.h"
 #include "include/usb_main.h"
 
-#include "include/sie_errors.h"
+#include "include/usb_sie_errors.h"
 
 #undef LIB_TINYUSB_HOST
 #undef LIB_TINYUSB_DEVICE

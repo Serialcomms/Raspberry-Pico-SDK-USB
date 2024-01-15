@@ -1,13 +1,12 @@
 #include "pico/stdlib.h" 
-#include "hardware/regs/usb.h"
-#include "hardware/structs/usb.h"
 #include "include/usb_debug.h"
-#include "include/setup_device.h"
-#include "include/setup_endpoints.h"
+#include "include/usb_common.h"
 #include "include/ep0_handlers.h"
 #include "include/epx_handlers.h"
 #include "include/usb_endpoints.h"
 #include "include/usb_descriptors.h"
+#include "include/setup_endpoints.h"
+#include "include/setup_device.h"
 
 #undef LIB_TINYUSB_HOST
 #undef LIB_TINYUSB_DEVICE

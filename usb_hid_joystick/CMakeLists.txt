@@ -11,7 +11,7 @@ add_executable(usb_hid_joystick
         pico_info.c
         pico_device.c
         time_stamp.c  
-        sie_errors.c 
+
         setup_packet.c
         setup_device.c
         setup_config.c
@@ -23,6 +23,7 @@ add_executable(usb_hid_joystick
         usb_receive.c    
         usb_interrupts.c
         usb_endpoints.c 
+        usb_sie_errors.c 
         usb_joystick.c
         ep0_handlers.c
         epx_handlers.c

@@ -2,10 +2,10 @@
 #include "pico/stdlib.h"
 #include "hardware/divider.h"               
 #include "include/usb_debug.h"
-#include "include/sie_errors.h"
 #include "include/usb_common.h" 
 #include "include/usb_transmit.h"
 #include "include/usb_endpoints.h"
+#include "include/usb_sie_errors.h"
 #include "include/show_registers.h"
         
 static uint8_t *DEBUG_TEXT = DEBUG_STRING_BUFFER;

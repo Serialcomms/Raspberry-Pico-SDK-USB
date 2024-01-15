@@ -3,7 +3,7 @@
 
 #include "include/usb_debug.h"
 #include "include/usb_common.h"
-#include "include/sie_errors.h"
+#include "include/usb_sie_errors.h"
 
 #undef LIB_TINYUSB_HOST
 #undef LIB_TINYUSB_DEVICE
@@ -22,10 +22,10 @@ void usb_wait_for_buffer_completion(uint8_t EP_NUMBER, uint32_t buffer_mask, boo
     absolute_time_t wait_time_now = get_absolute_time();
     absolute_time_t wait_time_end = make_timeout_time_us(100000);
 
-    buffer_done = usb_hw->buf_status & buffer_mask;
+    buffer_status = usb_hw->buf_status;
 
-    DEBUG_TEXT = "Serial Interface Engine\tWaiting for Buffer, Mask=%08X,\t Register=%08X";
-    DEBUG_SHOW ("SIE", DEBUG_TEXT, wait_duration, buffer_mask, buffer_done);
+    DEBUG_TEXT = "Serial Interface Engine\tBuffer Wait,\tMask=%08X, Register=%08X";
+    DEBUG_SHOW ("SIE", DEBUG_TEXT, wait_duration, buffer_mask, buffer_status);
     
     do { 
 
