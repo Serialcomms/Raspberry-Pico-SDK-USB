@@ -106,7 +106,6 @@ void usb_setup_device_respond_to_host(struct usb_setup_command setup_command) {
 
         break;
 
-
         case USB_REQUEST_GET_DESCRIPTOR:        // 6
 
             DEBUG_TEXT = "Pico Request Handler \tGET PICO USB DESCRIPTOR, Count=%d";
@@ -116,14 +115,12 @@ void usb_setup_device_respond_to_host(struct usb_setup_command setup_command) {
 
         break;
 
-
         case USB_REQUEST_GET_CONFIGURATION:     // 8
 
             DEBUG_TEXT = "Pico Request Handler \tGET PICO USB CONFIGURATION, Count=%d";
             DEBUG_SHOW ("USB", DEBUG_TEXT, ++get_configuration_count);
   
         break;
-
 
         default:
 

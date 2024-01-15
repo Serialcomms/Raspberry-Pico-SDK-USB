@@ -20,7 +20,8 @@ void receive_status_transaction_from_host(uint8_t EP_NUMBER, bool clear_buffer_s
     io_rw_32 buffer_status = 0;
     io_rw_32 buffer_control = 0;
     io_rw_32 buffer_dispatch = 0;
-    uint32_t ZER0_LENGTH_PACKET = 0;
+
+    uint16_t bytes_received = 0;
     
     uint8_t shift_left_bits = (2u * EP_NUMBER) + 1;
 
@@ -33,12 +34,14 @@ void receive_status_transaction_from_host(uint8_t EP_NUMBER, bool clear_buffer_s
 
     DEBUG_TEXT = "USB Data Transfer \tReceive Status Transaction Start,     Mask=%08X";
     DEBUG_SHOW ("USB", DEBUG_TEXT, buffer_status_mask);
-    
-    buffer_dispatch = ZER0_LENGTH_PACKET | USB_BUF_CTRL_DATA1_PID;      // PID1 expected from host
-    
-   // usb_dpram->ep_buf_ctrl[EP_NUMBER].out = buffer_dispatch;
 
-  //  busy_wait_at_least_cycles(3);
+    bytes_received = get_buffer_bytes_to_pico(EP_NUMBER);
+    
+    buffer_dispatch = USB_BUF_CTRL_DATA1_PID;      // PID1 expected from host
+    
+    usb_dpram->ep_buf_ctrl[EP_NUMBER].out = buffer_dispatch;
+
+    busy_wait_at_least_cycles(3);
 
     usb_dpram->ep_buf_ctrl[EP_NUMBER].out = buffer_dispatch | USB_BUF_CTRL_AVAIL;
     
@@ -55,6 +58,13 @@ void receive_status_transaction_from_host(uint8_t EP_NUMBER, bool clear_buffer_s
 
     DEBUG_TEXT = "USB Data Transfer \tReceive Status Transaction End,   Register=%08X";
     DEBUG_SHOW ("USB", DEBUG_TEXT, buffer_status);
+
+    if (bytes_received == 0) {
+
+        DEBUG_TEXT = "USB Data Transfer \tReceive Zero Length Packet (Bytes=%d) from host";
+        DEBUG_SHOW ("USB", DEBUG_TEXT, bytes_received);
+
+    }
 
 }
 

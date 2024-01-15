@@ -70,9 +70,6 @@ void reset_endpoints() {
       host_endpoint[ep_number].double_buffered = false;
       pico_endpoint[ep_number].double_buffered = false;
 
-      host_endpoint[ep_number].transfer_complete = false;
-      pico_endpoint[ep_number].transfer_complete = false;
-
       host_endpoint[ep_number].transaction_complete = false;
       pico_endpoint[ep_number].transaction_complete = false;
 

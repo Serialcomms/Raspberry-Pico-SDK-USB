@@ -65,7 +65,7 @@ void send_hid_descriptors_to_host() {
 
    // start_async_transfer_to_host(0, report_descriptor, report_length, 1);
 
-    synchronous_transfer_to_host(0, report_descriptor, report_length, 1);
+    synchronous_transfer_to_host(0, report_descriptor, report_length);
 
     receive_status_transaction_from_host(0, true);
 

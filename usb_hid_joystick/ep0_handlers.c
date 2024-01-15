@@ -31,7 +31,7 @@ void  __not_in_flash_func (ep0_handler_to_host_async)() {
 
             wait_for_transaction_completion(true);
 
-            host_endpoint[0].transfer_complete = true;
+            host_endpoint[0].transaction_complete = true;
 
     }
 }
@@ -55,4 +55,3 @@ void  __not_in_flash_func (ep0_handler_to_host)(uint8_t EP_NUMBER) {
     }
  
 }
-

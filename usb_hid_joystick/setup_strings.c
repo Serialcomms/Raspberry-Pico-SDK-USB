@@ -123,7 +123,7 @@ void usb_start_string_transfer(uint8_t *string_descriptor, uint8_t string_length
     
         }
 
-        synchronous_transfer_to_host(0, string_descriptor, string_length, 1);
+        synchronous_transfer_to_host(0, string_descriptor, string_length);
 
         receive_status_transaction_from_host(0, true);
 
