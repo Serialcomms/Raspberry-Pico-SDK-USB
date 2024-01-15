@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "pico/stdlib.h"
+#include "pico/binary_info.h"
 #include "include/usb_debug.h"
 #include "include/pico_device.h"
 
@@ -56,20 +57,11 @@ void show_device_enumerated() {
 
 }
 
-uint8_t *unused() {
+//set_binary_declarations();
 
-uint8_t *enumeration_text = show_device_text;      
-  
-  snprintf(show_device_text, 40, "%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s", 
+void set_binary_declarations() {     // for use with Picotool
 
-  "DEVICE ADDRESS SET=",     pico_usb_device.ADDRESS_SET ? "Y" : "N" ,
-  "DEVICE DESCRIPTOR=",      pico_usb_device.DEVICE_DESCRIPTOR_SENT ? "Y" : "N" ,
-  "CONFIG DESCRIPTOR=",      pico_usb_device.DEVICE_CONFIGURATION_SENT ? "Y" : "N" , 
-  "REPORT DESCRIPTOR=",      pico_usb_device.HID_REPORT_DESCRIPTOR_SENT ? "Y" : "N" , 
-  "HID SET IDLE=     ",      pico_usb_device.HID_SET_IDLE_RECEIVED ? "Y" : "N",
-  "DEVICE ENUMERATED =",     usb_device_enumerated() ? "TRUE" : "FAIL");
-  
-   return enumeration_text;
-
-
+    bi_decl(bi_program_description("Pico USB Joystick"));
+    bi_decl(bi_program_feature("PicoProbe / UART Debug"));
+    bi_decl(bi_program_version_string("SDK Demo Version"));
 }

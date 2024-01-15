@@ -15,8 +15,8 @@ void usb_wait_for_buffer_completion(uint8_t EP_NUMBER, uint32_t buffer_mask, boo
     volatile bool sie_errors;
     volatile bool wait_timeout;
     
-    volatile uint32_t buffer_done;
     volatile uint32_t buffer_status;
+    volatile uint32_t buffer_complete;
    
     uint64_t wait_duration = 0;
     absolute_time_t wait_time_now = get_absolute_time();
@@ -35,18 +35,19 @@ void usb_wait_for_buffer_completion(uint8_t EP_NUMBER, uint32_t buffer_mask, boo
 
         wait_timeout = time_reached(wait_time_end);
 
-        buffer_done = usb_hw->buf_status & buffer_mask;
+        buffer_complete = usb_hw->buf_status & buffer_mask;
 
-    } while (!sie_errors && !wait_timeout && !buffer_done);
+    } while (!sie_errors && !wait_timeout && !buffer_complete);
+
+    buffer_status = usb_hw->buf_status;
 
     wait_duration = absolute_time_diff_us(wait_time_now, get_absolute_time());
 
     if (sie_errors) {
 
         sie_status_error_handler();
-
         DEBUG_TEXT = "Serial Interface Engine\tWaited %lld µs for Buffer\tMask=%08X,\t Register=%08X";
-        DEBUG_SHOW ("SIE", DEBUG_TEXT, wait_duration, buffer_mask, buffer_done);
+        DEBUG_SHOW ("SIE", DEBUG_TEXT, wait_duration, buffer_mask, buffer_status);
        
     }
 
@@ -56,7 +57,7 @@ void usb_wait_for_buffer_completion(uint8_t EP_NUMBER, uint32_t buffer_mask, boo
         DEBUG_SHOW ("TIM", DEBUG_TEXT, wait_duration);
 
         DEBUG_TEXT = "Wait Timeout Error\tBuffer Mask=%08X,\t Buffer Status=%08X";
-        DEBUG_SHOW ("TIM", DEBUG_TEXT, buffer_mask, buffer_done);
+        DEBUG_SHOW ("TIM", DEBUG_TEXT, buffer_mask, buffer_status);
 
         DEBUG_TEXT = "Wait Timeout Error\tSIE Error Status=%08X";
         DEBUG_SHOW ("TIM", DEBUG_TEXT, sie_errors);
@@ -65,8 +66,6 @@ void usb_wait_for_buffer_completion(uint8_t EP_NUMBER, uint32_t buffer_mask, boo
     } else {
 
         if (buffer_status_clear) {
-
-            buffer_status = usb_hw->buf_status;
 
             DEBUG_TEXT = "Buffer Status\t\tClearing,\tMask=%08X, Register=%08X";
             DEBUG_SHOW ("USB", DEBUG_TEXT , buffer_mask, buffer_status);
@@ -81,7 +80,7 @@ void usb_wait_for_buffer_completion(uint8_t EP_NUMBER, uint32_t buffer_mask, boo
         }
 
         DEBUG_TEXT = "Buffer Status\t\tComplete, \tBuffer Status Wait Duration=%lldµs";
-        DEBUG_SHOW ("USB", DEBUG_TEXT ,wait_duration );
+        DEBUG_SHOW ("USB", DEBUG_TEXT, wait_duration);
 
     }
     
@@ -96,13 +95,14 @@ void wait_for_transaction_completion(bool clear_transaction) {
     volatile uint32_t buffer_status;
    
     uint64_t wait_duration = 0;
+    uint32_t wait_microseconds = 100000;
     absolute_time_t wait_time_now = get_absolute_time();
-    absolute_time_t wait_time_end = make_timeout_time_us(100000);
+    absolute_time_t wait_time_end = make_timeout_time_us(wait_microseconds);
 
     transaction_complete = usb_hw->sie_status & USB_SIE_STATUS_TRANS_COMPLETE_BITS;
 
-    DEBUG_TEXT = "Serial Interface Engine\tWaiting for Transaction=%08X,\t Register=%08X";
-    DEBUG_SHOW ("SIE", DEBUG_TEXT, wait_duration, transaction_complete);
+    DEBUG_TEXT = "Serial Interface Engine\tWaiting %d µs for Transaction Completion";
+    DEBUG_SHOW ("SIE", DEBUG_TEXT, wait_microseconds);
     
     do { 
 

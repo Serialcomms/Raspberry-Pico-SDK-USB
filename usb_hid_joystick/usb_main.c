@@ -97,7 +97,7 @@ void wait_for_device_enumeration() {
     volatile bool wait_timeout;
     volatile bool device_enumerated;
    
-    uint8_t wait_seconds = 11;
+    uint8_t wait_seconds = 15;
     uint64_t wait_duration = 0;
     absolute_time_t wait_time_now = get_absolute_time();
     absolute_time_t wait_time_end = make_timeout_time_ms(wait_seconds * 1000);

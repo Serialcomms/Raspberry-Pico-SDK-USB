@@ -32,11 +32,11 @@ void usb_handle_setup_packet() {
 
     switch (setup_command.recipient) {
 
-        case 0:     usb_setup_device(&setup_command);               break;      // device
-        case 1:     usb_setup_interface(&setup_command);            break;      // interface
-    //  case 2:                                                     break;      // endpoint
-    //  case 3:                                                     break;      // other
-        default:    usb_setup_unknown(setup_command.recipient);     break;
+        case 0:     usb_setup_device(setup_command);               break;      // device
+        case 1:     usb_setup_interface(setup_command);            break;      // interface
+    //  case 2:                                                    break;      // endpoint
+    //  case 3:                                                    break;      // other
+        default:    usb_setup_unknown(setup_command.recipient);    break;
         
     } 
 }
@@ -75,9 +75,9 @@ struct usb_setup_command prepare_setup_packet() {
 
 }
 
-void usb_setup_device(struct usb_setup_command *setup_command) {
+void usb_setup_device(struct usb_setup_command setup_command) {
 
-    if (setup_command->direction) {
+    if (setup_command.direction) {
 
         usb_setup_device_respond_to_host(setup_command);
 
@@ -88,9 +88,9 @@ void usb_setup_device(struct usb_setup_command *setup_command) {
     }
 }
 
-void usb_setup_interface(struct usb_setup_command *setup_command) {
+void usb_setup_interface(struct usb_setup_command setup_command) {
 
-    if (setup_command->direction) {
+    if (setup_command.direction) {
 
         usb_setup_interface_respond_to_host(setup_command);
 

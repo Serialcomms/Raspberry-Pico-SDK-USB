@@ -16,3 +16,5 @@ void reset_usb_device();
 bool usb_device_enumerated();
 
 void show_device_enumerated();
+
+void set_binary_declarations();

@@ -18,7 +18,7 @@ void  __not_in_flash_func (ep0_handler_to_host_async)() {
 
     if (host_endpoint[0].async_bytes_pending) {
 
-            clear_buffer_status(USB_BUFF_STATUS_EP0_IN_BITS); // re-check
+            clear_buffer_status(USB_BUFF_STATUS_EP0_IN_BITS); 
 
             send_async_packet(0);
 
@@ -28,6 +28,8 @@ void  __not_in_flash_func (ep0_handler_to_host_async)() {
             DEBUG_SHOW ("IRQ", DEBUG_TEXT, host_endpoint[0].bytes_transferred);
 
             receive_status_transaction_from_host(0, true);
+
+            wait_for_transaction_completion(true);
 
             host_endpoint[0].transfer_complete = true;
 

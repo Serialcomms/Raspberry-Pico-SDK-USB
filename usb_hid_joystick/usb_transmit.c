@@ -30,7 +30,7 @@ void send_sync_packet(uint8_t EP_NUMBER, uint8_t data_packet_size, bool last_pac
 
     host_endpoint[EP_NUMBER].packet_id = toggle_data_pid(DATA_PID);
 
-    usb_wait_for_buffer_available_to_host(EP_NUMBER);
+    usb_wait_for_buffer_completion_pico_to_host(EP_NUMBER, true);
 
 }
 
@@ -112,6 +112,7 @@ void synchronous_transfer_to_host(uint8_t EP_NUMBER, uint8_t *buffer_data, uint1
     host_endpoint[EP_NUMBER].transfer_id = transfer_id;
     host_endpoint[EP_NUMBER].transfer_complete = false;
 
+    usb_wait_for_buffer_available_to_host(EP_NUMBER);
 
     do {  
 
@@ -160,11 +161,15 @@ void start_async_transfer_to_host(uint8_t EP_NUMBER, void *source_buffer_address
     host_endpoint[EP_NUMBER].transfer_id = transfer_id;
     host_endpoint[EP_NUMBER].transfer_bytes = transfer_bytes;
     host_endpoint[EP_NUMBER].transfer_complete = false;
+    host_endpoint[EP_NUMBER].transfer_duration = 0;
+    host_endpoint[EP_NUMBER].transaction_complete = false;
     host_endpoint[EP_NUMBER].bytes_transferred = 0;
     host_endpoint[EP_NUMBER].source_buffer_address = source_buffer_address;
     host_endpoint[EP_NUMBER].last_packet_size = last_packet_size;
-    host_endpoint[EP_NUMBER].transfer_duration = 0;
+ 
     host_endpoint[EP_NUMBER].start_time_now = get_absolute_time();
+
+    usb_wait_for_buffer_available_to_host(EP_NUMBER);
           
     DEBUG_TEXT = "Start Async Transfer \tSending First %d/%d Bytes";  
     DEBUG_SHOW ("USB", DEBUG_TEXT, first_packet_size, transfer_bytes);
@@ -188,13 +193,11 @@ void send_ack_handshake_to_host(uint8_t EP_NUMBER, bool clear_buffer_status) {
     // bit 2 = EP1_IN
     // bit 3 = EP1_OUT
 
-    // uint32_t buffer_status_mask = (1 << (EP_NUMBER * 2u));
-
     uint8_t shift_left_bits = (2u * EP_NUMBER) + 0;
 
     uint32_t buffer_control = 0;
     uint32_t buffer_dispatch = 0;
-    uint32_t buffer_status_mask = 1u << shift_left_bits;
+    uint32_t buffer_status_mask = 0x1 << shift_left_bits;
 
     uint16_t ZERO_LENGTH_PACKET = 0;
 
@@ -263,11 +266,9 @@ void usb_wait_for_buffer_completion_pico_to_host(uint8_t EP_NUMBER, bool buffer_
     // bit 2 = EP1_IN
     // bit 3 = EP1_OUT
 
-    uint32_t buffer_bits = (2 << EP_NUMBER);
-
     uint8_t shift_left_bits = (2 * EP_NUMBER) + 0;
     
-    uint32_t buffer_mask = 1 << shift_left_bits;
+    uint32_t buffer_mask = 0x1 << shift_left_bits;
 
     usb_wait_for_buffer_completion(EP_NUMBER, buffer_mask, buffer_status_clear);
 

@@ -4,6 +4,7 @@
 #include "include/pico_info.h"
 #include "include/usb_debug.h"
 #include "include/time_stamp.h"
+#include "include/usb_common.h"
 #include "include/usb_transmit.h"
 #include "include/usb_receive.h"
 #include "include/setup_strings.h"
@@ -125,6 +126,8 @@ void usb_start_string_transfer(uint8_t *string_descriptor, uint8_t string_length
         synchronous_transfer_to_host(0, string_descriptor, string_length, 1);
 
         receive_status_transaction_from_host(0, true);
+
+        wait_for_transaction_completion(true);
 
     } else {
 

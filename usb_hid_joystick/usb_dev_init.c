@@ -1,12 +1,11 @@
 
 #include <string.h>                         // For memset
 #include "pico/stdlib.h"                   
-#include "pico/binary_info.h"
-#include "include/usb_dev_init.h"
 #include "hardware/irq.h"                   // For interrupt enable and numbers
 #include "hardware/resets.h"                // For USB controller reset
 #include "hardware/regs/usb.h"              // USB register definitions from pico-sdk
 #include "hardware/structs/usb.h"           // USB hardware struct definitions from pico-sdk
+#include "include/usb_dev_init.h"
 
 #undef LIB_TINYUSB_HOST
 #undef LIB_TINYUSB_DEVICE
@@ -48,13 +47,4 @@ busy_wait_ms(101);
 
 irq_set_enabled(USBCTRL_IRQ, true);                     // Enable USB interrupt at processor
 
-set_binary_declarations();
-
-}
-
-void set_binary_declarations() {     // for use with Picotool
-
-    bi_decl(bi_program_description("Pico USB Joystick"));
-    bi_decl(bi_program_feature("PicoProbe / UART Debug"));
-    bi_decl(bi_program_version_string("SDK Demo Version"));
 }

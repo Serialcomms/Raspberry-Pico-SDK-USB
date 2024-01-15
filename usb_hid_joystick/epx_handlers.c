@@ -17,7 +17,9 @@ void  __not_in_flash_func (ep1_handler_to_host)(uint8_t EP_NUMBER) {
 
     } else {
 
-        usb_wait_for_buffer_completion_pico_to_host(1, true);
+        //usb_wait_for_buffer_completion_pico_to_host(1, true);
+
+        wait_for_transaction_completion(true);
     }
 
     usb_hardware_clear->buf_status = USB_BUFF_STATUS_EP1_IN_BITS;

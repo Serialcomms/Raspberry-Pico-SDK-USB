@@ -17,7 +17,7 @@ static uint8_t *DEBUG_TEXT = DEBUG_STRING_BUFFER;
 void set_pico_device_address(uint16_t DEVICE_ADDRESS) {
 
   send_ack_handshake_to_host(0, true); 
-  
+
   busy_wait_ms(1);
 
   usb_hardware_set->dev_addr_ctrl = DEVICE_ADDRESS & 0x7f;
@@ -44,6 +44,8 @@ void send_device_descriptor_to_host(uint16_t request_packet_size) {
   synchronous_transfer_to_host(0, device_descriptor, descriptor_bytes, 1);
 
   receive_status_transaction_from_host(0, true);
+
+  wait_for_transaction_completion(true);
 
   //if (descriptor_bytes > 8) 
   

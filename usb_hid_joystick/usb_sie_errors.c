@@ -1,11 +1,8 @@
 
 #include "pico/stdlib.h"
-//#include "hardware/regs/usb.h"         
-//#include "hardware/structs/usb.h"
 #include "include/usb_debug.h"
 #include "include/usb_common.h"
 #include "include/usb_sie_errors.h"
-
 
 static uint8_t *DEBUG_TEXT = DEBUG_STRING_BUFFER;
 

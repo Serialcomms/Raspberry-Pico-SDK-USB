@@ -1,6 +1,7 @@
 
 #include "pico/stdlib.h"
 #include "include/usb_debug.h"
+#include "include/usb_common.h"
 #include "include/usb_receive.h"
 #include "include/usb_transmit.h"
 #include "include/usb_descriptors.h"
@@ -28,6 +29,8 @@ void send_device_configuration_to_host(uint16_t command_length) {
   DEBUG_SHOW ("EP0", DEBUG_TEXT);
 
   receive_status_transaction_from_host(0, true);
+
+  wait_for_transaction_completion(true);
 
   //if (full_descriptor) 
   
