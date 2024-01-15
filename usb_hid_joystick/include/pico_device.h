@@ -13,6 +13,6 @@ extern struct pico_device_profile pico_usb_device;
 
 void reset_usb_device();
 
-bool device_enumerated();
+bool usb_device_enumerated();
 
 void show_device_enumerated();

@@ -14,7 +14,7 @@ static uint8_t *DEBUG_TEXT = DEBUG_STRING_BUFFER;
 
 void  __not_in_flash_func (ep1_handler_to_host)(uint8_t EP_NUMBER) {
  
-    if (host_endpoint[1].async_bytes) {
+    if (host_endpoint[1].async_bytes_pending) {
 
         send_async_packet(1);
 

@@ -22,8 +22,6 @@ static uint8_t *DEBUG_TEXT = DEBUG_STRING_BUFFER;
 
 void usb_bus_reset() { 
 
-  USB_DEVICE_CONFIGURED = false;
-
   uint8_t DEVICE_ADDRESS = get_device_address();
 
   DEBUG_TEXT = "Bus Reset \t\tProcesssing USB Bus Reset,  Pico Device Address=%d ";
@@ -63,14 +61,20 @@ void reset_endpoints() {
 
     do {
 
-      host_endpoint[ep_number].async_bytes = 0;
-      pico_endpoint[ep_number].async_bytes = 0;
+      host_endpoint[ep_number].async_bytes_pending = 0;
+      pico_endpoint[ep_number].async_bytes_pending = 0;
       
       host_endpoint[ep_number].async_mode = false;
       pico_endpoint[ep_number].async_mode = false;
 
       host_endpoint[ep_number].double_buffered = false;
       pico_endpoint[ep_number].double_buffered = false;
+
+      host_endpoint[ep_number].transfer_complete = false;
+      pico_endpoint[ep_number].transfer_complete = false;
+
+      host_endpoint[ep_number].transaction_complete = false;
+      pico_endpoint[ep_number].transaction_complete = false;
 
       host_endpoint[ep_number].transfer_bytes = 0;
       pico_endpoint[ep_number].transfer_bytes = 0;

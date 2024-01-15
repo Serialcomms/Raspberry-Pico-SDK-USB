@@ -8,6 +8,9 @@
 #include "include/usb_protocol.h"
 #include "include/usb_common.h"
 #include "include/pico_device.h"
+#include "include/usb_main.h"
+
+#include "include/sie_errors.h"
 
 #undef LIB_TINYUSB_HOST
 #undef LIB_TINYUSB_DEVICE
@@ -15,8 +18,6 @@
 static uint8_t *DEBUG_TEXT = DEBUG_STRING_BUFFER;
 
 int main(void) {
-
-    USB_DEVICE_CONFIGURED = false;
 
     init_debug_critical_section();
 
@@ -40,9 +41,9 @@ int main(void) {
 
     usb_device_init();
 
-    busy_wait_ms(5000);
+    wait_for_device_enumeration();
 
-    if (device_enumerated()) {
+    if (usb_device_enumerated()) {
 
         gpio_put(PICO_DEFAULT_LED_PIN, 1);        
 
@@ -87,5 +88,36 @@ int main(void) {
         }
 
     }
+
+}
+
+void wait_for_device_enumeration() {
+
+    volatile bool sie_errors;
+    volatile bool wait_timeout;
+    volatile bool device_enumerated;
+   
+    uint64_t wait_duration = 0;
+    absolute_time_t wait_time_now = get_absolute_time();
+    absolute_time_t wait_time_end = make_timeout_time_ms(10000);
+
+    device_enumerated = false;
+
+    DEBUG_TEXT = "Device Enumeration\tWaiting for USB Device Enumeration";
+   // DEBUG_SHOW ("DEV", DEBUG_TEXT, wait_duration, buffer_mask, buffer_done);
+    
+    do { 
+
+        busy_wait_ms(500);
+
+        sie_errors = check_sie_errors();
+
+        device_enumerated = usb_device_enumerated();
+
+        wait_timeout = time_reached(wait_time_end);
+
+    } while (!sie_errors && !device_enumerated && !wait_timeout);
+
+    wait_duration = absolute_time_diff_us(wait_time_now, get_absolute_time());
 
 }

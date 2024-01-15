@@ -37,7 +37,7 @@ void send_sync_packet(uint8_t EP_NUMBER, uint8_t data_packet_size, bool last_pac
 void send_async_packet(uint8_t EP_NUMBER) {
 
     uint8_t offset = 0;
-    uint16_t async_bytes = host_endpoint[EP_NUMBER].async_bytes;
+    uint16_t async_bytes = host_endpoint[EP_NUMBER].async_bytes_pending;
     uint8_t *dpram_buffer = host_endpoint[EP_NUMBER].dpram_address;
     uint8_t *source_buffer = host_endpoint[EP_NUMBER].source_buffer_address;
     uint8_t  max_packet_size = host_endpoint[EP_NUMBER].max_packet_size;
@@ -55,7 +55,7 @@ void send_async_packet(uint8_t EP_NUMBER) {
     DEBUG_TEXT = "Sending Async Packet \tBuffer Offset=%d, Async Packet Bytes=%d" ;
     DEBUG_SHOW (ep_text(EP_NUMBER), DEBUG_TEXT, source_buffer_offset, async_bytes);
 
-    host_endpoint[EP_NUMBER].async_bytes -= offset;
+    host_endpoint[EP_NUMBER].async_bytes_pending -= offset;
     host_endpoint[EP_NUMBER].source_buffer_offset += offset;
 
     send_data_packet(EP_NUMBER, async_packet_size, false, last_packet);
@@ -107,7 +107,7 @@ void synchronous_transfer_to_host(uint8_t EP_NUMBER, uint8_t *buffer_data, uint1
 
     absolute_time_t start_time_now = get_absolute_time();
 
-    host_endpoint[EP_NUMBER].async_bytes = 0;
+    host_endpoint[EP_NUMBER].async_bytes_pending = 0;
     host_endpoint[EP_NUMBER].async_mode = false;
     host_endpoint[EP_NUMBER].transfer_id = transfer_id;
     host_endpoint[EP_NUMBER].transfer_complete = false;
@@ -156,7 +156,7 @@ void start_async_transfer_to_host(uint8_t EP_NUMBER, void *source_buffer_address
     bool     last_packet        = (transfer_bytes <= full_packet_size) ? true : false;
 
     host_endpoint[EP_NUMBER].async_mode = true;
-    host_endpoint[EP_NUMBER].async_bytes = async_bytes;
+    host_endpoint[EP_NUMBER].async_bytes_pending = async_bytes;
     host_endpoint[EP_NUMBER].transfer_id = transfer_id;
     host_endpoint[EP_NUMBER].transfer_bytes = transfer_bytes;
     host_endpoint[EP_NUMBER].transfer_complete = false;

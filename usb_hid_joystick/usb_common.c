@@ -8,8 +8,6 @@
 #undef LIB_TINYUSB_HOST
 #undef LIB_TINYUSB_DEVICE
 
-bool USB_DEVICE_CONFIGURED;
-
 static uint8_t *DEBUG_TEXT = DEBUG_STRING_BUFFER;
 
 void usb_wait_for_buffer_completion(uint8_t EP_NUMBER, uint32_t buffer_mask, bool buffer_status_clear) {
@@ -193,4 +191,14 @@ void set_ep0_buffer_status(bool enable_interrupts) {
     }
 
     // 0x20000000, set bit in BUFF_STATUS for every EP0 buffer completion
+}
+
+volatile uint16_t __not_in_flash_func (get_buffer_bytes_to_host)(uint8_t EP_NUMBER) {
+
+   return (uint16_t) usb_dpram->ep_buf_ctrl[EP_NUMBER].in & 0x01FF;
+}
+
+volatile uint16_t __not_in_flash_func (get_buffer_bytes_to_pico)(uint8_t EP_NUMBER) {
+
+   return (uint16_t) usb_dpram->ep_buf_ctrl[EP_NUMBER].out & 0x01FF;
 }

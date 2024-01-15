@@ -133,8 +133,6 @@ void __not_in_flash_func (isr_usbctrl()) {           // USB interrupt handler IR
 
         DEBUG_TEXT = "USB Buffer Completion\tBuffer Status Register=%08x";
         DEBUG_SHOW ("IRQ", DEBUG_TEXT, BUF_STATUS);
-
-        usb_hardware_clear->sie_status = USB_SIE_STATUS_SETUP_REC_BITS;
         
         IRQ_HANDLED |= USB_INTS_BUFF_STATUS_BITS;
 

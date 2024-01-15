@@ -19,10 +19,10 @@ struct endpoint_profile {
     boolean     double_buffered;
     boolean     buffer_complete;
     boolean     transfer_complete;
-
+    boolean     transaction_complete;
     uint16_t    max_packet_size;
     uint16_t    last_packet_size;
-    uint16_t    async_bytes;
+    uint16_t    async_bytes_pending;
     uint32_t    packet_id;
     uint16_t    transfer_id;
     uint16_t    transfer_bytes;

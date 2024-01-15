@@ -45,6 +45,8 @@ void send_device_descriptor_to_host(uint16_t request_packet_size) {
 
   receive_status_transaction_from_host(0, true);
 
-  if (descriptor_bytes > 8) pico_usb_device.DEVICE_DESCRIPTOR_SENT = true;
+  //if (descriptor_bytes > 8) 
+  
+  pico_usb_device.DEVICE_DESCRIPTOR_SENT = true;
 
 }

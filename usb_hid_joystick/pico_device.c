@@ -21,7 +21,7 @@ void reset_usb_device() {
 
 }
 
-bool device_enumerated() {
+bool usb_device_enumerated() {
 
     bool enumerated = 
     pico_usb_device.ADDRESS_SET &
@@ -52,7 +52,7 @@ void show_device_enumerated() {
     DEBUG_SHOW ("DEV", DEBUG_TEXT,  pico_usb_device.HID_SET_IDLE_RECEIVED ? "Y" : "N");
 
     DEBUG_TEXT = "Device Enumeration\tENUMERATION COMPLETE = %s";
-    DEBUG_SHOW ("DEV", DEBUG_TEXT,   device_enumerated() ? "TRUE" : "FALSE");
+    DEBUG_SHOW ("DEV", DEBUG_TEXT,   usb_device_enumerated() ? "TRUE" : "FALSE");
 
 }
 

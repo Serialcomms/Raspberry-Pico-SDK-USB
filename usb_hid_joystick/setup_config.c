@@ -28,7 +28,9 @@ void send_device_configuration_to_host(uint16_t command_length) {
 
   receive_status_transaction_from_host(0, true);
 
-  if (full_descriptor) pico_usb_device.DEVICE_CONFIGURATION_SENT = true;
+  //if (full_descriptor) 
+  
+  pico_usb_device.DEVICE_CONFIGURATION_SENT = true;
 
 
 }
