@@ -18,20 +18,24 @@ void  __not_in_flash_func (ep0_handler_to_host_async)() {
 
     if (host_endpoint[0].async_bytes_pending) {
 
-            clear_buffer_status(USB_BUFF_STATUS_EP0_IN_BITS); 
+      //  clear_buffer_status(USB_BUFF_STATUS_EP0_IN_BITS); 
 
-            send_async_packet(0);
+        send_async_packet(0);
+
+        clear_buffer_status(USB_BUFF_STATUS_EP0_IN_BITS); 
 
     } else {
 
-            DEBUG_TEXT = "Buffer Status Handler \tTransfer Complete, Async Bytes Transfered=%d";
-            DEBUG_SHOW ("IRQ", DEBUG_TEXT, host_endpoint[0].bytes_transferred);
+        DEBUG_TEXT = "Buffer Status Handler \tTransfer Complete, Async Bytes Transfered=%d";
+        DEBUG_SHOW ("IRQ", DEBUG_TEXT, host_endpoint[0].bytes_transferred);
 
-            receive_status_transaction_from_host(0, true);
+        receive_status_transaction_from_host(0, true);
 
-            wait_for_transaction_completion(true);
+        wait_for_transaction_completion(true);
 
-            host_endpoint[0].transaction_complete = true;
+        clear_buffer_status(USB_BUFF_STATUS_EP0_IN_BITS); 
+
+        host_endpoint[0].transaction_complete = true;
 
     }
 }
@@ -41,9 +45,14 @@ void  __not_in_flash_func (ep0_handler_to_host)(uint8_t EP_NUMBER) {
     DEBUG_TEXT = "Buffer Status Handler \tStarting Completion Handler for Endpoint %d";
     DEBUG_SHOW ("IRQ", DEBUG_TEXT, EP_NUMBER);
 
+    clear_buffer_status(USB_BUFF_STATUS_EP0_IN_BITS); 
+
     if (host_endpoint[0].async_mode) {
 
         ep0_handler_to_host_async;
+
+      //  clear_buffer_status(USB_BUFF_STATUS_EP0_IN_BITS); 
+
             
     } else {
 
