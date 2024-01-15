@@ -97,14 +97,15 @@ void wait_for_device_enumeration() {
     volatile bool wait_timeout;
     volatile bool device_enumerated;
    
+    uint8_t wait_seconds = 11;
     uint64_t wait_duration = 0;
     absolute_time_t wait_time_now = get_absolute_time();
-    absolute_time_t wait_time_end = make_timeout_time_ms(10000);
+    absolute_time_t wait_time_end = make_timeout_time_ms(wait_seconds * 1000);
 
     device_enumerated = false;
 
-    DEBUG_TEXT = "Device Enumeration\tWaiting for USB Device Enumeration";
-   // DEBUG_SHOW ("DEV", DEBUG_TEXT, wait_duration, buffer_mask, buffer_done);
+    DEBUG_TEXT = "Device Enumeration\tWaiting %d seconds for USB Device Enumeration";
+    DEBUG_SHOW ("DEV", DEBUG_TEXT, wait_seconds);
     
     do { 
 
@@ -112,12 +113,20 @@ void wait_for_device_enumeration() {
 
         sie_errors = check_sie_errors();
 
-        device_enumerated = usb_device_enumerated();
-
         wait_timeout = time_reached(wait_time_end);
+
+        device_enumerated = usb_device_enumerated();
 
     } while (!sie_errors && !device_enumerated && !wait_timeout);
 
     wait_duration = absolute_time_diff_us(wait_time_now, get_absolute_time());
+
+    if (device_enumerated) {
+
+    DEBUG_TEXT = "Device Enumerated\tWaited %d seconds for USB Device Enumeration";
+    DEBUG_SHOW ("DEV", DEBUG_TEXT, wait_duration/1000000);
+
+
+    }
 
 }
