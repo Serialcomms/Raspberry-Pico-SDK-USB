@@ -33,11 +33,11 @@ void usb_wait_for_buffer_completion(uint8_t EP_NUMBER, uint32_t buffer_mask, boo
 
         sie_errors = check_sie_errors();
 
-        buffer_done = usb_hw->buf_status & buffer_mask;
-
         wait_timeout = time_reached(wait_time_end);
 
-    } while (!sie_errors && !buffer_done && !wait_timeout);
+        buffer_done = usb_hw->buf_status & buffer_mask;
+
+    } while (!sie_errors && !wait_timeout && !buffer_done);
 
     wait_duration = absolute_time_diff_us(wait_time_now, get_absolute_time());
 
@@ -110,11 +110,11 @@ void wait_for_transaction_completion(bool clear_transaction) {
 
         sie_errors = check_sie_errors();
 
-        transaction_complete = usb_hw->sie_status & USB_SIE_STATUS_TRANS_COMPLETE_BITS;
-
         wait_timeout = time_reached(wait_time_end);
 
-    } while (!sie_errors && !transaction_complete && !wait_timeout);
+        transaction_complete = usb_hw->sie_status & USB_SIE_STATUS_TRANS_COMPLETE_BITS;
+
+    } while (!sie_errors && !wait_timeout && !transaction_complete );
 
     wait_duration = absolute_time_diff_us(wait_time_now, get_absolute_time());
 

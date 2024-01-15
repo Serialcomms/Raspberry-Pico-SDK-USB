@@ -3,7 +3,7 @@
 #include "include/usb_debug.h"
 #include "include/usb_dev_init.h"
 #include "include/usb_joystick.h"
-#include "include/usb_endpoints.h"
+#include "include/setup_endpoints.h"
 #include "include/status_screen.h"
 #include "include/usb_protocol.h"
 #include "include/usb_common.h"

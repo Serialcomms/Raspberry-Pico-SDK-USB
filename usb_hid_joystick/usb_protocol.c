@@ -15,7 +15,7 @@
 #include "include/usb_receive.h"
 #include "include/usb_common.h"
 #include "include/usb_protocol.h"
-#include "include/usb_endpoints.h"
+#include "include/setup_endpoints.h"
 #include "include/usb_descriptors.h"
 
 static uint8_t *DEBUG_TEXT = DEBUG_STRING_BUFFER;

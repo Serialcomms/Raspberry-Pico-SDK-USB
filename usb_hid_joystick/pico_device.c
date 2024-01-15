@@ -67,7 +67,7 @@ uint8_t *enumeration_text = show_device_text;
   "CONFIG DESCRIPTOR=",      pico_usb_device.DEVICE_CONFIGURATION_SENT ? "Y" : "N" , 
   "REPORT DESCRIPTOR=",      pico_usb_device.HID_REPORT_DESCRIPTOR_SENT ? "Y" : "N" , 
   "HID SET IDLE=     ",      pico_usb_device.HID_SET_IDLE_RECEIVED ? "Y" : "N",
-  "DEVICE ENUMERATED =",     device_enumerated() ? "TRUE" : "FAIL");
+  "DEVICE ENUMERATED =",     usb_device_enumerated() ? "TRUE" : "FAIL");
   
    return enumeration_text;
 

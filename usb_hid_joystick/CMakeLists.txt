@@ -6,7 +6,7 @@ add_executable(usb_hid_joystick
         usb_reset.c
         usb_main.c
         usb_dev_init.c     
-        usb_endpoints.c
+        setup_endpoints.c
         usb_descriptors.c 
         pico_info.c
         pico_device.c
@@ -21,7 +21,8 @@ add_executable(usb_hid_joystick
         usb_protocol.c
         usb_transmit.c 
         usb_receive.c    
-        usb_interrupts.c 
+        usb_interrupts.c
+        usb_endpoints.c 
         usb_joystick.c
         ep0_handlers.c
         epx_handlers.c

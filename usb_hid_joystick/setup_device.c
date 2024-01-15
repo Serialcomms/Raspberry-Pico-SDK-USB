@@ -6,10 +6,10 @@
 #include "pico/stdlib.h"
 #include "include/usb_debug.h"
 #include "include/usb_common.h"
-#include "include/setup_device.h"
-#include "include/usb_transmit.h"
 #include "include/usb_receive.h"
+#include "include/usb_transmit.h"
 #include "include/usb_descriptors.h"
+#include "include/setup_device.h"
 #include "include/pico_device.h"
 
 static uint8_t *DEBUG_TEXT = DEBUG_STRING_BUFFER;

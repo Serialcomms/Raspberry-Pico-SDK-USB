@@ -3,7 +3,7 @@
 #include "pico/stdlib.h"                
 #include "include/usb_debug.h"
 #include "include/usb_transmit.h"
-#include "include/usb_endpoints.h"
+#include "include/setup_endpoints.h"
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846

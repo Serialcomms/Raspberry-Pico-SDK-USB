@@ -1,11 +1,11 @@
 #include "pico/stdlib.h"
 #include "include/usb_debug.h"
-#include "include/usb_endpoints.h"
 #include "include/usb_common.h"
 #include "include/usb_transmit.h"
 #include "include/usb_receive.h"
 #include "include/setup_packet.h"
 #include "include/setup_interface.h"
+#include "include/usb_endpoints.h"
 #include "include/usb_descriptors.h"
 #include "include/pico_device.h"
 

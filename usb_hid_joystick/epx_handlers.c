@@ -1,14 +1,11 @@
 #include "pico/stdlib.h"
 #include "include/usb_debug.h"
-#include "include/usb_transmit.h"
-#include "include/usb_receive.h"
 #include "include/usb_common.h"
-#include "include/epx_handlers.h"
+#include "include/usb_receive.h"
+#include "include/usb_transmit.h"
 #include "include/usb_endpoints.h"
 #include "include/show_registers.h"
-
-#include "hardware/regs/usb.h"              
-#include "hardware/structs/usb.h"   
+#include "include/epx_handlers.h"
 
 static uint8_t *DEBUG_TEXT = DEBUG_STRING_BUFFER;
 

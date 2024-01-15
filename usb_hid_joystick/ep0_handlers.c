@@ -1,14 +1,12 @@
 #include "pico/stdlib.h"
 #include "include/usb_debug.h"
-#include "include/usb_transmit.h"
-#include "include/usb_receive.h"
 #include "include/usb_common.h"
+#include "include/usb_receive.h"
+#include "include/usb_transmit.h"
 #include "include/usb_endpoints.h"
 #include "include/show_registers.h"
 #include "include/ep0_handlers.h"
-#include "hardware/regs/usb.h"              
-#include "hardware/structs/usb.h"       
-
+     
 static uint8_t *DEBUG_TEXT = DEBUG_STRING_BUFFER;
 
 void  __not_in_flash_func (ep0_handler_to_host_async)() {
