@@ -1,3 +1,5 @@
+#include "pico.h"
+#include "pico/time.h"
 #include "pico/stdlib.h"
 #include "include/usb_debug.h"
 #include "include/usb_common.h"
@@ -11,6 +13,8 @@ static uint8_t *DEBUG_TEXT = DEBUG_STRING_BUFFER;
 
 void  __not_in_flash_func (ep0_handler_to_host)(uint8_t EP_NUMBER) {
 
+    const bool USE_ASYNC_HANDLER = false;  // does not call properly when = true;
+
     DEBUG_TEXT = "Buffer Status Handler \tStarting Completion Handler for Endpoint %d";
     DEBUG_SHOW ("IRQ", DEBUG_TEXT, EP_NUMBER);
 
@@ -18,37 +22,42 @@ void  __not_in_flash_func (ep0_handler_to_host)(uint8_t EP_NUMBER) {
 
         DEBUG_TEXT = "Buffer Status Handler \tStarting ASYNC Completion Handler for Endpoint %d";
         DEBUG_SHOW ("IRQ", DEBUG_TEXT, EP_NUMBER);
+       
+        if (USE_ASYNC_HANDLER) {
 
-        //ep0_handler_to_host_async;
+            ep0_handler_to_host_async;
 
-        host_endpoint[0].bytes_transferred += get_buffer_bytes_to_host(0);
+       } else {
 
-    if (host_endpoint[0].async_bytes_pending) {
+            host_endpoint[0].bytes_transferred += get_buffer_bytes_to_host(0);
 
-        send_async_packet(0);
+            if (host_endpoint[0].async_bytes_pending) {
 
-    } else {
+            send_async_packet(0);
 
-        DEBUG_TEXT = "Buffer Status Handler \tTransfer Complete, Async Bytes Transfered=%d";
-        DEBUG_SHOW ("IRQ", DEBUG_TEXT, host_endpoint[0].bytes_transferred);
+        } else {
 
-        receive_status_transaction_from_host(0, true);
+            DEBUG_TEXT = "Buffer Status Handler \tTransfer Complete, Async Bytes Transfered=%d";
+            DEBUG_SHOW ("IRQ", DEBUG_TEXT, host_endpoint[0].bytes_transferred);
 
-        wait_for_transaction_completion(true);
+            receive_status_transaction_from_host(0, true);
 
-        host_endpoint[0].transaction_complete = true;
+            wait_for_transaction_completion(true);
 
-    }
+            host_endpoint[0].transaction_complete = true;
 
+        }
 
-    } else {
+       }        
+
+        } else {
 
         DEBUG_TEXT = "Buffer Status Handler \tAsync Mode=False, Clearing Buffer Status";
         DEBUG_SHOW ("IRQ", DEBUG_TEXT);
 
         send_ack_handshake_to_host(0, true);
 
-    }
+        }
 
     // clear_buffer_status(USB_BUFF_STATUS_EP0_IN_BITS); 
 
@@ -60,6 +69,9 @@ void  __not_in_flash_func (ep0_handler_to_host_async)() {
 
   //  DEBUG_TEXT = "Buffer Status Handler \tAsync Mode=True, Async Bytes Pending=%d";
   //  DEBUG_SHOW ("IRQ", DEBUG_TEXT, host_endpoint[0].async_bytes_pending);
+
+    DEBUG_TEXT = "Buffer Status Handler \tEntered ASYNC Completion Handler for Endpoint %d";
+    DEBUG_SHOW ("IRQ", DEBUG_TEXT, 0);
 
     host_endpoint[0].bytes_transferred += get_buffer_bytes_to_host(0);
 

@@ -33,12 +33,17 @@ add_executable(usb_hid_joystick
 
 target_link_libraries(usb_hid_joystick PRIVATE pico_stdlib pico_unique_id hardware_resets hardware_irq)
 
+target_compile_definitions(usb_hid_joystick PRIVATE PICO_HEAP_SIZE=0x8000)
+target_compile_definitions(usb_hid_joystick PRIVATE PICO_STACK_SIZE=0x8000)
+target_compile_definitions(usb_hid_joystick PRIVATE LIB_TINYUSB_DEVICE=0)
+target_compile_definitions(usb_hid_joystick PRIVATE LIB_TINYUSB_HOST=0)
+
+add_compile_definitions(PICO_USE_STACK_GUARDS=0)
+
 pico_add_extra_outputs(usb_hid_joystick)
 
 pico_enable_stdio_usb(usb_hid_joystick 0)
 pico_enable_stdio_uart(usb_hid_joystick 1)
-
-add_compile_definitions(PICO_USE_STACK_GUARDS=0)
 
 # add url via pico_set_program_url
 # example_auto_set_url(dev_lowlevel)

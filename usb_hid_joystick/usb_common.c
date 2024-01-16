@@ -101,7 +101,7 @@ void wait_for_transaction_completion(bool clear_transaction) {
 
     transaction_complete = usb_hw->sie_status & USB_SIE_STATUS_TRANS_COMPLETE_BITS;
 
-    DEBUG_TEXT = "Serial Interface Engine\tWaiting %d µs for Transaction Completion";
+    DEBUG_TEXT = "Serial Interface Engine\tWaiting Max. %d µs for Transaction Completion";
     DEBUG_SHOW ("SIE", DEBUG_TEXT, wait_microseconds);
     
     do { 
@@ -201,3 +201,4 @@ volatile uint16_t __not_in_flash_func (get_buffer_bytes_to_pico)(uint8_t EP_NUMB
 
    return (uint16_t) usb_dpram->ep_buf_ctrl[EP_NUMBER].out & 0x01FF;
 }
+

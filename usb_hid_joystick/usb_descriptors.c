@@ -72,8 +72,8 @@ uint8_t pico_hid_report_descriptor[] = {
 0xA1, 0x01,        // Collection (Application)
 
 0x05, 0x02,        //   Usage Page (Sim Ctrls)
-0x09, 0xBB,        //   Usage (Throttle)
-0x09, 0xBA,        //   Usage (Rudder)
+0x09, 0xBA,        //   Usage (Throttle)
+0x09, 0xBB,        //   Usage (Rudder)
 0x15, 0x81,        //   Logical Minimum (-127)
 0x25, 0x7F,        //   Logical Maximum (127)
 0x75, 0x08,        //   Report Size (8)
