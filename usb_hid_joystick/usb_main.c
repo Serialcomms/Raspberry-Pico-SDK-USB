@@ -41,7 +41,11 @@ int main(void) {
 
     usb_device_init();
 
+    busy_wait_ms(3000);
+
     wait_for_device_enumeration();
+
+   // if (false) {
 
     if (usb_device_enumerated()) {
 

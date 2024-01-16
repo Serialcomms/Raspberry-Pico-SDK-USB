@@ -9,20 +9,23 @@
      
 static uint8_t *DEBUG_TEXT = DEBUG_STRING_BUFFER;
 
-void  __not_in_flash_func (ep0_handler_to_host_async)() {
+void  __not_in_flash_func (ep0_handler_to_host)(uint8_t EP_NUMBER) {
 
-    DEBUG_TEXT = "Buffer Status Handler \tAsync Mode=True, Async Bytes Remaining=%d";
-    DEBUG_SHOW ("IRQ", DEBUG_TEXT, host_endpoint[0].async_bytes_pending);
+    DEBUG_TEXT = "Buffer Status Handler \tStarting Completion Handler for Endpoint %d";
+    DEBUG_SHOW ("IRQ", DEBUG_TEXT, EP_NUMBER);
 
-    host_endpoint[0].bytes_transferred += get_buffer_bytes_to_host(0);
+    if (host_endpoint[0].async_mode) {
+
+        DEBUG_TEXT = "Buffer Status Handler \tStarting ASYNC Completion Handler for Endpoint %d";
+        DEBUG_SHOW ("IRQ", DEBUG_TEXT, EP_NUMBER);
+
+        //ep0_handler_to_host_async;
+
+        host_endpoint[0].bytes_transferred += get_buffer_bytes_to_host(0);
 
     if (host_endpoint[0].async_bytes_pending) {
 
-      //  clear_buffer_status(USB_BUFF_STATUS_EP0_IN_BITS); 
-
         send_async_packet(0);
-
-        clear_buffer_status(USB_BUFF_STATUS_EP0_IN_BITS); 
 
     } else {
 
@@ -33,34 +36,47 @@ void  __not_in_flash_func (ep0_handler_to_host_async)() {
 
         wait_for_transaction_completion(true);
 
-        clear_buffer_status(USB_BUFF_STATUS_EP0_IN_BITS); 
-
         host_endpoint[0].transaction_complete = true;
 
     }
-}
 
-void  __not_in_flash_func (ep0_handler_to_host)(uint8_t EP_NUMBER) {
 
-    DEBUG_TEXT = "Buffer Status Handler \tStarting Completion Handler for Endpoint %d";
-    DEBUG_SHOW ("IRQ", DEBUG_TEXT, EP_NUMBER);
-
-    clear_buffer_status(USB_BUFF_STATUS_EP0_IN_BITS); 
-
-    if (host_endpoint[0].async_mode) {
-
-        ep0_handler_to_host_async;
-
-      //  clear_buffer_status(USB_BUFF_STATUS_EP0_IN_BITS); 
-
-            
     } else {
 
         DEBUG_TEXT = "Buffer Status Handler \tAsync Mode=False, Clearing Buffer Status";
         DEBUG_SHOW ("IRQ", DEBUG_TEXT);
 
-        clear_buffer_status(USB_BUFF_STATUS_EP0_IN_BITS);
+        send_ack_handshake_to_host(0, true);
 
     }
+
+    // clear_buffer_status(USB_BUFF_STATUS_EP0_IN_BITS); 
+
+    usb_hardware_clear->buf_status = USB_BUFF_STATUS_EP0_IN_BITS;
  
+}
+
+void  __not_in_flash_func (ep0_handler_to_host_async)() {
+
+  //  DEBUG_TEXT = "Buffer Status Handler \tAsync Mode=True, Async Bytes Pending=%d";
+  //  DEBUG_SHOW ("IRQ", DEBUG_TEXT, host_endpoint[0].async_bytes_pending);
+
+    host_endpoint[0].bytes_transferred += get_buffer_bytes_to_host(0);
+
+    if (host_endpoint[0].async_bytes_pending) {
+
+        send_async_packet(0);
+
+    } else {
+
+        DEBUG_TEXT = "Buffer Status Handler \tTransfer Complete, Async Bytes Transfered=%d";
+        DEBUG_SHOW ("IRQ", DEBUG_TEXT, host_endpoint[0].bytes_transferred);
+
+        receive_status_transaction_from_host(0, true);
+
+        wait_for_transaction_completion(true);
+
+        host_endpoint[0].transaction_complete = true;
+
+    }
 }

@@ -85,46 +85,6 @@ void usb_start_transfer_host_to_pico(uint8_t EP_NUMBER, uint16_t buffer_length) 
 
 }
 
-void usb_wait_for_host_ack(uint8_t EP_NUMBER) {
-
-    uint64_t wait_duration = 0;
-    volatile bool wait_timeout;  
-    volatile bool ack_received;
-    
-    absolute_time_t wait_time_now = get_absolute_time();
-    absolute_time_t wait_time_end = make_timeout_time_us(100000);
-   
-    do { 
-
-       // busy_wait_at_least_cycles(8);
-
-        wait_timeout = time_reached(wait_time_end);
-
-        //ack_received = usb_hw->sie_status & USB_SIE_STATUS_TRANS_COMPLETE_BITS;
-
-        ack_received = usb_dpram->ep_buf_ctrl[EP_NUMBER].out & USB_BUF_CTRL_AVAIL;
-       
-    } while (!wait_timeout && !ack_received);
-
-    
-    wait_duration = absolute_time_diff_us(wait_time_now, get_absolute_time());
-
-
-    if (wait_timeout) {
-
-        DEBUG_TEXT = "Wait Timeout Error\tTransaction Completion Wait Timeout, Duration=%lld µs";
-        DEBUG_SHOW ("USB", DEBUG_TEXT , wait_duration);
-
-
-    } else {
-
-        DEBUG_TEXT = "Transaction Complete\tWait Duration=%lld µs";
-        DEBUG_SHOW ("SIE", DEBUG_TEXT , wait_duration);
-
-    }
-
-}
-
 void usb_wait_for_buffer_completion_host_to_pico(uint8_t EP_NUMBER, bool buffer_status_clear) {
 
     // bit 0 = EP0_IN
