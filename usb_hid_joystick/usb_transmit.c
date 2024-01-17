@@ -92,24 +92,24 @@ void send_data_packet(uint8_t EP_NUMBER, uint8_t data_packet_size, bool wait_for
 
 void synchronous_transfer_to_host(uint8_t EP_NUMBER, uint8_t *buffer_data, uint16_t transfer_bytes) {
 
-    uint8_t  dpram_offset       = 0;
-    uint32_t buffer_offset      = 0;
-    uint64_t transfer_duration  = 0;
-    uint16_t max_packet_size    = host_endpoint[EP_NUMBER].max_packet_size;
-    uint16_t full_packet_size   = MIN(max_packet_size, 64);   
-    uint16_t full_packets       = transfer_bytes / full_packet_size;
-    uint16_t last_packet_size   = transfer_bytes - (full_packets * full_packet_size);
-    uint8_t  *usb_dpram_data    = host_endpoint[EP_NUMBER].dpram_address;
+    uint8_t  dpram_offset           = 0;
+    uint32_t buffer_offset          = 0;
+    uint16_t max_packet_size        = host_endpoint[EP_NUMBER].max_packet_size;
+    uint16_t full_packet_size       = MIN(max_packet_size, 64);   
+    uint16_t full_packets           = transfer_bytes / full_packet_size;
+    uint16_t last_packet_size       = transfer_bytes - (full_packets * full_packet_size);
+    uint8_t  *usb_dpram_data        = host_endpoint[EP_NUMBER].dpram_address;
 
     DEBUG_TEXT = "Synchronous Transfer \tFull (%d Byte) Packets to Send=%d, Last Packet Size=%d";
     DEBUG_SHOW ("USB", DEBUG_TEXT, full_packet_size, full_packets, last_packet_size);
 
-    bool last_packet = (transfer_bytes == full_packet_size) ? true : false;
+    bool last_packet = (transfer_bytes == full_packet_size) || (transfer_bytes == 0) ? true : false;
 
     absolute_time_t start_time_now = get_absolute_time();
 
     host_endpoint[EP_NUMBER].async_mode = false;
     host_endpoint[EP_NUMBER].async_bytes_pending = 0;
+    host_endpoint[EP_NUMBER].transaction_duration = 0;
     host_endpoint[EP_NUMBER].transaction_complete = false;
     host_endpoint[EP_NUMBER].start_time_now = start_time_now;
 
@@ -138,14 +138,14 @@ void synchronous_transfer_to_host(uint8_t EP_NUMBER, uint8_t *buffer_data, uint1
 
     }
 
-    transfer_duration = absolute_time_diff_us(start_time_now, get_absolute_time());
+    uint32_t transaction_duration = absolute_time_diff_us(start_time_now, get_absolute_time());
     
     host_endpoint[EP_NUMBER].start_time_end = get_absolute_time();
 
-    host_endpoint[EP_NUMBER].transfer_duration = transfer_duration;
+    host_endpoint[EP_NUMBER].transaction_duration = transaction_duration;
 
     DEBUG_TEXT = "Synchronous Transfer \tBuffer Offset=%d, Transfer Duration=%lldµs";
-    DEBUG_SHOW ("USB", DEBUG_TEXT, buffer_offset, transfer_duration);
+    DEBUG_SHOW ("USB", DEBUG_TEXT, buffer_offset, transaction_duration);
 
 }
 
@@ -165,11 +165,11 @@ void start_async_transfer_to_host(uint8_t EP_NUMBER, void *source_buffer_address
     host_endpoint[EP_NUMBER].async_mode = true;
     host_endpoint[EP_NUMBER].async_bytes_pending = async_bytes;
     host_endpoint[EP_NUMBER].transfer_bytes = transfer_bytes;
-    host_endpoint[EP_NUMBER].transfer_duration = 0;
+    host_endpoint[EP_NUMBER].transaction_duration = 0;
     host_endpoint[EP_NUMBER].transaction_complete = false;
     host_endpoint[EP_NUMBER].bytes_transferred = 0;
-    host_endpoint[EP_NUMBER].source_buffer_address = source_buffer_address;
     host_endpoint[EP_NUMBER].last_packet_size = last_packet_size;
+    host_endpoint[EP_NUMBER].source_buffer_address = source_buffer_address;
  
     host_endpoint[EP_NUMBER].start_time_now = get_absolute_time();
 

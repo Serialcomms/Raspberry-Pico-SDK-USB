@@ -11,6 +11,31 @@
      
 static uint8_t *DEBUG_TEXT = DEBUG_STRING_BUFFER;
 
+uint32_t transaction_duration = 0;
+
+static inline void __not_in_flash_func (ep0_handler_to_host_async)() {
+
+    host_endpoint[0].bytes_transferred += get_buffer_bytes_to_host(0);
+
+    if (host_endpoint[0].async_bytes_pending) {
+
+        send_async_packet(0);
+
+    } else {
+
+        receive_status_transaction_from_host(0, true);
+
+        wait_for_transaction_completion(true);
+
+        transaction_duration = absolute_time_diff_us(host_endpoint[0].start_time_now, get_absolute_time());
+
+        host_endpoint[0].transaction_duration = transaction_duration;
+
+        host_endpoint[0].transaction_complete = true;
+
+    }
+}
+
 void  __not_in_flash_func (ep0_handler_to_host)(uint8_t EP_NUMBER) {
 
     const bool USE_ASYNC_HANDLER = false;  // does not call properly when = true;
@@ -44,6 +69,10 @@ void  __not_in_flash_func (ep0_handler_to_host)(uint8_t EP_NUMBER) {
 
             wait_for_transaction_completion(true);
 
+            transaction_duration = absolute_time_diff_us(host_endpoint[0].start_time_now, get_absolute_time());
+
+            host_endpoint[0].transaction_duration = transaction_duration;
+
             host_endpoint[0].transaction_complete = true;
 
         }
@@ -65,30 +94,3 @@ void  __not_in_flash_func (ep0_handler_to_host)(uint8_t EP_NUMBER) {
  
 }
 
-void  __not_in_flash_func (ep0_handler_to_host_async)() {
-
-  //  DEBUG_TEXT = "Buffer Status Handler \tAsync Mode=True, Async Bytes Pending=%d";
-  //  DEBUG_SHOW ("IRQ", DEBUG_TEXT, host_endpoint[0].async_bytes_pending);
-
-    DEBUG_TEXT = "Buffer Status Handler \tEntered ASYNC Completion Handler for Endpoint %d";
-    DEBUG_SHOW ("IRQ", DEBUG_TEXT, 0);
-
-    host_endpoint[0].bytes_transferred += get_buffer_bytes_to_host(0);
-
-    if (host_endpoint[0].async_bytes_pending) {
-
-        send_async_packet(0);
-
-    } else {
-
-        DEBUG_TEXT = "Buffer Status Handler \tTransfer Complete, Async Bytes Transfered=%d";
-        DEBUG_SHOW ("IRQ", DEBUG_TEXT, host_endpoint[0].bytes_transferred);
-
-        receive_status_transaction_from_host(0, true);
-
-        wait_for_transaction_completion(true);
-
-        host_endpoint[0].transaction_complete = true;
-
-    }
-}

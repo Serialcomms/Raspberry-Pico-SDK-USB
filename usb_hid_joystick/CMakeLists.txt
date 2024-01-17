@@ -1,44 +1,54 @@
-#
 
 add_executable(usb_hid_joystick
 
+        usb_main.c        
         usb_debug.c
         usb_reset.c
-        usb_main.c
         usb_dev_init.c     
-        setup_endpoints.c
-        usb_descriptors.c 
+       
         pico_info.c
         pico_device.c
-        time_stamp.c  
-
+         
         setup_packet.c
         setup_device.c
         setup_config.c
         setup_strings.c
+        setup_endpoints.c
         setup_interface.c
+
         usb_common.c
+        usb_receive.c
         usb_protocol.c
-        usb_transmit.c 
-        usb_receive.c    
-        usb_interrupts.c
-        usb_endpoints.c 
-        usb_sie_errors.c 
+        usb_transmit.c
         usb_joystick.c
+        usb_endpoints.c 
+        usb_interrupts.c
+        usb_descriptors.c 
+        usb_sie_errors.c 
+        
         ep0_handlers.c
         epx_handlers.c
-        show_registers.c
+
+        time_stamp.c 
         status_screen.c
+        show_registers.c
+       
         )
 
-target_link_libraries(usb_hid_joystick PRIVATE pico_stdlib pico_unique_id hardware_resets hardware_irq)
+target_link_libraries(usb_hid_joystick PRIVATE 
 
-target_compile_definitions(usb_hid_joystick PRIVATE PICO_HEAP_SIZE=0x8000)
-target_compile_definitions(usb_hid_joystick PRIVATE PICO_STACK_SIZE=0x8000)
-target_compile_definitions(usb_hid_joystick PRIVATE LIB_TINYUSB_DEVICE=0)
-target_compile_definitions(usb_hid_joystick PRIVATE LIB_TINYUSB_HOST=0)
+        pico_stdlib 
+        pico_unique_id
+        hardware_irq
+        hardware_resets
+)
+
+add_compile_options("-fstack-usage")
 
 add_compile_definitions(PICO_USE_STACK_GUARDS=0)
+add_compile_definitions(PICO_STDIO_DEADLOCK_TIMEOUT_MS=1500)
+
+target_compile_definitions(usb_hid_joystick PRIVATE PICO_STACK_SIZE=0x1000)
 
 pico_add_extra_outputs(usb_hid_joystick)
 

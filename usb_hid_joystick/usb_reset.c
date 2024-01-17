@@ -76,8 +76,8 @@ void reset_endpoints() {
       host_endpoint[ep_number].transfer_bytes = 0;
       pico_endpoint[ep_number].transfer_bytes = 0;
 
-      host_endpoint[ep_number].transfer_duration = 0;
-      pico_endpoint[ep_number].transfer_duration = 0;
+      host_endpoint[ep_number].transaction_duration = 0;
+      pico_endpoint[ep_number].transaction_duration = 0;
 
       host_endpoint[ep_number].start_time_now = 0;
       pico_endpoint[ep_number].start_time_now = 0;
