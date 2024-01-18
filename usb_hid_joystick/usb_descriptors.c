@@ -5,6 +5,8 @@
 #undef LIB_TINYUSB_HOST
 #undef LIB_TINYUSB_DEVICE
 
+extern uint8_t *DEBUG_TEXT;
+
 uint8_t pico_device_descriptor[] = {
 
 0x12,        // bLength // 18 bytes

@@ -14,7 +14,7 @@
 #undef LIB_TINYUSB_HOST
 #undef LIB_TINYUSB_DEVICE
 
-static uint8_t *DEBUG_TEXT = DEBUG_STRING_BUFFER;
+extern uint8_t *DEBUG_TEXT;
 
 uint8_t *pico_string_descriptors[] = {
 
@@ -79,7 +79,7 @@ uint8_t build_string_descriptor(uint8_t *ascii_string) {
     uint8_t ascii_char;
 
     DEBUG_TEXT = "String Descriptor \t%s (%d ASCII Bytes)";
-    DEBUG_SHOW ("USB", DEBUG_TEXT, ascii_string, string_length);
+    DEBUG_SHOW ("USB", ascii_string, string_length);
 
     clear_string_buffer();
 
@@ -114,12 +114,12 @@ void usb_start_string_transfer(uint8_t *string_descriptor, uint8_t string_length
         if (string_index) {
 
           DEBUG_TEXT = "USB String Transfer\t%s (%d Unicode Bytes)+2 Bytes=%d";
-          DEBUG_SHOW ("EP0", DEBUG_TEXT, pico_string_descriptors[string_index], string_length-2, string_length );
+          DEBUG_SHOW ("EP0", pico_string_descriptors[string_index], string_length-2, string_length );
         
         } else {
 
           DEBUG_TEXT = "USB String Transfer\tString Length = %d Bytes";
-          DEBUG_SHOW ("EP0", DEBUG_TEXT, string_length) ;
+          DEBUG_SHOW ("EP0", string_length) ;
     
         }
 
@@ -132,7 +132,7 @@ void usb_start_string_transfer(uint8_t *string_descriptor, uint8_t string_length
     } else {
 
     DEBUG_TEXT = "Pico Request Handler \tGET PICO STRINGS, Empty String" ;
-    DEBUG_SHOW ("USB", DEBUG_TEXT);
+    DEBUG_SHOW ("USB");
 
     }
 
@@ -150,7 +150,7 @@ uint8_t generate_serial_number_string(bool show_string_length) {
   if (show_string_length) {
 
     DEBUG_TEXT = "Pico Serial String \tSerial Number Length = %d" ;
-    DEBUG_SHOW ("USB", DEBUG_TEXT, serial_number_length);
+    DEBUG_SHOW ("USB", serial_number_length);
 
   }
 
@@ -164,7 +164,7 @@ void show_serial_number_string() {
   uint8_t *serial_string = serial_number;
 
   DEBUG_TEXT = "Pico Serial String \tSerial Number = %s" ;
-  DEBUG_SHOW ("USB", DEBUG_TEXT, serial_string);
+  DEBUG_SHOW ("USB", serial_string);
 
 }
 

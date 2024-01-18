@@ -8,7 +8,6 @@
 #include "include/usb_debug.h"
 #include "include/setup_device.h"
 #include "include/setup_config.h"
-#include "include/setup_packet.h"
 #include "include/setup_strings.h"
 #include "include/show_registers.h"
 #include "include/usb_transmit.h"
@@ -17,35 +16,38 @@
 #include "include/usb_protocol.h"
 #include "include/setup_endpoints.h"
 #include "include/usb_descriptors.h"
+#include "include/usb_setup_packet.h"
 
-static uint8_t *DEBUG_TEXT = DEBUG_STRING_BUFFER;
+extern uint8_t *DEBUG_TEXT;
 
-void usb_get_descriptor(volatile struct usb_setup_command setup_command) {
+extern usb_setup_t *setup;
+
+void usb_get_descriptor() {
 
     static uint16_t get_descriptor_count;
 
     DEBUG_TEXT = "Pico Request Handler \tGET DESCRIPTOR TYPE=%s, Count=%d";
-    DEBUG_SHOW ("USB", DEBUG_TEXT, config_dt_to_string(setup_command.descriptor_type), ++get_descriptor_count );
+    DEBUG_SHOW ("USB", config_dt_to_string(setup->descriptor_type), ++get_descriptor_count);
 
     DEBUG_TEXT = "Pico Request Handler \tEndpoint Buffer Status Register=%08X";
-    DEBUG_SHOW ("IRQ", DEBUG_TEXT, usb_hw->buf_status);
+    DEBUG_SHOW ("IRQ", usb_hw->buf_status);
 
-    switch (setup_command.descriptor_type) {
+    switch (setup->descriptor_type) {
 
-        case USB_DT_DEVICE:     send_device_descriptor_to_host(setup_command.length);          break;
+        case USB_DT_DEVICE:     send_device_descriptor_to_host(setup->length);          break;
    
-        case USB_DT_CONFIG:     send_device_configuration_to_host(setup_command.length);       break;
+        case USB_DT_CONFIG:     send_device_configuration_to_host(setup->length);       break;
  
-        case USB_DT_STRING:     send_device_string_to_host(setup_command.descriptor_index);    break;
+        case USB_DT_STRING:     send_device_string_to_host(setup->descriptor_index);    break;
 
-        default:                error_unknown_descriptor_type(setup_command.descriptor_type);  break;
+        default:                error_unknown_descriptor_type(setup->descriptor_type);  break;
            
     }
 }
 
-void usb_setup_device_request_to_pico(struct usb_setup_command setup_command) {
+void usb_setup_device_request_to_pico() {
 
-    switch(setup_command.request) {
+    switch(setup->request) {
 
     //  case USB_REQUEST_CLEAR_FEATURE:   break;
     //  case USB_REQUEST_SET_FEATURE:     break;
@@ -54,9 +56,9 @@ void usb_setup_device_request_to_pico(struct usb_setup_command setup_command) {
         case USB_REQUEST_SET_ADDRESS:   // 5  
 
             DEBUG_TEXT = "Setup Device Address\tNew Device Address Allocated = %d";
-            DEBUG_SHOW ("USB", DEBUG_TEXT, setup_command.value);
+            DEBUG_SHOW ("USB", setup->value);
 
-            set_pico_device_address(setup_command.value);
+            set_pico_device_address(setup->value);
 
             set_ep0_buffer_status(true);
 
@@ -65,7 +67,7 @@ void usb_setup_device_request_to_pico(struct usb_setup_command setup_command) {
         case USB_REQUEST_SET_CONFIGURATION:  // 9   // Expected to start HID sequence
 
             DEBUG_TEXT = "Pico Request Handler \tSET CONFIGURATION REQUEST (HID), Value=%d";
-            DEBUG_SHOW ("HID", DEBUG_TEXT, setup_command.value);
+            DEBUG_SHOW ("HID", setup->value);
 
             send_ack_handshake_to_host(0, true); // VERY IMPORTANT, otherwise Host will issue hang / BUS RESET
 
@@ -78,7 +80,7 @@ void usb_setup_device_request_to_pico(struct usb_setup_command setup_command) {
         default:
 
             DEBUG_TEXT = "Pico Request Handler \tUNKNOWN USB SET REQUEST";
-            DEBUG_SHOW ("ERR", DEBUG_TEXT);
+            DEBUG_SHOW ("ERR");
 
             send_ack_handshake_to_host(0, true); // VERY IMPORTANT, otherwise Host will issue BUS RESET
 
@@ -88,7 +90,7 @@ void usb_setup_device_request_to_pico(struct usb_setup_command setup_command) {
 
 }
 
-void usb_setup_device_respond_to_host(struct usb_setup_command setup_command) {
+void usb_setup_device_respond_to_host() {
 
     static uint16_t get_status_count;
     static uint16_t get_unknown_count;
@@ -97,35 +99,35 @@ void usb_setup_device_respond_to_host(struct usb_setup_command setup_command) {
 
     receive_status_transaction_from_host(0, true);
     
-    switch(setup_command.request) {
+    switch(setup->request) {
 
         case USB_REQUEST_GET_STATUS:            // 0
 
             DEBUG_TEXT = "Pico Request Handler \tGET PICO DEVICE STATUS, Count=%d";
-            DEBUG_SHOW ("USB", DEBUG_TEXT, ++get_status_count);
+            DEBUG_SHOW ("USB", ++get_status_count);
 
         break;
 
         case USB_REQUEST_GET_DESCRIPTOR:        // 6
 
             DEBUG_TEXT = "Pico Request Handler \tGET PICO USB DESCRIPTOR, Count=%d";
-            DEBUG_SHOW ("USB", DEBUG_TEXT, ++get_descriptor_count);
+            DEBUG_SHOW ("USB", ++get_descriptor_count);
 
-            usb_get_descriptor(setup_command);
+            usb_get_descriptor(setup);
 
         break;
 
         case USB_REQUEST_GET_CONFIGURATION:     // 8
 
             DEBUG_TEXT = "Pico Request Handler \tGET PICO USB CONFIGURATION, Count=%d";
-            DEBUG_SHOW ("USB", DEBUG_TEXT, ++get_configuration_count);
+            DEBUG_SHOW ("USB", ++get_configuration_count);
   
         break;
 
         default:
 
             DEBUG_TEXT = "Pico Request Handler \tUNKNOWN USB GET REQUEST, Count=%d";
-            DEBUG_SHOW ("ERR", DEBUG_TEXT, ++get_unknown_count);
+            DEBUG_SHOW ("ERR", ++get_unknown_count);
 
         break;
 
@@ -133,15 +135,15 @@ void usb_setup_device_respond_to_host(struct usb_setup_command setup_command) {
 }
 
 
-void error_unknown_descriptor_type(uint8_t descriptor_type) {
+static inline void error_unknown_descriptor_type(uint8_t descriptor_type) {
 
     DEBUG_TEXT = "Pico Request Handler \tUNKNOWN REQUEST, Descriptor Type=%d";
 
-    DEBUG_SHOW ("ERR", DEBUG_TEXT, descriptor_type);
+    DEBUG_SHOW ("ERR", descriptor_type);
 
 } 
 
-uint8_t *config_dt_to_string(uint8_t descriptor_type) {
+static inline uint8_t *config_dt_to_string(uint8_t descriptor_type) {
 
     switch (descriptor_type) {
 

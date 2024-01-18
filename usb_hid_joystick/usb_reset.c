@@ -4,8 +4,8 @@
 #include "include/usb_reset.h"
 #include "include/usb_debug.h"
 #include "include/setup_device.h"
-#include "include/setup_packet.h"
 #include "include/show_registers.h"
+#include "include/usb_setup_packet.h"
 #include "include/usb_protocol.h"
 #include "include/usb_endpoints.h"
 #include "include/usb_transmit.h"
@@ -18,14 +18,14 @@
 
 const io_rw_32 CLEAR_ALL_BITS = 0xFFFFFFFF; 
 
-static uint8_t *DEBUG_TEXT = DEBUG_STRING_BUFFER;
+extern uint8_t *DEBUG_TEXT;
 
 void usb_bus_reset() { 
 
   uint8_t DEVICE_ADDRESS = get_device_address();
 
   DEBUG_TEXT = "Bus Reset \t\tProcesssing USB Bus Reset,  Pico Device Address=%d ";
-  DEBUG_SHOW   ("USB", DEBUG_TEXT, DEVICE_ADDRESS);
+  DEBUG_SHOW   ("USB", DEVICE_ADDRESS);
 
   reset_endpoints();
 
@@ -49,7 +49,7 @@ void usb_bus_reset() {
 
   busy_wait_ms(2);
 
-  receive_status_transaction_from_host(0, true);
+ // receive_status_transaction_from_host(0, true);
 
   //busy_wait_ms(1000);
 
@@ -103,7 +103,7 @@ void enable_setup_interrupts() {
   usb_hardware_set->inte = USB_INTS_SETUP_REQ_BITS;
   
   DEBUG_TEXT = "Bus Reset \t\tEnabling Setup Interrupt,\tRegister=%08X";
-  DEBUG_SHOW ("USB", DEBUG_TEXT, usb_hw->inte);
+  DEBUG_SHOW ("USB", usb_hw->inte);
 
 }
 
@@ -112,7 +112,7 @@ void disable_setup_interrupts() {
   usb_hardware_clear->inte = USB_INTS_SETUP_REQ_BITS;
   
   DEBUG_TEXT = "Bus Reset \t\tDisabling Setup Interrupt,\tRegister=%08X";
-  DEBUG_SHOW ("USB", DEBUG_TEXT, usb_hw->inte);
+  DEBUG_SHOW ("USB", usb_hw->inte);
 
 
 }

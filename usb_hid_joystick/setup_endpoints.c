@@ -11,7 +11,7 @@
 #undef LIB_TINYUSB_HOST
 #undef LIB_TINYUSB_DEVICE
 
-static uint8_t *DEBUG_TEXT = DEBUG_STRING_BUFFER;
+extern uint8_t *DEBUG_TEXT;
 
 const uint16_t usb_dpram_size = sizeof(*usb_dpram);
 const uint16_t usb_dpram_epx_size = usb_dpram_size - 128; // check
@@ -88,10 +88,10 @@ void usb_setup_host_endpoint(uint8_t EP_NUMBER, uint16_t TRANSFER_TYPE, void *co
   usb_dpram->ep_ctrl[EP_OFFSET].in = ep_control_register;
 
   DEBUG_TEXT = "Configure Endpoint\tConfigure and Enable Endpoint %d to Host";
-  DEBUG_SHOW (ep_text(EP_NUMBER), DEBUG_TEXT, EP_NUMBER);
+  DEBUG_SHOW (ep_text(EP_NUMBER), EP_NUMBER);
 
   DEBUG_TEXT = "Endpoint Control In\tRegister = %08X, Offset = %04X";
-  DEBUG_SHOW (ep_text(EP_NUMBER), DEBUG_TEXT, usb_dpram->ep_ctrl[EP_OFFSET].in, address_base_offset);
+  DEBUG_SHOW (ep_text(EP_NUMBER), usb_dpram->ep_ctrl[EP_OFFSET].in, address_base_offset);
 
 }
 
@@ -119,10 +119,10 @@ void usb_setup_pico_endpoint(uint8_t EP_NUMBER, uint16_t TRANSFER_TYPE, void *co
   usb_dpram->ep_ctrl[EP_OFFSET].out = ep_control_register;
 
   DEBUG_TEXT = "Configure Endpoint\tConfigure and Enable Endpoint %d to Pico";
-  DEBUG_SHOW (ep_text(EP_NUMBER), DEBUG_TEXT, EP_NUMBER);
+  DEBUG_SHOW (ep_text(EP_NUMBER), EP_NUMBER);
 
   DEBUG_TEXT = "Endpoint Control Out\tRegister = %08X, Offset = %04X";
-  DEBUG_SHOW (ep_text(EP_NUMBER), DEBUG_TEXT, usb_dpram->ep_ctrl[EP_OFFSET].out, address_base_offset);
+  DEBUG_SHOW (ep_text(EP_NUMBER), usb_dpram->ep_ctrl[EP_OFFSET].out, address_base_offset);
 
 }
 

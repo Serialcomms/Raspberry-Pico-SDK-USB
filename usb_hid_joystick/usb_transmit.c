@@ -8,7 +8,7 @@
 #include "include/usb_sie_errors.h"
 #include "include/show_registers.h"
         
-static uint8_t *DEBUG_TEXT = DEBUG_STRING_BUFFER;
+extern uint8_t *DEBUG_TEXT;
 
 void send_sync_packet(uint8_t EP_NUMBER, uint8_t data_packet_size, bool last_packet) {
 
@@ -20,7 +20,7 @@ void send_sync_packet(uint8_t EP_NUMBER, uint8_t data_packet_size, bool last_pac
     if (last_packet) buffer_dispatch |= USB_BUF_CTRL_LAST;
 
     DEBUG_TEXT = "Sending Data Packet \tSync Data Packet Size=%d Bytes,      Packet ID (PID)=%d" ;
-    DEBUG_SHOW (ep_text(EP_NUMBER), DEBUG_TEXT, data_packet_size, DATA_PID/8192);
+    DEBUG_SHOW (ep_text(EP_NUMBER), data_packet_size, DATA_PID/8192);
 
     usb_dpram->ep_buf_ctrl[EP_NUMBER].in = buffer_dispatch;
     
@@ -53,7 +53,7 @@ void send_async_packet(uint8_t EP_NUMBER) {
     } while (++offset < async_packet_size);
 
     DEBUG_TEXT = "Sending Async Packet \tBuffer Offset=%d, Async Packet Bytes=%d" ;
-    DEBUG_SHOW (ep_text(EP_NUMBER), DEBUG_TEXT, source_buffer_offset, async_bytes);
+    DEBUG_SHOW (ep_text(EP_NUMBER), source_buffer_offset, async_bytes);
 
     host_endpoint[EP_NUMBER].async_bytes_pending -= offset;
     host_endpoint[EP_NUMBER].source_buffer_offset += offset;
@@ -73,7 +73,7 @@ void send_data_packet(uint8_t EP_NUMBER, uint8_t data_packet_size, bool wait_for
     if (last_packet) buffer_dispatch |= USB_BUF_CTRL_LAST;
 
     DEBUG_TEXT = "Sending Data Packet \tData Packet Size=%d Bytes,      Packet ID (PID)=%d" ;
-    DEBUG_SHOW (ep_text(EP_NUMBER), DEBUG_TEXT, data_packet_size, DATA_PID/8192);
+    DEBUG_SHOW (ep_text(EP_NUMBER), data_packet_size, DATA_PID/8192);
 
     usb_dpram->ep_buf_ctrl[EP_NUMBER].in = buffer_dispatch;
     
@@ -101,7 +101,7 @@ void synchronous_transfer_to_host(uint8_t EP_NUMBER, uint8_t *buffer_data, uint1
     uint8_t  *usb_dpram_data        = host_endpoint[EP_NUMBER].dpram_address;
 
     DEBUG_TEXT = "Synchronous Transfer \tFull (%d Byte) Packets to Send=%d, Last Packet Size=%d";
-    DEBUG_SHOW ("USB", DEBUG_TEXT, full_packet_size, full_packets, last_packet_size);
+    DEBUG_SHOW ("USB", full_packet_size, full_packets, last_packet_size);
 
     bool last_packet = (transfer_bytes == full_packet_size) || (transfer_bytes == 0) ? true : false;
 
@@ -132,7 +132,7 @@ void synchronous_transfer_to_host(uint8_t EP_NUMBER, uint8_t *buffer_data, uint1
     if (last_packet_size) {
 
         DEBUG_TEXT = "Synchronous Transfer \tDPRAM Data Remaining, Bytes=%d";
-        DEBUG_SHOW ("USB", DEBUG_TEXT, dpram_offset + 1);
+        DEBUG_SHOW ("USB", dpram_offset + 1);
 
         send_sync_packet(EP_NUMBER, last_packet_size, last_packet);
 
@@ -145,7 +145,7 @@ void synchronous_transfer_to_host(uint8_t EP_NUMBER, uint8_t *buffer_data, uint1
     host_endpoint[EP_NUMBER].transaction_duration = transaction_duration;
 
     DEBUG_TEXT = "Synchronous Transfer \tBuffer Offset=%d, Transfer Duration=%lldµs";
-    DEBUG_SHOW ("USB", DEBUG_TEXT, buffer_offset, transaction_duration);
+    DEBUG_SHOW ("USB", buffer_offset, transaction_duration);
 
 }
 
@@ -176,7 +176,7 @@ void start_async_transfer_to_host(uint8_t EP_NUMBER, void *source_buffer_address
     usb_wait_for_buffer_available_to_host(EP_NUMBER);
           
     DEBUG_TEXT = "Start Async Transfer \tSending First %d/%d Bytes";  
-    DEBUG_SHOW ("USB", DEBUG_TEXT, first_packet_size, transfer_bytes);
+    DEBUG_SHOW ("USB", first_packet_size, transfer_bytes);
 
     do {  
 
@@ -221,7 +221,7 @@ void send_ack_handshake_to_host(uint8_t EP_NUMBER, bool clear_buffer_status) {
     if (clear_buffer_status) usb_hardware_clear->buf_status = buffer_status_mask;
 
     DEBUG_TEXT = "ACK Handshake (Host)\tSending ACK to Host, PID=%d, Register=%08X";
-    DEBUG_SHOW ("ACK", DEBUG_TEXT, USB_BUF_CTRL_DATA1_PID/8192, buffer_control);
+    DEBUG_SHOW ("ACK", USB_BUF_CTRL_DATA1_PID/8192, buffer_control);
 
 }
 
@@ -252,12 +252,12 @@ void usb_wait_for_buffer_available_to_host(uint8_t EP_NUMBER) {
     if (wait_timeout) {
 
         DEBUG_TEXT = "Buffer Wait Timeout\tWaited %d µs for buffer available to CPU";
-        DEBUG_SHOW ("TIM", DEBUG_TEXT, wait_duration);
+        DEBUG_SHOW ("TIM", wait_duration);
 
     } else {
 
         DEBUG_TEXT = "Buffer Wait Complete\tWaited %d µs for buffer available to CPU";
-        DEBUG_SHOW ("TIM", DEBUG_TEXT, wait_duration);
+        DEBUG_SHOW ("TIM", wait_duration);
 
     }
 
@@ -300,12 +300,12 @@ void usb_wait_for_last_packet_to_host(uint8_t EP_NUMBER) {
     if (wait_timeout) {
 
         DEBUG_TEXT = "Wait Timeout Error\tLast Packet Wait Timeout, Duration=%lld µs";
-        DEBUG_SHOW ("USB", DEBUG_TEXT , wait_duration);
+        DEBUG_SHOW ("USB", wait_duration);
 
     } else {
 
         DEBUG_TEXT = "Wait Last Packet\tWait Duration=%lld µs";
-        DEBUG_SHOW ("SIE", DEBUG_TEXT , wait_duration);
+        DEBUG_SHOW ("SIE", wait_duration);
 
     }
 

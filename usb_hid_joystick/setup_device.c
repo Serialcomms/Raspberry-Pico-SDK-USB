@@ -12,7 +12,7 @@
 #include "include/setup_device.h"
 #include "include/pico_device.h"
 
-static uint8_t *DEBUG_TEXT = DEBUG_STRING_BUFFER;
+extern uint8_t *DEBUG_TEXT;
 
 void set_pico_device_address(uint16_t DEVICE_ADDRESS) {
 
@@ -23,7 +23,7 @@ void set_pico_device_address(uint16_t DEVICE_ADDRESS) {
   usb_hardware_set->dev_addr_ctrl = DEVICE_ADDRESS & 0x7f;
 
   DEBUG_TEXT = "Setup Device Handler\tDevice Address Changed, Pico New Address=%d";
-  DEBUG_SHOW ("DEV", DEBUG_TEXT, get_device_address());
+  DEBUG_SHOW ("DEV", get_device_address());
 
   pico_usb_device.ADDRESS_SET = true;
 
@@ -39,7 +39,7 @@ void send_device_descriptor_to_host(uint16_t request_packet_size) {
   // send first 8 descriptor bytes only before device is addressed
 
   DEBUG_TEXT = "Pico Device Descriptor\tSend to Host, Packet Size=%d, Bytes=%d/%d ";
-  DEBUG_SHOW ("EP0", DEBUG_TEXT, ep0_packet_size(), descriptor_bytes, descriptor_length); 
+  DEBUG_SHOW ("EP0", ep0_packet_size(), descriptor_bytes, descriptor_length); 
   
   synchronous_transfer_to_host(0, device_descriptor, descriptor_bytes);
 

@@ -8,7 +8,7 @@
 #undef LIB_TINYUSB_HOST
 #undef LIB_TINYUSB_DEVICE
 
-static uint8_t *DEBUG_TEXT = DEBUG_STRING_BUFFER;
+extern uint8_t *DEBUG_TEXT;
 
 void usb_wait_for_buffer_completion(uint8_t EP_NUMBER, uint32_t buffer_mask, bool buffer_status_clear) {
 
@@ -19,13 +19,14 @@ void usb_wait_for_buffer_completion(uint8_t EP_NUMBER, uint32_t buffer_mask, boo
     volatile uint32_t buffer_complete;
    
     uint64_t wait_duration = 0;
+    
     absolute_time_t wait_time_now = get_absolute_time();
     absolute_time_t wait_time_end = make_timeout_time_us(100000);
 
     buffer_status = usb_hw->buf_status;
 
     DEBUG_TEXT = "Serial Interface Engine\tBuffer Wait,\tMask=%08X, Register=%08X";
-    DEBUG_SHOW ("SIE", DEBUG_TEXT, wait_duration, buffer_mask, buffer_status);
+    DEBUG_SHOW ("SIE", wait_duration, buffer_mask, buffer_status);
     
     do { 
 
@@ -47,20 +48,20 @@ void usb_wait_for_buffer_completion(uint8_t EP_NUMBER, uint32_t buffer_mask, boo
 
         sie_status_error_handler();
         DEBUG_TEXT = "Serial Interface Engine\tWaited %lld µs for Buffer\tMask=%08X,\t Register=%08X";
-        DEBUG_SHOW ("SIE", DEBUG_TEXT, wait_duration, buffer_mask, buffer_status);
+        DEBUG_SHOW ("SIE", wait_duration, buffer_mask, buffer_status);
        
     }
 
     if (wait_timeout) {
 
         DEBUG_TEXT = "Wait Timeout Error\tBuffer Completion Wait Timeout, Duration=%lld µs";
-        DEBUG_SHOW ("TIM", DEBUG_TEXT, wait_duration);
+        DEBUG_SHOW ("TIM", wait_duration);
 
         DEBUG_TEXT = "Wait Timeout Error\tBuffer Mask=%08X,\t Buffer Status=%08X";
-        DEBUG_SHOW ("TIM", DEBUG_TEXT, buffer_mask, buffer_status);
+        DEBUG_SHOW ("TIM", buffer_mask, buffer_status);
 
         DEBUG_TEXT = "Wait Timeout Error\tSIE Error Status=%08X";
-        DEBUG_SHOW ("TIM", DEBUG_TEXT, sie_errors);
+        DEBUG_SHOW ("TIM", sie_errors);
 
 
     } else {
@@ -75,12 +76,12 @@ void usb_wait_for_buffer_completion(uint8_t EP_NUMBER, uint32_t buffer_mask, boo
             buffer_status = usb_hw->buf_status;
 
             DEBUG_TEXT = "Buffer Status\t\tCleared, \tMask=%08X, Register=%08X";
-            DEBUG_SHOW ("USB", DEBUG_TEXT , buffer_mask, buffer_status);
+            DEBUG_SHOW ("USB", buffer_mask, buffer_status);
 
         }
 
         DEBUG_TEXT = "Buffer Status\t\tComplete, \tBuffer Status Wait Duration=%lldµs";
-        DEBUG_SHOW ("USB", DEBUG_TEXT, wait_duration);
+        DEBUG_SHOW ("USB", wait_duration);
 
     }
     
@@ -102,7 +103,7 @@ void wait_for_transaction_completion(bool clear_transaction) {
     transaction_complete = usb_hw->sie_status & USB_SIE_STATUS_TRANS_COMPLETE_BITS;
 
     DEBUG_TEXT = "Serial Interface Engine\tWaiting Max. %d µs for Transaction Completion";
-    DEBUG_SHOW ("SIE", DEBUG_TEXT, wait_microseconds);
+    DEBUG_SHOW ("SIE", wait_microseconds);
     
     do { 
 
@@ -121,7 +122,7 @@ void wait_for_transaction_completion(bool clear_transaction) {
     if (sie_errors) {
 
         DEBUG_TEXT = "Serial Interface Engine\tSIE Error Status=%08X";
-        DEBUG_SHOW ("SIE", DEBUG_TEXT, sie_errors);
+        DEBUG_SHOW ("SIE", sie_errors);
         
         sie_status_error_handler();
 
@@ -130,7 +131,7 @@ void wait_for_transaction_completion(bool clear_transaction) {
     if (wait_timeout) {
 
         DEBUG_TEXT = "Wait Timeout Error\tTransaction Completion Wait Timeout, Duration=%lld µs";
-        DEBUG_SHOW ("TIM", DEBUG_TEXT, wait_duration);
+        DEBUG_SHOW ("TIM", wait_duration);
 
     } else {
 
@@ -139,12 +140,12 @@ void wait_for_transaction_completion(bool clear_transaction) {
             usb_hardware_clear->sie_status = USB_SIE_STATUS_TRANS_COMPLETE_BITS;
 
             DEBUG_TEXT = "Serial Interface Engine\tCleared Transaction Complete Bits";
-            DEBUG_SHOW ("SIE", DEBUG_TEXT );
+            DEBUG_SHOW ("SIE");
 
         }
 
         DEBUG_TEXT = "Serial Interface Engine\tTransaction Complete, Wait Duration=%lldµs";
-        DEBUG_SHOW ("USB", DEBUG_TEXT, wait_duration);
+        DEBUG_SHOW ("USB", wait_duration);
 
     }
     
@@ -156,7 +157,7 @@ void __not_in_flash_func (clear_buffer_status)(uint32_t buffer_status_bits) {
     usb_hardware_clear->buf_status = buffer_status_bits;
 
     DEBUG_TEXT = "Buffer Status Handler \tCleared Buffer Status, Bit Mask=%08x";
-    DEBUG_SHOW ("IRQ", DEBUG_TEXT, buffer_status_bits);
+    DEBUG_SHOW ("IRQ", buffer_status_bits);
 
 }
 
@@ -165,7 +166,7 @@ uint32_t toggle_data_pid(uint32_t data_pid) {
     uint32_t new_pid = data_pid ? USB_BUF_CTRL_DATA0_PID : USB_BUF_CTRL_DATA1_PID;
 
     DEBUG_TEXT = "USB Data Transfer \tToggling Old PID=%d > New PID=%d";
-    DEBUG_SHOW ("USB", DEBUG_TEXT , data_pid/8192, new_pid/8192);
+    DEBUG_SHOW ("USB", data_pid/8192, new_pid/8192);
 
     return new_pid;
 

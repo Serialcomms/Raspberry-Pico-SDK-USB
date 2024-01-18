@@ -7,7 +7,7 @@
 #include "include/show_registers.h"
 #include "include/epx_handlers.h"
 
-static uint8_t *DEBUG_TEXT = DEBUG_STRING_BUFFER;
+extern uint8_t *DEBUG_TEXT;
 
 void  __not_in_flash_func (ep1_handler_to_host)(uint8_t EP_NUMBER) {
  
@@ -25,9 +25,9 @@ void  __not_in_flash_func (ep1_handler_to_host)(uint8_t EP_NUMBER) {
     usb_hardware_clear->buf_status = USB_BUFF_STATUS_EP1_IN_BITS;
 
     DEBUG_TEXT = "Buffer Status Handler \tCompletion Handler for Endpoint %d";
-    DEBUG_SHOW ("IRQ", DEBUG_TEXT, EP_NUMBER);
+    DEBUG_SHOW ("IRQ", EP_NUMBER);
 
     DEBUG_TEXT = "Buffer Status Handler \tCleared Buffer Status, Bit Mask=%08x";
-    DEBUG_SHOW ("IRQ", DEBUG_TEXT, USB_BUFF_STATUS_EP1_IN_BITS);
+    DEBUG_SHOW ("IRQ", USB_BUFF_STATUS_EP1_IN_BITS);
 
 }

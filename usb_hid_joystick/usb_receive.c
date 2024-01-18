@@ -8,7 +8,7 @@
 #include "include/usb_sie_errors.h"
 #include "include/show_registers.h"
 
-static uint8_t *DEBUG_TEXT = DEBUG_STRING_BUFFER;
+extern uint8_t *DEBUG_TEXT;
 
 void receive_status_transaction_from_host(uint8_t EP_NUMBER, bool clear_buffer_status) {
 
@@ -30,10 +30,10 @@ void receive_status_transaction_from_host(uint8_t EP_NUMBER, bool clear_buffer_s
     buffer_control = usb_dpram->ep_buf_ctrl[EP_NUMBER].out;
 
     DEBUG_TEXT = "USB Data Transfer \tReceive Status Transaction Start, Register=%08X";
-    DEBUG_SHOW ("USB", DEBUG_TEXT, buffer_status);
+    DEBUG_SHOW ("USB", buffer_status);
 
     DEBUG_TEXT = "USB Data Transfer \tReceive Status Transaction Start,     Mask=%08X";
-    DEBUG_SHOW ("USB", DEBUG_TEXT, buffer_status_mask);
+    DEBUG_SHOW ("USB", buffer_status_mask);
 
     bytes_received = get_buffer_bytes_to_pico(EP_NUMBER);
     
@@ -57,12 +57,12 @@ void receive_status_transaction_from_host(uint8_t EP_NUMBER, bool clear_buffer_s
     buffer_control = usb_dpram->ep_buf_ctrl[EP_NUMBER].out;
 
     DEBUG_TEXT = "USB Data Transfer \tReceive Status Transaction End,   Register=%08X";
-    DEBUG_SHOW ("USB", DEBUG_TEXT, buffer_status);
+    DEBUG_SHOW ("USB", buffer_status);
 
     if (bytes_received == 0) {
 
         DEBUG_TEXT = "USB Data Transfer \tReceive Zero Length Packet (Bytes=%d) from host";
-        DEBUG_SHOW ("USB", DEBUG_TEXT, bytes_received);
+        DEBUG_SHOW ("USB", bytes_received);
 
     }
 
@@ -81,7 +81,7 @@ void usb_start_transfer_host_to_pico(uint8_t EP_NUMBER, uint16_t buffer_length) 
     usb_dpram->ep_buf_ctrl[EP_NUMBER].out = buffer_dispatch;
 
     DEBUG_TEXT = "USB Data Transfer \tHost to Pico, PID=%08X, Length=%d";
-    DEBUG_SHOW ("USB", DEBUG_TEXT, DATA_PID, buffer_length);
+    DEBUG_SHOW ("USB", DATA_PID, buffer_length);
 
 }
 

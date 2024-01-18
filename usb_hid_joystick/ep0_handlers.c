@@ -9,7 +9,7 @@
 #include "include/show_registers.h"
 #include "include/ep0_handlers.h"
      
-static uint8_t *DEBUG_TEXT = DEBUG_STRING_BUFFER;
+extern uint8_t *DEBUG_TEXT;
 
 uint32_t transaction_duration = 0;
 
@@ -41,12 +41,12 @@ void  __not_in_flash_func (ep0_handler_to_host)(uint8_t EP_NUMBER) {
     const bool USE_ASYNC_HANDLER = false;  // does not call properly when = true;
 
     DEBUG_TEXT = "Buffer Status Handler \tStarting Completion Handler for Endpoint %d";
-    DEBUG_SHOW ("IRQ", DEBUG_TEXT, EP_NUMBER);
+    DEBUG_SHOW ("IRQ", EP_NUMBER);
 
     if (host_endpoint[0].async_mode) {
 
         DEBUG_TEXT = "Buffer Status Handler \tStarting ASYNC Completion Handler for Endpoint %d";
-        DEBUG_SHOW ("IRQ", DEBUG_TEXT, EP_NUMBER);
+        DEBUG_SHOW ("IRQ", EP_NUMBER);
        
         if (USE_ASYNC_HANDLER) {
 
@@ -63,7 +63,7 @@ void  __not_in_flash_func (ep0_handler_to_host)(uint8_t EP_NUMBER) {
         } else {
 
             DEBUG_TEXT = "Buffer Status Handler \tTransfer Complete, Async Bytes Transfered=%d";
-            DEBUG_SHOW ("IRQ", DEBUG_TEXT, host_endpoint[0].bytes_transferred);
+            DEBUG_SHOW ("IRQ", host_endpoint[0].bytes_transferred);
 
             receive_status_transaction_from_host(0, true);
 
@@ -82,7 +82,7 @@ void  __not_in_flash_func (ep0_handler_to_host)(uint8_t EP_NUMBER) {
         } else {
 
         DEBUG_TEXT = "Buffer Status Handler \tAsync Mode=False, Clearing Buffer Status";
-        DEBUG_SHOW ("IRQ", DEBUG_TEXT);
+        DEBUG_SHOW ("IRQ");
 
         send_ack_handshake_to_host(0, true);
 

@@ -3,7 +3,7 @@
 #include "pico/types.h"
 #include "include/usb_debug.h"
 #include "include/usb_reset.h"
-#include "include/setup_packet.h"
+#include "include/usb_setup_packet.h"
 #include "include/setup_device.h"
 #include "include/show_registers.h"
 #include "include/usb_interrupts.h"
@@ -14,7 +14,7 @@
 
 #include "hardware/irq.h"                 
 
-static uint8_t *DEBUG_TEXT = DEBUG_STRING_BUFFER;
+extern uint8_t *DEBUG_TEXT;
 
 void  __not_in_flash_func (usb_handle_buffer_status_host)(uint8_t EP_NUMBER) {
 
@@ -60,10 +60,10 @@ void __not_in_flash_func (buffer_completion_default)(uint8_t EP_NUMBER, uint8_t 
     usb_hardware_clear->buf_status = buffer_status_bit;
    
     DEBUG_TEXT = "Buffer Status Handler \tNo Completion Handler for Endpoint Number=%d";
-    DEBUG_SHOW ("IRQ", DEBUG_TEXT, EP_NUMBER);
+    DEBUG_SHOW ("IRQ", EP_NUMBER);
 
     DEBUG_TEXT = "Buffer Status Handler \tCleared Buffer Status Bit=%08x";
-    DEBUG_SHOW ("IRQ", DEBUG_TEXT, buffer_status_bit);
+    DEBUG_SHOW ("IRQ", buffer_status_bit);
 
 }
 
@@ -76,7 +76,7 @@ void __not_in_flash_func (usb_handle_buffer_status()) {
     do {
 
         DEBUG_TEXT = "Buffer Status Handler \tProcessing Endpoint Number=%d, IRQ=%s";
-        DEBUG_SHOW ("IRQ", DEBUG_TEXT, endpoint_buffer_number, endpoint_irq_pending(endpoint_buffer_status));
+        DEBUG_SHOW ("IRQ", endpoint_buffer_number, endpoint_irq_pending(endpoint_buffer_status));
 
         if (endpoint_buffer_status & 0x1) {
 
@@ -106,7 +106,7 @@ void __not_in_flash_func (isr_usbctrl()) {           // USB interrupt handler IR
     if (IRQ_STATUS & USB_INTS_BUS_RESET_BITS) {          
 
         DEBUG_TEXT = "USB BUS RESET \t\tUSB Bus Reset command received from host";
-        DEBUG_SHOW ("IRQ", DEBUG_TEXT);
+        DEBUG_SHOW ("IRQ");
    
         usb_hardware_clear->sie_status = USB_SIE_STATUS_BUS_RESET_BITS;
 
@@ -119,7 +119,7 @@ void __not_in_flash_func (isr_usbctrl()) {           // USB interrupt handler IR
     if (IRQ_STATUS & USB_INTS_SETUP_REQ_BITS) {
 
         DEBUG_TEXT = "USB Device Setup\tSetup command received from host";
-        DEBUG_SHOW ("IRQ", DEBUG_TEXT);
+        DEBUG_SHOW ("IRQ");
 
         usb_hardware_clear->sie_status = USB_SIE_STATUS_SETUP_REC_BITS;
 
@@ -132,7 +132,7 @@ void __not_in_flash_func (isr_usbctrl()) {           // USB interrupt handler IR
     if (IRQ_STATUS & USB_INTS_BUFF_STATUS_BITS) { 
 
         DEBUG_TEXT = "USB Buffer Completion\tBuffer Status Register=%08x";
-        DEBUG_SHOW ("IRQ", DEBUG_TEXT, BUF_STATUS);
+        DEBUG_SHOW ("IRQ", BUF_STATUS);
         
         IRQ_HANDLED |= USB_INTS_BUFF_STATUS_BITS;
 
@@ -143,7 +143,7 @@ void __not_in_flash_func (isr_usbctrl()) {           // USB interrupt handler IR
     if (IRQ_STATUS & USB_INTS_TRANS_COMPLETE_BITS) {
 
         DEBUG_TEXT = "USB Transaction Completion\tSIE Register=%08x";
-        DEBUG_SHOW ("IRQ", DEBUG_TEXT, SIE_STATUS);
+        DEBUG_SHOW ("IRQ", SIE_STATUS);
 
         usb_hardware_clear->sie_status = USB_INTS_TRANS_COMPLETE_BITS;
         
@@ -155,7 +155,7 @@ void __not_in_flash_func (isr_usbctrl()) {           // USB interrupt handler IR
     if (IRQ_STATUS ^ IRQ_HANDLED) {
 
         DEBUG_TEXT = "Unhandled Interrupt\t IRQ 0x%08x";
-        DEBUG_SHOW ("IRQ", DEBUG_TEXT , (uint) (IRQ_STATUS ^ IRQ_HANDLED));
+        DEBUG_SHOW ("IRQ", (uint) (IRQ_STATUS ^ IRQ_HANDLED));
         busy_wait_ms(1000);
             
     }

@@ -8,7 +8,7 @@
 #undef LIB_TINYUSB_HOST
 #undef LIB_TINYUSB_DEVICE
 
-static uint8_t *DEBUG_TEXT = DEBUG_STRING_BUFFER;
+extern uint8_t *DEBUG_TEXT;
 
 uint8_t *rp2040_rom_versions[] =  { "?", "V1", "V2", "V3" };
 uint8_t *rp2040_chip_versions[] = { "?", "B0/B1", "B2" };
@@ -74,14 +74,14 @@ uint32_t read_free_heap() {
 void show_free_total_heap() {
 
   DEBUG_TEXT = "Pico Memory Heap \tTotal Bytes=%d, Free Bytes=%d" ;
-  DEBUG_SHOW ("MEM", DEBUG_TEXT, read_total_heap(), read_free_heap());
+  DEBUG_SHOW ("MEM", read_total_heap(), read_free_heap());
 
 }
 
 void show_pico_clocks() {
 
   DEBUG_TEXT = "Pico Clocks (MHz)\tOscillator=%d, System=%d, Peripheral=%d, USB=%d" ;
-  DEBUG_SHOW ("CLK", DEBUG_TEXT, read_clock_osc(), read_clock_sys(), read_clock_per(), read_clock_usb());
+  DEBUG_SHOW ("CLK", read_clock_osc(), read_clock_sys(), read_clock_per(), read_clock_usb());
 
 }
 

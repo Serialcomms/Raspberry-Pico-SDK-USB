@@ -1,30 +1,29 @@
 #include "pico/stdlib.h"
-#include "include/setup_packet.h"
 #include "include/usb_debug.h"
 #include "include/usb_common.h"
 #include "include/usb_transmit.h"
 #include "include/usb_receive.h"
 #include "include/setup_interface.h"
+#include "include/usb_setup_packet.h"
 #include "include/usb_descriptors.h"
 #include "include/usb_endpoints.h"
 #include "include/pico_device.h"
 
-static uint8_t *DEBUG_TEXT = DEBUG_STRING_BUFFER;
+extern uint8_t *DEBUG_TEXT;
 
-void usb_setup_interface_request_to_pico(struct usb_setup_command setup_command);
-void usb_setup_interface_respond_to_host(struct usb_setup_command setup_command);
+extern usb_setup_t *setup;
 
-void usb_setup_interface_request_to_pico(struct usb_setup_command setup_command) {
+void usb_setup_interface_request_to_pico() {
 
 DEBUG_TEXT = "Setup Interface \tRequest=%d, Type=%d";
-DEBUG_SHOW ("HID", DEBUG_TEXT, setup_command.request, setup_command.request_type);
+DEBUG_SHOW ("HID", setup->request, setup->request_type);
 
-switch (setup_command.request) {
+switch (setup->request) {
 
     case 0x0A:
 
         DEBUG_TEXT = "Setup Interface \tSetting Idle, Request=%d";
-        DEBUG_SHOW ("HID", DEBUG_TEXT, setup_command.request);
+        DEBUG_SHOW ("HID", setup->request);
 
         pico_usb_device.HID_SET_IDLE_RECEIVED = true;
 
@@ -36,7 +35,7 @@ switch (setup_command.request) {
     default:
 
         DEBUG_TEXT = "Setup Interface \tUnknown Request=%d";
-        DEBUG_SHOW ("HID", DEBUG_TEXT, setup_command.request);
+        DEBUG_SHOW ("HID", setup->request);
 
         send_ack_handshake_to_host(0, true);
 
@@ -46,10 +45,10 @@ switch (setup_command.request) {
 
 }
 
-void usb_setup_interface_respond_to_host(struct usb_setup_command setup_command) {
+void usb_setup_interface_respond_to_host() {
 
     DEBUG_TEXT = "Pico HID Interface \tSend HID Report Descriptor to Host";
-    DEBUG_SHOW ("HID", DEBUG_TEXT );
+    DEBUG_SHOW ("HID");
 
     send_hid_descriptors_to_host();
 
@@ -61,11 +60,11 @@ void send_hid_descriptors_to_host() {
     uint8_t  *report_descriptor = pico_hid_report_descriptor;
 
     DEBUG_TEXT = "Pico HID Report \tSend HID Descriptor to Host,\tBytes=%d";
-    DEBUG_SHOW ("HID", DEBUG_TEXT , report_length);
+    DEBUG_SHOW ("HID", report_length);
 
-    start_async_transfer_to_host(0, report_descriptor, report_length);
+  //  start_async_transfer_to_host(0, report_descriptor, report_length);
 
-   // synchronous_transfer_to_host(0, report_descriptor, report_length);
+    synchronous_transfer_to_host(0, report_descriptor, report_length);
 
    // receive_status_transaction_from_host(0, true);
 

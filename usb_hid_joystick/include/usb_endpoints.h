@@ -27,7 +27,7 @@ struct endpoint_profile {
      
     buffer_completion_handler completion_handler;
 
-} ;
+};
 
 extern bool valid_host_endpoint[15];
 extern bool valid_pico_endpoint[15];

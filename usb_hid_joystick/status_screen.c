@@ -14,7 +14,7 @@
 #include "include/setup_strings.h"
 #include "include/status_screen.h"
 
-static uint8_t *DEBUG_TEXT = DEBUG_STRING_BUFFER;
+extern uint8_t *DEBUG_TEXT;
 
 void clear_status_screen() {
 
@@ -33,7 +33,7 @@ void start_status_screen() {
 clear_status_screen();
 
 DEBUG_TEXT = "Pico Initialising\tUSB Device - HID Joystick Device Function";
-DEBUG_SHOW ("SDK", DEBUG_TEXT);
+DEBUG_SHOW ("SDK");
 
 generate_serial_number_string(false);
 

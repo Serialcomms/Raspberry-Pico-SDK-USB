@@ -15,7 +15,7 @@
 #undef LIB_TINYUSB_HOST
 #undef LIB_TINYUSB_DEVICE
 
-static uint8_t *DEBUG_TEXT = DEBUG_STRING_BUFFER;
+extern uint8_t *DEBUG_TEXT;
 
 int main(void) {
 
@@ -52,12 +52,12 @@ int main(void) {
         gpio_put(PICO_DEFAULT_LED_PIN, 1);        
 
         DEBUG_TEXT = "Pico SDK/USB \t\tJoystick Simulation Starting";
-        DEBUG_SHOW ("SDK", DEBUG_TEXT);
+        DEBUG_SHOW ("SDK");
 
         busy_wait_ms(2000);
 
         DEBUG_TEXT = "Simulation Starting\tUSB Joystick with controls and buttons";
-        DEBUG_SHOW ("SDK" , DEBUG_TEXT);
+        DEBUG_SHOW ("SDK");
 
         busy_wait_ms(1000);
 
@@ -73,7 +73,7 @@ int main(void) {
     } else {
 
     DEBUG_TEXT = "USB Device Failure\tError Initialising USB";
-    DEBUG_SHOW ("ERR" , DEBUG_TEXT);
+    DEBUG_SHOW ("ERR");
 
     show_device_enumerated();
 
@@ -109,7 +109,7 @@ void wait_for_device_enumeration() {
     device_enumerated = false;
 
     DEBUG_TEXT = "Device Enumeration\tWaiting %d seconds for USB Device Enumeration";
-    DEBUG_SHOW ("DEV", DEBUG_TEXT, wait_seconds);
+    DEBUG_SHOW ("DEV", wait_seconds);
     
     do { 
 
@@ -128,7 +128,7 @@ void wait_for_device_enumeration() {
     if (device_enumerated) {
 
     DEBUG_TEXT = "Device Enumerated\tWaited %d seconds for USB Device Enumeration";
-    DEBUG_SHOW ("DEV", DEBUG_TEXT, wait_duration/1000000);
+    DEBUG_SHOW ("DEV", wait_duration/1000000);
 
 
     }

@@ -16,11 +16,13 @@
 
 uint8_t DEBUG_STRING_BUFFER[100];
 
+uint8_t *DEBUG_TEXT = DEBUG_STRING_BUFFER;
+
 static struct critical_section debug_critical_section;
 
-void __not_in_flash_func(DEBUG_SHOW)(uint8_t *prefix_text, uint8_t *debug_text, ...) {
+void __not_in_flash_func(DEBUG_SHOW)(uint8_t *prefix_text,  ...) {
 
-   // if (2 > 1) {
+   //if (2 > 1) {
  
     critical_section_enter_blocking(&debug_critical_section);
   
@@ -32,9 +34,9 @@ void __not_in_flash_func(DEBUG_SHOW)(uint8_t *prefix_text, uint8_t *debug_text, 
     
     va_list args;
 
-    va_start(args, debug_text);
+    va_start(args, prefix_text);
    
-    vprintf(debug_text, args);
+    vprintf(DEBUG_TEXT, args);
    
     va_end(args);
 
@@ -42,9 +44,11 @@ void __not_in_flash_func(DEBUG_SHOW)(uint8_t *prefix_text, uint8_t *debug_text, 
 
     fflush(stdout);
 
+    DEBUG_TEXT = "";
+
     critical_section_exit(&debug_critical_section);
 
-   // }
+  // }
   
 }
 

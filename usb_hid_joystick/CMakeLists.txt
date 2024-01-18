@@ -8,8 +8,7 @@ add_executable(usb_hid_joystick
        
         pico_info.c
         pico_device.c
-         
-        setup_packet.c
+
         setup_device.c
         setup_config.c
         setup_strings.c
@@ -24,6 +23,7 @@ add_executable(usb_hid_joystick
         usb_endpoints.c 
         usb_interrupts.c
         usb_descriptors.c 
+        usb_setup_packet.c
         usb_sie_errors.c 
         
         ep0_handlers.c
