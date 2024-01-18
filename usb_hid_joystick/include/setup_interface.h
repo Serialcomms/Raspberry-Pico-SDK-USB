@@ -1,5 +1,5 @@
 
-void send_hid_descriptors_to_host();
+static void send_hid_descriptors_to_host();
 
 void usb_setup_interface_request_to_pico();
 

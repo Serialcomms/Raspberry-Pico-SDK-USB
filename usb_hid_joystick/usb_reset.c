@@ -5,7 +5,7 @@
 #include "include/usb_debug.h"
 #include "include/setup_device.h"
 #include "include/show_registers.h"
-#include "include/usb_setup_packet.h"
+#include "include/setup_packet.h"
 #include "include/usb_protocol.h"
 #include "include/usb_endpoints.h"
 #include "include/usb_transmit.h"
@@ -16,9 +16,9 @@
 #include "include/usb_descriptors.h"
 #include "hardware/resets.h"
 
-const io_rw_32 CLEAR_ALL_BITS = 0xFFFFFFFF; 
-
 extern uint8_t *DEBUG_TEXT;
+
+const io_rw_32 CLEAR_ALL_BITS = 0xFFFFFFFF; 
 
 void usb_bus_reset() { 
 

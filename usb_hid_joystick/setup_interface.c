@@ -4,7 +4,7 @@
 #include "include/usb_transmit.h"
 #include "include/usb_receive.h"
 #include "include/setup_interface.h"
-#include "include/usb_setup_packet.h"
+#include "include/setup_packet.h"
 #include "include/usb_descriptors.h"
 #include "include/usb_endpoints.h"
 #include "include/pico_device.h"
@@ -54,7 +54,9 @@ void usb_setup_interface_respond_to_host() {
 
 }
 
-void send_hid_descriptors_to_host() {
+static void send_hid_descriptors_to_host() {
+
+    const bool ASYNC_MODE_TRANSFER = true;
 
     uint16_t  report_length = hid_report_descriptor_size();
     uint8_t  *report_descriptor = pico_hid_report_descriptor;
@@ -62,13 +64,19 @@ void send_hid_descriptors_to_host() {
     DEBUG_TEXT = "Pico HID Report \tSend HID Descriptor to Host,\tBytes=%d";
     DEBUG_SHOW ("HID", report_length);
 
-  //  start_async_transfer_to_host(0, report_descriptor, report_length);
+    if (ASYNC_MODE_TRANSFER) { // aysnc mode test
 
-    synchronous_transfer_to_host(0, report_descriptor, report_length);
+      start_async_transfer_to_host(0, report_descriptor, report_length);
 
-   // receive_status_transaction_from_host(0, true);
+    } else {
 
-  //  wait_for_transaction_completion(true);
+      synchronous_transfer_to_host(0, report_descriptor, report_length);
+
+      receive_status_transaction_from_host(0, true);
+
+      wait_for_transaction_completion(true);
+
+    }
 
     pico_usb_device.HID_REPORT_DESCRIPTOR_SENT = true;
 

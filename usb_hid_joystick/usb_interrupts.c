@@ -3,7 +3,7 @@
 #include "pico/types.h"
 #include "include/usb_debug.h"
 #include "include/usb_reset.h"
-#include "include/usb_setup_packet.h"
+#include "include/setup_packet.h"
 #include "include/setup_device.h"
 #include "include/show_registers.h"
 #include "include/usb_interrupts.h"

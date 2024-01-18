@@ -37,7 +37,7 @@ void receive_status_transaction_from_host(uint8_t EP_NUMBER, bool clear_buffer_s
 
     bytes_received = get_buffer_bytes_to_pico(EP_NUMBER);
     
-    buffer_dispatch = USB_BUF_CTRL_DATA1_PID;      // PID1 expected from host
+    buffer_dispatch = USB_BUF_CTRL_DATA1_PID;      // DATA1_PID expected from host
     
     usb_dpram->ep_buf_ctrl[EP_NUMBER].out = buffer_dispatch;
 

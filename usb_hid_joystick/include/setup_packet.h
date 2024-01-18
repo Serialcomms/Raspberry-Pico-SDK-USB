@@ -1,4 +1,3 @@
-
 struct usb_setup_command {
 
     uint8_t descriptor_type;
@@ -13,19 +12,14 @@ struct usb_setup_command {
 
 } __packed;
 
+typedef struct usb_setup_command usb_setup_t;
+ 
 void usb_handle_setup_packet();
 
-void usb_setup_unknown(uint8_t recipient);
+static void usb_setup_device();
 
-void usb_setup_device(struct usb_setup_command setup_command);
+static void usb_setup_interface();
 
-void usb_setup_interface(struct usb_setup_command setup_command);
+static void prepare_setup_packet();
 
-void usb_setup_device_request_to_pico(struct usb_setup_command setup_command);
-
-void usb_setup_device_respond_to_host(struct usb_setup_command setup_command);
-
-struct usb_setup_command prepare_setup_packet();
-
-
-
+static void usb_setup_unknown(uint8_t recipient);

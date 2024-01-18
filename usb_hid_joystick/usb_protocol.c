@@ -16,7 +16,7 @@
 #include "include/usb_protocol.h"
 #include "include/setup_endpoints.h"
 #include "include/usb_descriptors.h"
-#include "include/usb_setup_packet.h"
+#include "include/setup_packet.h"
 
 extern uint8_t *DEBUG_TEXT;
 

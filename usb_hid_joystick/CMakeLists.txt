@@ -14,6 +14,7 @@ add_executable(usb_hid_joystick
         setup_strings.c
         setup_endpoints.c
         setup_interface.c
+        setup_packet.c
 
         usb_common.c
         usb_receive.c
@@ -23,7 +24,7 @@ add_executable(usb_hid_joystick
         usb_endpoints.c 
         usb_interrupts.c
         usb_descriptors.c 
-        usb_setup_packet.c
+
         usb_sie_errors.c 
         
         ep0_handlers.c
@@ -48,7 +49,7 @@ add_compile_options("-fstack-usage")
 add_compile_definitions(PICO_USE_STACK_GUARDS=0)
 add_compile_definitions(PICO_STDIO_DEADLOCK_TIMEOUT_MS=1500)
 
-target_compile_definitions(usb_hid_joystick PRIVATE PICO_STACK_SIZE=0x1000)
+target_compile_definitions(usb_hid_joystick PRIVATE PICO_STACK_SIZE=0x4000)
 
 pico_add_extra_outputs(usb_hid_joystick)
 

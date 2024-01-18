@@ -57,8 +57,6 @@ void show_device_enumerated() {
 
 }
 
-//set_binary_declarations();
-
 void set_binary_declarations() {     // for use with Picotool
 
     bi_decl(bi_program_description("Pico USB Joystick"));

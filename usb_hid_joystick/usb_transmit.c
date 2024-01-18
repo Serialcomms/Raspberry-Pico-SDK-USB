@@ -144,7 +144,7 @@ void synchronous_transfer_to_host(uint8_t EP_NUMBER, uint8_t *buffer_data, uint1
 
     host_endpoint[EP_NUMBER].transaction_duration = transaction_duration;
 
-    DEBUG_TEXT = "Synchronous Transfer \tBuffer Offset=%d, Transfer Duration=%lldµs";
+    DEBUG_TEXT = "Synchronous Transfer \tBuffer Offset=%d, Transfer Duration=%ldµs";
     DEBUG_SHOW ("USB", buffer_offset, transaction_duration);
 
 }
@@ -231,7 +231,7 @@ void usb_wait_for_buffer_available_to_host(uint8_t EP_NUMBER) {
     volatile bool wait_timeout;
     volatile uint32_t buffer_unavailable;
    
-    uint64_t wait_duration = 0;
+    uint32_t wait_duration = 0;
     absolute_time_t wait_time_now = get_absolute_time();
     absolute_time_t wait_time_end = make_timeout_time_us(100000);
     
@@ -251,12 +251,12 @@ void usb_wait_for_buffer_available_to_host(uint8_t EP_NUMBER) {
 
     if (wait_timeout) {
 
-        DEBUG_TEXT = "Buffer Wait Timeout\tWaited %d µs for buffer available to CPU";
+        DEBUG_TEXT = "Buffer Wait Timeout\tWaited %ld µs for buffer available to CPU";
         DEBUG_SHOW ("TIM", wait_duration);
 
     } else {
 
-        DEBUG_TEXT = "Buffer Wait Complete\tWaited %d µs for buffer available to CPU";
+        DEBUG_TEXT = "Buffer Wait Complete\tWaited %ld µs for buffer available to CPU";
         DEBUG_SHOW ("TIM", wait_duration);
 
     }
@@ -280,7 +280,7 @@ void usb_wait_for_buffer_completion_pico_to_host(uint8_t EP_NUMBER, bool buffer_
 
 void usb_wait_for_last_packet_to_host(uint8_t EP_NUMBER) {
 
-    uint64_t wait_duration = 0;
+    uint32_t wait_duration=0;
     volatile bool wait_timeout;  
     volatile bool last_received;
   
@@ -299,12 +299,12 @@ void usb_wait_for_last_packet_to_host(uint8_t EP_NUMBER) {
 
     if (wait_timeout) {
 
-        DEBUG_TEXT = "Wait Timeout Error\tLast Packet Wait Timeout, Duration=%lld µs";
+        DEBUG_TEXT = "Wait Timeout Error\tLast Packet Wait Timeout, Duration=%ld µs";
         DEBUG_SHOW ("USB", wait_duration);
 
     } else {
 
-        DEBUG_TEXT = "Wait Last Packet\tWait Duration=%lld µs";
+        DEBUG_TEXT = "Wait Last Packet\tWait Duration=%ld µs";
         DEBUG_SHOW ("SIE", wait_duration);
 
     }

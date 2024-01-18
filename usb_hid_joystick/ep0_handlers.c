@@ -88,9 +88,7 @@ void  __not_in_flash_func (ep0_handler_to_host)(uint8_t EP_NUMBER) {
 
         }
 
-    // clear_buffer_status(USB_BUFF_STATUS_EP0_IN_BITS); 
+    clear_buffer_status(USB_BUFF_STATUS_EP0_IN_BITS); 
 
-    usb_hardware_clear->buf_status = USB_BUFF_STATUS_EP0_IN_BITS;
- 
 }
 
