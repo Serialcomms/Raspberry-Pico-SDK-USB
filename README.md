@@ -10,6 +10,7 @@
 
 * [Microsoft USB Device Enumeration](https://techcommunity.microsoft.com/t5/microsoft-usb-blog/how-does-usb-stack-enumerate-a-device/ba-p/270685)
 * [Microsoft USB Control Transfer](https://learn.microsoft.com/en-us/windows-hardware/drivers/usbcon/usb-control-transfer)
+* [USB Descriptor and Request Parser](https://eleccelerator.com/usbdescreqparser/)
 
    
 </p>
