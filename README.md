@@ -28,9 +28,9 @@ It should then enumerate as a Human Interface Device / Joystick game controller 
 
 <table>
   <tr>
-    <td>First Screen Page</td>
-     <td>Holiday Mention</td>
-     <td>Present day in purple and selected day in pink</td>
+    <td>Control Panel</td>
+     <td>Joystick Properties</td>
+   
   </tr>
   <tr>
    
