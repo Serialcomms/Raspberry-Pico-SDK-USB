@@ -12,6 +12,7 @@
 * [Microsoft USB Control Transfer](https://learn.microsoft.com/en-us/windows-hardware/drivers/usbcon/usb-control-transfer)
 * [USB Descriptor and Request Parser](https://eleccelerator.com/usbdescreqparser/)
 * [BUSDOG USB Analyser](https://github.com/djpnewton/busdog)
+* [Thesycon USB Descriptor Dumper](https://www.thesycon.de/eng/usb_descriptordumper.shtml)
 
    
 </p>
