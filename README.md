@@ -4,7 +4,7 @@
 
 This repository has one primary objective only, which is to understand the viability of developing an alternative USB Device stack.
 
-The 'stack' [^] is written in C using native SDK functions only, and is derived from the low-level device example provided by Raspberry.
+The 'stack' [^1] is written in C using native SDK functions only, and is derived from the low-level device example provided by Raspberry.
 
 Extensive debug/log reporting via UART0 has been provided in lieu of an external hardware USB protocol analyser.
 
@@ -18,8 +18,7 @@ Some unresolved issues (possibly related to stack usage ?) remain in the endpoin
 
 The source c
 
-[^1]: The 'stack' is more of a 'controller' at this stage of development.
-There are no published APIs or documentation available.
+
 
 <details><summary>Acknowledgements</summary>  
 <p>
@@ -33,3 +32,6 @@ There are no published APIs or documentation available.
    
 </p>
 </details>
+
+[^1]: The 'stack' is more of a 'controller' at this stage of development.
+There are no published APIs or documentation available.
