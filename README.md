@@ -8,6 +8,10 @@ The 'stack' [^1] is written in C using native SDK functions only, and is derived
 
 Extensive debug/log reporting via UART0 has been provided in lieu of an external hardware USB protocol analyser.
 
+Synchronous (blocking) and Asynchronous (interrupt-driven) transmission routined are provided. 
+
+The example provided simulates a continually-running joystick.
+
 No attempt to optimise memory usage, code size, style or performance has been made at this stage.
 
 The repository may be extensively modified or made unavailable at any time without notice.
@@ -16,8 +20,7 @@ Some unresolved issues (possibly related to stack usage ?) remain in the endpoin
 
 ### Usage
 
-The source c
-
+Once compiled, a
 
 
 <details><summary>Acknowledgements</summary>  
