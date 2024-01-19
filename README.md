@@ -2,9 +2,9 @@
 
 #### Proof-of-Concept development to help understand USB device stack operation in a Pico SDK/Hardware context.
 
-This repository has one objective only, which is to understand the viability of developing an alternative USB Device stack.
+This repository has one objective only, which is to understand the viability of developing a USB Device stack using native SDK functions only.
 
-The 'stack' [^1] is written in C using native SDK functions only, and is derived from the low-level device example provided by Raspberry.
+The 'stack' [^1] is written in C, and is derived from the low-level device example provided by Raspberry, supported by the Raspberry documentation set.
 
 Extensive debug/log reporting via UART0 has been provided in lieu of an external hardware USB protocol analyser.
 
