@@ -27,6 +27,10 @@ It should then enumerate as a Human Interface Device / Joystick game controller 
 
 #### Windows Game Controllers
 
+<p>
+On a Windows machine, type `Joy.cpl` into the search box.
+<p float="left">
+
 <table>
   <tr>
       <td>Control Panel</td>
@@ -43,7 +47,9 @@ It should then enumerate as a Human Interface Device / Joystick game controller 
   
  </table>
 
+</p>
 
+</p>
 
 #### Windows Game Controllers
 <p>
