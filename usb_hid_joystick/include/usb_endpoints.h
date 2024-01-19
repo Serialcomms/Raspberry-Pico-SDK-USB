@@ -37,5 +37,3 @@ extern struct endpoint_profile pico_endpoint[15];
 
 extern buffer_completion_handler buffer_completion_handler_pico[15];
 extern buffer_completion_handler buffer_completion_handler_host[15];
-
-

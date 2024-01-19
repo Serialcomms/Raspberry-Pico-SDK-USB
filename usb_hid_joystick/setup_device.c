@@ -1,8 +1,4 @@
-/**
- * Copyright (c) 2024 SerialComms
- *
- */
-             
+     
 #include "pico/stdlib.h"
 #include "include/usb_debug.h"
 #include "include/usb_common.h"
@@ -46,8 +42,6 @@ void send_device_descriptor_to_host(uint16_t request_packet_size) {
   receive_status_transaction_from_host(0, true);
 
   wait_for_transaction_completion(true);
-
-  //if (descriptor_bytes > 8) 
   
   pico_usb_device.DEVICE_DESCRIPTOR_SENT = true;
 

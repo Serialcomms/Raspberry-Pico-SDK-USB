@@ -1,5 +1,4 @@
 
-
 uint16_t read_clock_osc();
 uint16_t read_clock_sys();
 uint16_t read_clock_usb();

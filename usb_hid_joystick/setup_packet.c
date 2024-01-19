@@ -20,7 +20,7 @@ usb_setup_t setup_command;
 
 usb_setup_t *setup = &setup_command;
 
-static void prepare_setup_packet() {
+static inline void prepare_setup_packet() {
 
     volatile uint8_t *setup_packet = usb_dpram->setup_packet;
 
@@ -76,20 +76,20 @@ void usb_handle_setup_packet() {
     } 
 }
 
-void usb_setup_device() {
+static inline void usb_setup_device() {
 
     if (setup->direction) {
 
-     usb_setup_device_respond_to_host();
+        usb_setup_device_respond_to_host();
 
     } else {
 
-     usb_setup_device_request_to_pico();
+        usb_setup_device_request_to_pico();
 
     }
 }
 
-void usb_setup_interface() {
+static inline void usb_setup_interface() {
 
     if (setup->direction) {
 
@@ -102,7 +102,7 @@ void usb_setup_interface() {
     }
 }
 
-static void usb_setup_unknown(uint8_t recipient) {
+static inline void usb_setup_unknown(uint8_t recipient) {
 
     DEBUG_TEXT = "Unhandled device setup request, recipient=%02X";
     DEBUG_SHOW ("ERR", recipient);

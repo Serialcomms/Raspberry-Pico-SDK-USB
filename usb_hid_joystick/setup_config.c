@@ -31,9 +31,6 @@ void send_device_configuration_to_host(uint16_t command_length) {
 
   wait_for_transaction_completion(true);
 
-  //if (full_descriptor) 
-  
   pico_usb_device.DEVICE_CONFIGURATION_SENT = true;
-
 
 }

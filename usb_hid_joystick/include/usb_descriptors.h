@@ -1,14 +1,6 @@
-/*
- * Copyright (c) 2020 Raspberry Pi (Trading) Ltd.
- *
- * SPDX-License-Identifier: BSD-3-Clause
- */
-
 extern uint8_t pico_device_descriptor[];
 extern uint8_t pico_config_descriptor[];
 extern uint8_t pico_hid_report_descriptor[];
-
-//extern uint16_t hid_report_descriptor_size;
 
 uint8_t ep0_packet_size();
 uint16_t config_total_length();

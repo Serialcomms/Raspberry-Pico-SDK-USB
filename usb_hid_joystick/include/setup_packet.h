@@ -16,10 +16,10 @@ typedef struct usb_setup_command usb_setup_t;
  
 void usb_handle_setup_packet();
 
-static void usb_setup_device();
+static inline void usb_setup_device();
 
-static void usb_setup_interface();
+static inline void usb_setup_interface();
 
-static void prepare_setup_packet();
+static inline void prepare_setup_packet();
 
-static void usb_setup_unknown(uint8_t recipient);
+static inline void usb_setup_unknown(uint8_t recipient);

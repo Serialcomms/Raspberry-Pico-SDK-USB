@@ -13,9 +13,6 @@
 
 extern uint8_t *DEBUG_TEXT;
 
-const uint16_t usb_dpram_size = sizeof(*usb_dpram);
-const uint16_t usb_dpram_epx_size = usb_dpram_size - 128; // check
-
 static inline uint32_t usb_buffer_offset(volatile uint8_t *buffer) {  // from pico-examples
 
   return (uint32_t) buffer ^ (uint32_t) usb_dpram;

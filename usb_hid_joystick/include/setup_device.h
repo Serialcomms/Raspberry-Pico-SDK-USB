@@ -47,6 +47,3 @@
 void set_pico_device_address(uint16_t DEVICE_ADDRESS);
 
 void send_device_descriptor_to_host(uint16_t packet_size);
-
-
-
