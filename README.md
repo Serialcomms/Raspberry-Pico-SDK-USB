@@ -26,34 +26,8 @@ It should then enumerate as a Human Interface Device / Joystick game controller 
 
 
 #### Windows Game Controllers
-
 <p>
-On a Windows machine, type `Joy.cpl` into the search box.
-<p float="left">
-
-<table>
-  <tr>
-      <td>Control Panel</td>
-      <td>Joystick Properties</td>
-   
-  </tr>
-  
-  <tr>
-   
-      <td><img src="images/joy_cpl.png" alt="Control Panel" title="Game Controllers" width=270 height=480></td>
-      <td><img src="images/WIN10_JOYSTICK.png" alt="Joystick Properties" title="Joystick Properties" width=270 height=480></td>
-   
-  </tr>
-  
- </table>
-
-</p>
-
-</p>
-
-#### Windows Game Controllers
-<p>
-On a Windows machine, type `Joy.cpl` into the search box.
+On a Windows machine, type `Joy.cpl` into the search box to display the game controller properties.
 <p float="left">
 
 <img src="images/joy_cpl.png" alt="Control Panel" title="Game Controllers" width="25%" height="25%">
