@@ -1,5 +1,6 @@
 
 #include "pico/stdlib.h"
+#include "include/usb_main.h"
 #include "include/usb_debug.h"
 #include "include/usb_dev_init.h"
 #include "include/usb_joystick.h"
@@ -8,8 +9,6 @@
 #include "include/usb_protocol.h"
 #include "include/usb_common.h"
 #include "include/pico_device.h"
-#include "include/usb_main.h"
-
 #include "include/usb_sie_errors.h"
 
 #undef LIB_TINYUSB_HOST
@@ -25,10 +24,6 @@ int main(void) {
 
     gpio_set_dir(PICO_DEFAULT_LED_PIN, GPIO_OUT);
    
-    irq_set_enabled(UART0_IRQ, true);
-   
-    uart_set_fifo_enabled(uart0, true);
-
     stdio_uart_init();
 
     busy_wait_ms(100);
@@ -41,11 +36,11 @@ int main(void) {
 
     usb_device_init();
 
+    usb_insert_device();
+
     busy_wait_ms(3000);
 
     wait_for_device_enumeration();
-
-   // if (false) {
 
     if (usb_device_enumerated()) {
 
@@ -76,8 +71,6 @@ int main(void) {
     DEBUG_SHOW ("ERR");
 
     show_device_enumerated();
-
-    //show_free_total_heap();
 
         while (1) {  
 
@@ -113,7 +106,7 @@ void wait_for_device_enumeration() {
     
     do { 
 
-        busy_wait_ms(500);
+        busy_wait_ms(333);
 
         sie_errors = check_sie_errors();
 
@@ -127,9 +120,8 @@ void wait_for_device_enumeration() {
 
     if (device_enumerated) {
 
-    DEBUG_TEXT = "Device Enumerated\tWaited %d seconds for USB Device Enumeration";
-    DEBUG_SHOW ("DEV", wait_duration/1000000);
-
+        DEBUG_TEXT = "Device Enumerated\tWaited %d seconds for USB Device Enumeration";
+        DEBUG_SHOW ("DEV", wait_duration/1000000);
 
     }
 

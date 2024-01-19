@@ -192,12 +192,7 @@ void start_async_transfer_to_host(uint8_t EP_NUMBER, void *source_buffer_address
 
 void send_ack_handshake_to_host(uint8_t EP_NUMBER, bool clear_buffer_status) {
 
-    // bit 0 = EP0_IN
-    // bit 1 = EP0_OUT
-    // bit 2 = EP1_IN
-    // bit 3 = EP1_OUT
-
-    uint8_t shift_left_bits = (2u * EP_NUMBER) + 0;
+    uint8_t shift_left_bits = (2 * EP_NUMBER) + 0;
 
     uint32_t buffer_control = 0;
     uint32_t buffer_dispatch = 0;
@@ -265,11 +260,6 @@ void usb_wait_for_buffer_available_to_host(uint8_t EP_NUMBER) {
 
 void usb_wait_for_buffer_completion_pico_to_host(uint8_t EP_NUMBER, bool buffer_status_clear) {
 
-    // bit 0 = EP0_IN
-    // bit 1 = EP0_OUT
-    // bit 2 = EP1_IN
-    // bit 3 = EP1_OUT
-
     uint8_t shift_left_bits = (2 * EP_NUMBER) + 0;
     
     uint32_t buffer_mask = 0x1 << shift_left_bits;
@@ -281,6 +271,7 @@ void usb_wait_for_buffer_completion_pico_to_host(uint8_t EP_NUMBER, bool buffer_
 void usb_wait_for_last_packet_to_host(uint8_t EP_NUMBER) {
 
     uint32_t wait_duration=0;
+    volatile bool sie_errors;
     volatile bool wait_timeout;  
     volatile bool last_received;
   
@@ -289,11 +280,13 @@ void usb_wait_for_last_packet_to_host(uint8_t EP_NUMBER) {
 
     do { 
 
+        sie_errors = check_sie_errors();
+        
         wait_timeout = time_reached(wait_time_end);
 
         last_received = usb_dpram->ep_buf_ctrl[EP_NUMBER].in & USB_BUF_CTRL_LAST;
        
-    } while (!wait_timeout && !last_received);
+    } while (!wait_timeout && !sie_errors && !last_received);
 
         wait_duration = absolute_time_diff_us(wait_time_now, get_absolute_time());
 

@@ -1,8 +1,6 @@
 
 /**
  * Copyright (c) 2023 SerialComms (github) 
- *
- * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #undef LIB_TINYUSB_HOST

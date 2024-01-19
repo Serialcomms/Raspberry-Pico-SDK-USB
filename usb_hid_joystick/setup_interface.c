@@ -27,9 +27,6 @@ switch (setup->request) {
 
         pico_usb_device.HID_SET_IDLE_RECEIVED = true;
 
-      // send_ack_handshake_to_host(0, true);
-      // now done by completion handler. 
-
     break;
 
     default:
@@ -77,7 +74,5 @@ static void send_hid_descriptors_to_host() {
       wait_for_transaction_completion(true);
 
     }
-
-    pico_usb_device.HID_REPORT_DESCRIPTOR_SENT = true;
-
+      pico_usb_device.HID_REPORT_DESCRIPTOR_SENT = true;
 }

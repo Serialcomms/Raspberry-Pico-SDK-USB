@@ -49,10 +49,6 @@ void usb_bus_reset() {
 
   busy_wait_ms(2);
 
- // receive_status_transaction_from_host(0, true);
-
-  //busy_wait_ms(1000);
-
 }
 
 void reset_endpoints() {

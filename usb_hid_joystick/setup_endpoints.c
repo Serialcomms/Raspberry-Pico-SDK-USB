@@ -34,7 +34,7 @@ static inline uint32_t endpoint_base_config(uint8_t TRANSFER_TYPE, uint32_t addr
 
 }
 
-void setup_host_endpoint_0(void *completion_handler_address) {
+static inline void setup_host_endpoint_0(void *completion_handler_address) {
 
   host_endpoint[0].async_mode = false;
   host_endpoint[0].async_bytes_pending = 0;
@@ -48,7 +48,7 @@ void setup_host_endpoint_0(void *completion_handler_address) {
 
 }
 
-void setup_pico_endpoint_0(void *completion_handler_address) {
+static inline void setup_pico_endpoint_0(void *completion_handler_address) {
 
   
   pico_endpoint[0].async_mode = false;
@@ -63,8 +63,7 @@ void setup_pico_endpoint_0(void *completion_handler_address) {
 
 }
 
-
-void usb_setup_host_endpoint(uint8_t EP_NUMBER, uint16_t TRANSFER_TYPE, void *completion_handler_address) {
+static inline void usb_setup_host_endpoint(uint8_t EP_NUMBER, uint16_t TRANSFER_TYPE, void *completion_handler_address) {
 
   uint8_t EP_OFFSET = EP_NUMBER - 1;
 
@@ -95,7 +94,7 @@ void usb_setup_host_endpoint(uint8_t EP_NUMBER, uint16_t TRANSFER_TYPE, void *co
 
 }
 
-void usb_setup_pico_endpoint(uint8_t EP_NUMBER, uint16_t TRANSFER_TYPE, void *completion_handler_address) {
+static inline void usb_setup_pico_endpoint(uint8_t EP_NUMBER, uint16_t TRANSFER_TYPE, void *completion_handler_address) {
 
   uint8_t EP_OFFSET = EP_NUMBER - 1;
 

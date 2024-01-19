@@ -49,7 +49,7 @@ add_compile_options("-fstack-usage")
 add_compile_definitions(PICO_USE_STACK_GUARDS=0)
 add_compile_definitions(PICO_STDIO_DEADLOCK_TIMEOUT_MS=1500)
 
-target_compile_definitions(usb_hid_joystick PRIVATE PICO_STACK_SIZE=0x4000)
+target_compile_definitions(usb_hid_joystick PRIVATE PICO_STACK_SIZE=0x1000)
 
 pico_add_extra_outputs(usb_hid_joystick)
 

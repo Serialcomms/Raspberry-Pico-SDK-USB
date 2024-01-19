@@ -20,7 +20,7 @@ uint8_t *DEBUG_TEXT = DEBUG_STRING_BUFFER;
 
 static struct critical_section debug_critical_section;
 
-void __not_in_flash_func(DEBUG_SHOW)(uint8_t *prefix_text,  ...) {
+void __not_in_flash_func(DEBUG_SHOW)(uint8_t *prefix_text, ...) {
 
    //if (2 > 1) {
  
