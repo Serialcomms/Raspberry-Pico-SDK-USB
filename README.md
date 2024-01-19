@@ -28,10 +28,11 @@ It should then enumerate as a Human Interface Device / Joystick game controller 
 
 <table>
   <tr>
-    <td>Control Panel</td>
-     <td>Joystick Properties</td>
+      <td>Control Panel</td>
+      <td>Joystick Properties</td>
    
   </tr>
+  
   <tr>
    
       <td><img src="images/joy_cpl.png" alt="Control Panel" title="Game Controllers" width="25%" height="25%"></td>
