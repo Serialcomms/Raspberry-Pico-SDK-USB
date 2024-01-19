@@ -31,7 +31,7 @@ On a Windows machine, type `Joy.cpl` into the search box.
 <p float="left">
 
 <img src="images/joy_cpl.png" alt="Control Panel" title="Game Controllers" width="25%" height="25%">
-<img src="images/WIN10_JOYSTICK.png" alt="Control Panel" title="Joystick Properties" width="25%" height="25%">
+<img src="images/WIN10_JOYSTICK.png" alt="Control Panel" title="Joystick Properties" width="20%" height="20%">
 
 </p>
 
