@@ -22,8 +22,10 @@ Some unresolved issues (possibly related to stack usage ?) remain in the endpoin
 
 Once compiled, the uf2 image can be uploaded as normal and the Pico attached to a host machine.
 It should then enumerate as a Human Interface Device / Joystick game controller and send continual activity to the host.
-On a Windows machine, type `Joy.cpl` into the search box.
 
+<p>
+On a Windows machine, type `Joy.cpl` into the search box.
+</p>
 
 
 ### Testing
