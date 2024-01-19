@@ -36,9 +36,10 @@ It should then enumerate as a Human Interface Device / Joystick game controller 
   <tr>
    
       <td><img src="images/joy_cpl.png" alt="Control Panel" title="Game Controllers" width="25%" height="25%"></td>
-      <td><img src="images/WIN10_JOYSTICK.png" alt="Control Panel" title="Joystick Properties" width="20%" height="20%"></td>
+      <td><img src="images/WIN10_JOYSTICK.png" alt="Joystick Properties" title="Joystick Properties" width="20%" height="20%"></td>
    
   </tr>
+  
  </table>
 
 
