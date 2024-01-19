@@ -25,6 +25,9 @@ It should then enumerate as a Human Interface Device / Joystick game controller 
 
 <p>
 On a Windows machine, type `Joy.cpl` into the search box.
+
+<img src="Graphics/Pico-LCD-RP2040.png" alt="Control Panel" title="Game Controllers" width="25%" height="25%">
+
 </p>
 
 
