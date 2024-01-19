@@ -23,11 +23,28 @@ Some unresolved issues (possibly related to stack usage ?) remain in the endpoin
 Once compiled, the uf2 image can be uploaded as normal and the Pico attached to a host machine.
 It should then enumerate as a Human Interface Device / Joystick game controller and send continual activity to the host.
 
-<p>
-On a Windows machine, type `Joy.cpl` into the search box.
 
 #### Windows Game Controllers
 
+<table>
+  <tr>
+    <td>First Screen Page</td>
+     <td>Holiday Mention</td>
+     <td>Present day in purple and selected day in pink</td>
+  </tr>
+  <tr>
+   
+      <td><img src="images/joy_cpl.png" alt="Control Panel" title="Game Controllers" width="25%" height="25%"></td>
+      <td><img src="images/WIN10_JOYSTICK.png" alt="Control Panel" title="Joystick Properties" width="20%" height="20%"></td>
+   
+  </tr>
+ </table>
+
+
+
+#### Windows Game Controllers
+<p>
+On a Windows machine, type `Joy.cpl` into the search box.
 <p float="left">
 
 <img src="images/joy_cpl.png" alt="Control Panel" title="Game Controllers" width="25%" height="25%">
