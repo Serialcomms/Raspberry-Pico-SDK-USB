@@ -21,6 +21,7 @@ Some unresolved issues (possibly related to stack usage ?) remain in the endpoin
 ### Usage
 
 Once compiled, the uf2 image can be uploaded as normal and the Pico attached to a host machine.
+
 It should then enumerate as a Human Interface Device / Joystick game controller and send continual activity to the host.
 
 
@@ -35,8 +36,8 @@ It should then enumerate as a Human Interface Device / Joystick game controller 
   
   <tr>
    
-      <td><img src="images/joy_cpl.png" alt="Control Panel" title="Game Controllers" width="25%" height="25%"></td>
-      <td><img src="images/WIN10_JOYSTICK.png" alt="Joystick Properties" title="Joystick Properties" width="20%" height="20%"></td>
+      <td><img src="images/joy_cpl.png" alt="Control Panel" title="Game Controllers" width=270 height=480></td>
+      <td><img src="images/WIN10_JOYSTICK.png" alt="Joystick Properties" title="Joystick Properties" width=270 height=480></td>
    
   </tr>
   
