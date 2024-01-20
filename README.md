@@ -34,7 +34,7 @@ On a Windows machine, type joy.cpl into the search box to display the game contr
 <p float="left">
 
 <img src="screenshots/joy_cpl.png" alt="Control Panel" title="Game Controllers" width="25%" height="25%">
-<img src="screenshots/win10_joystick.png" alt="Joystick" title="Joystick Properties" width="20%" height="20%">
+<img src="screenshots/pico_sdk_joystick.png" alt="Joystick" title="Joystick Properties" width="20%" height="20%">
 
 The properties windows should update continually at a nominal rate of 3Hz.
 
