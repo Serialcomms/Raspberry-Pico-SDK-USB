@@ -77,9 +77,12 @@ Testing has been performed with a Windows 10 22H2 Host and a Pico Chip B2, ROM V
 <details><summary> Association</summary> 
 
 This repository is associated with the following
+<p>
 
 * [shreeve development](https://github.com/shreeve/pico-usb/tree/main)
-* [Pico forums thread] (https://forums.raspberrypi.com/viewtopic.php?t=363705)
+* [Pico forums thread](https://forums.raspberrypi.com/viewtopic.php?t=363705)
+
+</p>
    
 <p>
 
