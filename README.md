@@ -29,14 +29,13 @@ It should then enumerate as a Human Interface Device / Joystick game controller 
 
 #### Windows Game Controllers
 <p>
-On a Windows machine, type `joy.cpl` into the search box to display the game controller properties.
-
-
    
+On a Windows machine, type joy.cpl into the search box to display the game controller properties.
+
 <p float="left">
 
 <img src="screenshots/joy_cpl.png" alt="Control Panel" title="Game Controllers" width="25%" height="25%">
-<img src="screenshots/win10_joystick.png" alt="Control Panel" title="Joystick Properties" width="20%" height="20%">
+<img src="screenshots/win10_joystick.png" alt="Joystick" title="Joystick Properties" width="20%" height="20%">
 
 The properties windows should update continually at a nominal rate of 3Hz.
 
@@ -50,8 +49,9 @@ The properties windows should update continually at a nominal rate of 3Hz.
 </p>
 </details>
 
+#### Pico Debug Output
 
-
+<img src="screenshots/putty_screen.png" alt="debug" title="Debug Output" width="20%" height="20%">
 
 ### Testing
 
