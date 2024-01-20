@@ -72,7 +72,7 @@ Testing has been performed with a Windows 10 22H2 Host and a Pico Chip B2, ROM V
 </p>
 </details>
 
-<details><summary> Association</summary> 
+<details><summary>Pico Forums Association</summary> 
 
 This repository is currently associated with the following Pico forum thread :-
 
