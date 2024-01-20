@@ -4,7 +4,7 @@
 
 This repository has one main objective, which is to investigate USB Device stack development using native SDK functions only.
 
-The 'stack' [^1] is written in C, and is derived from the [low-level device example](https://github.com/raspberrypi/pico-examples/tree/master/usb/device/dev_lowlevel) supported by the Raspberry documentation set.
+The 'stack' [^1] is written in C, and is derived from the [low-level device example](https://github.com/raspberrypi/pico-examples/tree/master/usb/device/dev_lowlevel) supported by the Raspberry Pico documentation set.
 
 Extensive debug/log reporting via UART0 has been provided in lieu of an external hardware USB protocol analyser.
 
