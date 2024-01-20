@@ -30,8 +30,8 @@ It should then enumerate as a Human Interface Device / Joystick game controller 
 On a Windows machine, type `Joy.cpl` into the search box to display the game controller properties.
 <p float="left">
 
-<img src="images/joy_cpl.png" alt="Control Panel" title="Game Controllers" width="25%" height="25%">
-<img src="images/WIN10_JOYSTICK.png" alt="Control Panel" title="Joystick Properties" width="20%" height="20%">
+<img src="screenshots/joy_cpl.png" alt="Control Panel" title="Game Controllers" width="25%" height="25%">
+<img src="screenshots/win10_joystick.png" alt="Control Panel" title="Joystick Properties" width="20%" height="20%">
 
 The properties windows should update continually at a nominal rate of 3Hz.
 
