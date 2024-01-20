@@ -2,15 +2,13 @@
 
 #### Proof-of-Concept development to help understand USB device stack operation in a Pico SDK/Hardware context.
 
-This repository has one objective only, which is to investigate USB Device stack development using native SDK functions only.
+This repository has one main objective, which is to investigate USB Device stack development using native SDK functions only.
 
 The 'stack' [^1] is written in C, and is derived from the [low-level device example](https://github.com/raspberrypi/pico-examples/tree/master/usb/device/dev_lowlevel) supported by the Raspberry documentation set.
 
 Extensive debug/log reporting via UART0 has been provided in lieu of an external hardware USB protocol analyser.
 
 Synchronous (blocking) and Asynchronous (interrupt-driven) transmission functions are provided. 
-
-The example provided simulates a continually-running joystick.
 
 No attempt to optimise memory usage, code size, style or performance has been made at this stage.
 
@@ -19,6 +17,8 @@ The repository may be extensively modified or made unavailable at any time witho
 Some unresolved issues (possibly related to stack usage ?) remain in the endpoint handler and debug routines.
 
 ### Usage
+
+The example provided simulates a continually-running joystick.
 
 Once compiled, the uf2 image can be uploaded as normal and the Pico attached to a host machine.
 
