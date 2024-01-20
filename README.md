@@ -24,6 +24,8 @@ Once compiled, the uf2 image can be uploaded as normal and the Pico attached to 
 
 It should then enumerate as a Human Interface Device / Joystick game controller and send continual activity to the host.
 
+<details><summary>Windows Game Controllers</summary>  
+
 
 #### Windows Game Controllers
 <p>
@@ -38,6 +40,14 @@ The properties windows should update continually at a nominal rate of 3Hz.
 </p>
 
 </p>
+
+   
+<p>
+
+</p>
+</details>
+
+
 
 
 ### Testing
