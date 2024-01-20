@@ -68,6 +68,7 @@ Testing has been performed with a Windows 10 22H2 Host and a Pico Chip B2, ROM V
 * [USB Descriptor and Request Parser](https://eleccelerator.com/usbdescreqparser/)
 * [Thesycon USB Descriptor Dumper](https://www.thesycon.de/eng/usb_descriptordumper.shtml)
 * [BUSDOG USB Analyser](https://github.com/djpnewton/busdog)
+* [phind.com](https://phind.com)
 
 </p>
 </details>
