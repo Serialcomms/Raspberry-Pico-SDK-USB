@@ -42,7 +42,6 @@ The properties windows should update continually at a nominal rate of 3Hz.
 
 </p>
 
-   
 <p>
 
 </p>
@@ -61,7 +60,6 @@ The properties windows should update continually at a nominal rate of 3Hz.
 
 Testing has been performed with a Windows 10 22H2 Host and a Pico Chip B2, ROM V3 device only.
 
-
 <details><summary>Acknowledgements</summary>  
 <p>
 
@@ -71,9 +69,23 @@ Testing has been performed with a Windows 10 22H2 Host and a Pico Chip B2, ROM V
 * [Thesycon USB Descriptor Dumper](https://www.thesycon.de/eng/usb_descriptordumper.shtml)
 * [BUSDOG USB Analyser](https://github.com/djpnewton/busdog)
 
-   
 </p>
 </details>
+
+### Association
+
+<details><summary> Association</summary> 
+
+This repository is associated with the following
+
+* [shreeve development](https://github.com/shreeve/pico-usb/tree/main)
+* [Pico forums thread] (https://forums.raspberrypi.com/viewtopic.php?t=363705)
+   
+<p>
+
+</p>
+</details>
+
 
 [^1]: The 'stack' is more of a 'controller' at this stage of development.
 There are no published APIs or documentation available.
