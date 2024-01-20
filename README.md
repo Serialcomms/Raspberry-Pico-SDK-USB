@@ -26,7 +26,6 @@ It should then enumerate as a Human Interface Device / Joystick game controller 
 
 <details><summary>Windows Game Controllers</summary>  
 
-
 #### Windows Game Controllers
 <p>
    
@@ -49,9 +48,14 @@ The properties windows should update continually at a nominal rate of 3Hz.
 </p>
 </details>
 
+<details><summary>Pico Debug Output</summary>  
+
 #### Pico Debug Output
 
-<img src="screenshots/putty_screen.png" alt="debug" title="Debug Output" width="20%" height="20%">
+<img src="screenshots/putty_screen.png" alt="debug" title="Debug Output" width="40%" height="40%">
+
+</p>
+</details>
 
 ### Testing
 
