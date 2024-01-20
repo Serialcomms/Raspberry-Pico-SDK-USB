@@ -74,16 +74,13 @@ Testing has been performed with a Windows 10 22H2 Host and a Pico Chip B2, ROM V
 </details>
 
 <details><summary>Pico Forums Association</summary> 
+<p>
 
 This repository is currently associated with the following Pico forum thread :-
 
-<p>
 
 * [Pico forums thread](https://forums.raspberrypi.com/viewtopic.php?t=363705)
 
-</p>
-   
-<p>
 
 </p>
 </details>
