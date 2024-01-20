@@ -21,8 +21,8 @@ uint8_t pico_device_descriptor[] = {
 0x00,        // bDeviceSubClass 
 0x00,        // bDeviceProtocol 
 0x40,        // bMaxPacketSize0 64
-0xEF, 0x17,  // idVendor 0x17EF
-0x8F, 0x60,  // idProduct 0x608D
+0x8A, 0x2E,  // idVendor 0x2E8A (Raspberry Pi)
+0xAA, 0xAA,  // idProduct 0xAAAA
 0x00, 0x01,  // bcdDevice 2.00
 0x01,        // iManufacturer (String Index)
 0x02,        // iProduct (String Index)

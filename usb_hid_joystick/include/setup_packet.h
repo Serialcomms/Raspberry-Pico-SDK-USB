@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-
 struct usb_setup_command {
 
     uint8_t descriptor_type;
