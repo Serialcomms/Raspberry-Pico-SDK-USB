@@ -47,8 +47,8 @@ static inline void prepare_setup_packet() {
     setup_packet[4], setup_packet[5], setup_packet[6], setup_packet[7]);
 
     DEBUG_TEXT = "Setup Packet Handler\t%s, Recipient=%02X, Request=%02X, Length=%d";
-    DEBUG_SHOW ("USB", setup->direction? "Pico > Host":"Host > Pico" ,
-    setup_command.recipient, setup->request, setup->length);
+    DEBUG_SHOW ("USB", setup->direction ? "Pico > Host":"Host > Pico" ,
+    setup->recipient, setup->request, setup->length);
 
     DEBUG_TEXT = "Setup Packet Handler\tDesc. Index=%02X, Type=%04X, Value=%04X, Index=%04X";
     DEBUG_SHOW ("USB", 
@@ -68,16 +68,13 @@ void usb_handle_setup_packet() {
     host_endpoint[0].packet_id = USB_BUF_CTRL_DATA1_PID;
     pico_endpoint[0].packet_id = USB_BUF_CTRL_DATA1_PID;
 
-    DEBUG_TEXT = "Setup Packet Handler\tRecipient = %d";
-    DEBUG_SHOW ("USB", setup->recipient);
-
     switch (setup->recipient) {
 
-        case 0:     usb_setup_device();              break;      // device
-        case 1:     usb_setup_interface();           break;      // interface
-    //  case 2:                                                    break;      // endpoint
-    //  case 3:                                                    break;      // other
-        default:    usb_setup_unknown(setup->recipient);           break;
+        case 0:     usb_setup_device();                     break;      // device
+        case 1:     usb_setup_interface();                  break;      // interface
+    //  case 2:                                             break;      // endpoint
+    //  case 3:                                             break;      // other
+        default:    usb_setup_unknown(setup->recipient);    break;
         
     } 
 }

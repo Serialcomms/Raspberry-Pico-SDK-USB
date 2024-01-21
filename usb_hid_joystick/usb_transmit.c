@@ -201,7 +201,7 @@ void send_ack_handshake_to_host(uint8_t EP_NUMBER, bool clear_buffer_status) {
 
     uint32_t buffer_control = 0;
     uint32_t buffer_dispatch = 0;
-    uint32_t buffer_status_mask = 0x1 << shift_left_bits;
+    uint32_t buffer_status_mask = 1 << shift_left_bits;
 
     uint16_t ZERO_LENGTH_PACKET = 0;
 
@@ -265,9 +265,12 @@ void usb_wait_for_buffer_available_to_host(uint8_t EP_NUMBER) {
 
 void usb_wait_for_buffer_completion_pico_to_host(uint8_t EP_NUMBER, bool buffer_status_clear) {
 
-    uint8_t shift_left_bits = (2 * EP_NUMBER) + 0;
+    uint8_t shift_left_bits = (2u * EP_NUMBER) + 0;
     
-    uint32_t buffer_mask = 0x1 << shift_left_bits;
+    uint32_t buffer_mask = 1 << shift_left_bits;
+
+    DEBUG_TEXT = "Buffer Wait To Host\tBuffer Mask=%08X, Shift Left Bits=%d";
+    DEBUG_SHOW ("BUF", buffer_mask, shift_left_bits);
 
     usb_wait_for_buffer_completion(EP_NUMBER, buffer_mask, buffer_status_clear);
 
@@ -308,3 +311,4 @@ void usb_wait_for_last_packet_to_host(uint8_t EP_NUMBER) {
     }
 
 }
+

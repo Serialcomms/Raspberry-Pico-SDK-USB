@@ -20,8 +20,8 @@ void usb_wait_for_buffer_completion(uint8_t EP_NUMBER, uint32_t buffer_mask, boo
     volatile bool sie_errors;
     volatile bool wait_timeout;
     
-    volatile uint32_t buffer_status;
-    volatile uint32_t buffer_complete;
+    io_rw_32 buffer_status;
+    io_rw_32 buffer_complete;
     
     uint32_t wait_duration=0;
     
@@ -31,8 +31,8 @@ void usb_wait_for_buffer_completion(uint8_t EP_NUMBER, uint32_t buffer_mask, boo
     buffer_status = usb_hw->buf_status;
 
     DEBUG_TEXT = "Serial Interface Engine\tBuffer Wait,\tMask=%08X, Register=%08X";
-    DEBUG_SHOW ("SIE", wait_duration, buffer_mask, buffer_status);
-    
+    DEBUG_SHOW ("SIE", buffer_mask, buffer_status);
+
     do { 
 
         busy_wait_at_least_cycles(8);
@@ -74,7 +74,7 @@ void usb_wait_for_buffer_completion(uint8_t EP_NUMBER, uint32_t buffer_mask, boo
         if (buffer_status_clear) {
 
             DEBUG_TEXT = "Buffer Status\t\tClearing,\tMask=%08X, Register=%08X";
-            DEBUG_SHOW ("USB", DEBUG_TEXT , buffer_mask, buffer_status);
+            DEBUG_SHOW ("USB", buffer_mask, buffer_status);
 
             usb_hardware_clear->buf_status = buffer_mask;
 
@@ -183,6 +183,19 @@ uint8_t get_device_address() {
 
 }
 
+void build_ep0_data_packet(uint8_t *source_buffer, uint8_t transfer_bytes) {
+
+    uint8_t offset = 0; 
+    uint8_t ep0_buffer_bytes = MIN(transfer_bytes, 64);
+
+    do {  
+
+       usb_dpram->ep0_buf_a[offset] = source_buffer[offset];
+
+    } while (++offset < ep0_buffer_bytes);
+
+}
+
 void set_ep0_buffer_status(bool enable_interrupts) {
 
     if (enable_interrupts) {
@@ -207,4 +220,5 @@ volatile uint16_t __not_in_flash_func (get_buffer_bytes_to_pico)(uint8_t EP_NUMB
 
    return (uint16_t) usb_dpram->ep_buf_ctrl[EP_NUMBER].out & 0x01FF;
 }
+
 

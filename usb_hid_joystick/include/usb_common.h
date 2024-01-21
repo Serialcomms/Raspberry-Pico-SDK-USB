@@ -23,10 +23,14 @@ void usb_wait_for_buffer_completion(uint8_t EP_NUMBER, uint32_t buffer_mask, boo
 
 void wait_for_transaction_completion(bool clear_transaction);
 
+void build_ep0_data_packet(uint8_t *source_buffer, uint8_t transfer_bytes);
+
 void __not_in_flash_func (clear_buffer_status)(uint32_t buffer_status_bits);
 
 volatile uint16_t __not_in_flash_func (get_buffer_bytes_to_host)(uint8_t EP_NUMBER);
 volatile uint16_t __not_in_flash_func (get_buffer_bytes_to_pico)(uint8_t EP_NUMBER);
+
+
 
 
 
