@@ -8,7 +8,7 @@ The 'stack' [^1] is written in C, and is derived from the [low-level device exam
 
 Extensive debug/log reporting via UART0 has been provided in lieu of an external hardware USB protocol analyser.
 
-Synchronous (blocking) and Asynchronous (interrupt-driven) transmission functions are provided. 
+Synchronous (blocking) and Asynchronous (interrupt-driven) transmission functions are provided. Multipacket transfers are currently supported in Pico-to-Host direction only.
 
 No attempt to optimise memory usage, code size, style or performance has been made at this stage.
 
