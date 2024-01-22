@@ -17,7 +17,7 @@ extern uint8_t *DEBUG_TEXT;
 
 void send_device_configuration_to_host(uint16_t command_length) { 
 
-  pico_usb_device.DEVICE_CONFIGURATION_SENT = false;
+  pico_usb_joystick.DESCRIPTOR.CONFIG = false;
 
   uint8_t  config_length = pico_config_descriptor[0];
   uint8_t *config_descriptor = pico_config_descriptor;
@@ -36,6 +36,6 @@ void send_device_configuration_to_host(uint16_t command_length) {
 
   wait_for_transaction_completion(true);
 
-  pico_usb_device.DEVICE_CONFIGURATION_SENT = true;
-
+  pico_usb_joystick.DESCRIPTOR.CONFIG = true;
+ 
 }

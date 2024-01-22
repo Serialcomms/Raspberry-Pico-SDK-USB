@@ -43,7 +43,5 @@ show_pico_clocks();
 
 show_free_total_heap();
 
-busy_wait_ms(3000);
-
 }
 

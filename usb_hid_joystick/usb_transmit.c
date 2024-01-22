@@ -49,7 +49,7 @@ void send_async_packet(uint8_t EP_NUMBER) {
     uint8_t  async_packet_size = MIN(max_packet_size, async_bytes);
     uint16_t source_buffer_offset = host_endpoint[EP_NUMBER].source_buffer_offset;
 
-    bool last_packet = (async_packet_size <= max_packet_size) ? true : false;
+    bool last_packet = (max_packet_size >= async_packet_size) ? true : false;
 
     do {  
 
@@ -57,8 +57,8 @@ void send_async_packet(uint8_t EP_NUMBER) {
 
     } while (++offset < async_packet_size);
 
-    DEBUG_TEXT = "Sending Async Packet \tBuffer Offset=%d, Async Packet Bytes=%d" ;
-    DEBUG_SHOW (ep_text(EP_NUMBER), source_buffer_offset, async_bytes);
+    DEBUG_TEXT = "Sending Async Packet \tBuffer Offset=%d, Bytes Pending=%d, Last=%s" ;
+    DEBUG_SHOW (ep_text(EP_NUMBER), source_buffer_offset, async_bytes, last_packet_text(last_packet));
 
     host_endpoint[EP_NUMBER].async_bytes_pending -= offset;
     host_endpoint[EP_NUMBER].source_buffer_offset += offset;
@@ -265,7 +265,7 @@ void usb_wait_for_buffer_available_to_host(uint8_t EP_NUMBER) {
 
 void usb_wait_for_buffer_completion_pico_to_host(uint8_t EP_NUMBER, bool buffer_status_clear) {
 
-    uint8_t shift_left_bits = (2u * EP_NUMBER) + 0;
+    uint8_t shift_left_bits = (2 * EP_NUMBER) + 0;
     
     uint32_t buffer_mask = 1 << shift_left_bits;
 
@@ -311,4 +311,3 @@ void usb_wait_for_last_packet_to_host(uint8_t EP_NUMBER) {
     }
 
 }
-

@@ -26,13 +26,13 @@ void set_pico_device_address(uint16_t DEVICE_ADDRESS) {
   DEBUG_TEXT = "Setup Device Handler\tDevice Address Changed, Pico New Address=%d";
   DEBUG_SHOW ("DEV", get_device_address());
 
-  pico_usb_device.ADDRESS_SET = true;
+  pico_usb_joystick.SET_ADDRESS = true;
 
 }
 
 void send_device_descriptor_to_host(uint16_t request_packet_size) { 
 
-  pico_usb_device.DEVICE_DESCRIPTOR_SENT = false;
+  pico_usb_joystick.DESCRIPTOR.DEVICE = false;
 
   uint8_t *device_descriptor = pico_device_descriptor;
   uint8_t  descriptor_length = pico_device_descriptor[0];
@@ -50,7 +50,7 @@ void send_device_descriptor_to_host(uint16_t request_packet_size) {
 
     wait_for_transaction_completion(true);
   
-    pico_usb_device.DEVICE_DESCRIPTOR_SENT = true;
+    pico_usb_joystick.DESCRIPTOR.DEVICE = true;
   
 
   } else {  // host wants first 8 bytes only to determine EP0 max_packet_size
@@ -59,7 +59,7 @@ void send_device_descriptor_to_host(uint16_t request_packet_size) {
     
     send_data_packet(0, 8, false, true);
 
-    pico_usb_device.DEVICE_DESCRIPTOR_SENT = false;
+    pico_usb_joystick.DESCRIPTOR.DEVICE = false;
 
   }
   

@@ -53,7 +53,7 @@ void usb_setup_device_request_to_pico() {
     //  case USB_REQUEST_SET_FEATURE:     break;
     //  case USB_REQUEST_SET_DESCRIPTOR:  break;
           
-        case USB_REQUEST_SET_ADDRESS:   // 5  
+        case USB_REQUEST_SET_ADDRESS:
 
             DEBUG_TEXT = "Setup Device Address\tNew Device Address Allocated = %d";
             DEBUG_SHOW ("USB", setup->value);
@@ -82,7 +82,7 @@ void usb_setup_device_request_to_pico() {
             DEBUG_TEXT = "Pico Request Handler \tUNKNOWN USB SET REQUEST";
             DEBUG_SHOW ("ERR");
 
-            send_ack_handshake_to_host(0, true); // VERY IMPORTANT, otherwise Host will issue BUS RESET
+            send_ack_handshake_to_host(0, true); 
 
         break;
 

@@ -15,9 +15,6 @@
 #undef LIB_TINYUSB_HOST
 #undef LIB_TINYUSB_DEVICE
 
-#define usb_hardware_set   ((usb_hw_t *)hw_set_alias_untyped(usb_hw))
-#define usb_hardware_clear ((usb_hw_t *)hw_clear_alias_untyped(usb_hw))
-
 extern uint8_t *DEBUG_TEXT;
 
 void usb_device_init() {                                  
@@ -36,7 +33,7 @@ clear_usb_dpsram();
     
 USB_REGISTER_VALUE |= USB_MAIN_CTRL_CONTROLLER_EN_BITS; // Enable Pico USB controller = device mode 
 MUX_REGISTER_VALUE |= USB_USB_MUXING_TO_PHY_BITS; 
-IRQ_REGISTER_VALUE |= USB_INTS_BUS_RESET_BITS;          // bus reset IRQ only until reset complete
+IRQ_REGISTER_VALUE |= USB_INTS_BUS_RESET_BITS;          // bus reset IRQ only until bus reset complete
 SIE_REGISTER_VALUE |= USB_SIE_STATUS_DATA_SEQ_ERROR_BITS;
 PWR_REGISTER_VALUE |= USB_USB_PWR_VBUS_DETECT_BITS;
 PWR_REGISTER_VALUE |= USB_USB_PWR_VBUS_DETECT_OVERRIDE_EN_BITS; 
@@ -49,7 +46,7 @@ usb_hw->pwr = PWR_REGISTER_VALUE;
 
 busy_wait_ms(101);
 
-irq_set_enabled(USBCTRL_IRQ, true);                     // Enable USB interrupt at processor
+//irq_set_enabled(USBCTRL_IRQ, true);                     // Enable USB interrupt at processor
 
 }
 
@@ -63,6 +60,8 @@ void usb_insert_device() {
 
     usb_hw->sie_ctrl = SIE_REGISTER_VALUE;
 
+    irq_set_enabled(USBCTRL_IRQ, true);                     // Enable USB interrupt at processor
+
 }
 
 void usb_remove_device() {
@@ -75,21 +74,24 @@ void usb_remove_device() {
 
     usb_hw->sie_ctrl = SIE_REGISTER_VALUE;
 
+    irq_set_enabled(USBCTRL_IRQ, false);                     // Enable USB interrupt at processor
+
 }
 
 void clear_usb_dpsram() {
 
-    uint8_t *DPRAM_ADDRESS = (void *)usb_dpram;
-    uint32_t DPRAM_SIZE = sizeof(*usb_dpram);
-    uint32_t DPRAM_OFFSET = DPRAM_SIZE-1;
+    uint16_t offset = 0;
+    void *dpram_address = usb_dpram;
+    uint8_t *dpram_data = dpram_address;
+    uint16_t dpram_size = sizeof(*usb_dpram);
 
+    DEBUG_TEXT = "Device Initialisation\tDPRAM Start Address=%08X, Size=%d Bytes";
+    DEBUG_SHOW ("USB", dpram_address, dpram_size);
+   
     do {
 
-       DPRAM_ADDRESS[DPRAM_OFFSET] = 0;
+        dpram_data[offset] = 0;
 
-    } while (--DPRAM_OFFSET);
-
-    DEBUG_TEXT = "Device Initialisation\tDPRAM Address=%08X, Size=%d";
-    DEBUG_SHOW ("USB", DPRAM_ADDRESS, DPRAM_SIZE);
+    } while (++offset < dpram_size);
 
 }

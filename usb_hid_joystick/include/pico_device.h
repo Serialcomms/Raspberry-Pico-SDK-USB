@@ -4,19 +4,31 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-struct pico_device_profile {
 
-    bool ADDRESS_SET;
-    bool DEVICE_DESCRIPTOR_SENT;
-    bool DEVICE_CONFIGURATION_SENT;
-    bool HID_REPORT_DESCRIPTOR_SENT;
-    bool HID_SET_IDLE_RECEIVED;
+struct usb_descriptor_sent {
+
+    bool DEVICE;
+    bool CONFIG;
+    bool HID_REPORT;
 
 };
 
-extern struct pico_device_profile pico_usb_device;
+struct pico_device_profile {
+
+    bool SET_ADDRESS;
+    bool RECEIVED_HID_SET_IDLE;
+    bool LAST_TRANSACTION_DONE;
+    uint32_t LAST_TRANSACTION_WAIT;
+    absolute_time_t LAST_TRANSACTION_TIME;
+    struct usb_descriptor_sent DESCRIPTOR;
+
+};
+
+extern struct pico_device_profile pico_usb_joystick;
 
 void reset_usb_device();
+
+bool last_transaction_done();
 
 bool usb_device_enumerated();
 

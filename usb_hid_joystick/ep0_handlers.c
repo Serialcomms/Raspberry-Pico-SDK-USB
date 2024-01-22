@@ -17,9 +17,9 @@
      
 extern uint8_t *DEBUG_TEXT;
 
-uint32_t transaction_duration = 0;
-
 static inline void __not_in_flash_func (ep0_handler_to_host_async)() {
+
+    uint32_t transaction_duration = 0;
 
     host_endpoint[0].bytes_transferred += get_buffer_bytes_to_host(0);
 
@@ -44,6 +44,8 @@ static inline void __not_in_flash_func (ep0_handler_to_host_async)() {
 
 void  __not_in_flash_func (ep0_handler_to_host)(uint8_t EP_NUMBER) {
 
+    uint32_t transaction_duration = 0;
+
     const bool USE_ASYNC_HANDLER = false;  // does not call properly when = true;
 
     DEBUG_TEXT = "Buffer Status Handler \tStarting Completion Handler for Endpoint %d";
@@ -60,7 +62,12 @@ void  __not_in_flash_func (ep0_handler_to_host)(uint8_t EP_NUMBER) {
 
        } else {
 
+            DEBUG_TEXT = "Buffer Status Handler \tASYNC Bytes Transferred=%d, Bytes Remaining=%d";
+            DEBUG_SHOW ("IRQ", get_buffer_bytes_to_host(0), host_endpoint[0].async_bytes_pending );
+            
             host_endpoint[0].bytes_transferred += get_buffer_bytes_to_host(0);
+
+            clear_buffer_status(USB_BUFF_STATUS_EP0_IN_BITS); 
 
             if (host_endpoint[0].async_bytes_pending) {
 
@@ -81,19 +88,19 @@ void  __not_in_flash_func (ep0_handler_to_host)(uint8_t EP_NUMBER) {
 
             host_endpoint[0].transaction_complete = true;
 
+
         }
 
        }        
 
         } else {
 
-        DEBUG_TEXT = "Buffer Status Handler \tAsync Mode=False, Clearing Buffer Status";
+        DEBUG_TEXT = "Buffer Status Handler \tAsync Mode=False, Sending ACK and Clearing Buffer Status";
         DEBUG_SHOW ("IRQ");
 
         send_ack_handshake_to_host(0, true);
 
         }
 
-    clear_buffer_status(USB_BUFF_STATUS_EP0_IN_BITS); 
 
 }

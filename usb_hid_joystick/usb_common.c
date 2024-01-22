@@ -7,6 +7,7 @@
 #include "pico/stdlib.h"
 
 #include "include/usb_debug.h"
+#include "include/pico_device.h"
 #include "include/usb_common.h"
 #include "include/usb_sie_errors.h"
 
@@ -73,15 +74,7 @@ void usb_wait_for_buffer_completion(uint8_t EP_NUMBER, uint32_t buffer_mask, boo
 
         if (buffer_status_clear) {
 
-            DEBUG_TEXT = "Buffer Status\t\tClearing,\tMask=%08X, Register=%08X";
-            DEBUG_SHOW ("USB", buffer_mask, buffer_status);
-
-            usb_hardware_clear->buf_status = buffer_mask;
-
-            buffer_status = usb_hw->buf_status;
-
-            DEBUG_TEXT = "Buffer Status\t\tCleared, \tMask=%08X, Register=%08X";
-            DEBUG_SHOW ("USB", buffer_mask, buffer_status);
+            clear_buffer_status(buffer_mask);           
 
         }
 
@@ -152,17 +145,28 @@ void wait_for_transaction_completion(bool clear_transaction) {
         DEBUG_TEXT = "Serial Interface Engine\tTransaction Complete, Wait Duration=%ldµs";
         DEBUG_SHOW ("USB", wait_duration);
 
+        pico_usb_joystick.LAST_TRANSACTION_TIME = get_absolute_time();
+
     }
     
 }
 
+void __not_in_flash_func (clear_buffer_status)(uint32_t buffer_mask) {
 
-void __not_in_flash_func (clear_buffer_status)(uint32_t buffer_status_bits) {
+    io_rw_32 buffer_status = usb_hw->buf_status;
 
-    usb_hardware_clear->buf_status = buffer_status_bits;
+    DEBUG_TEXT = "Buffer Status\t\tClearing,\tMask=%08X, Register=%08X";
+    DEBUG_SHOW ("USB", buffer_mask, buffer_status);
+
+    usb_hardware_clear->buf_status = buffer_mask;
+
+    buffer_status = usb_hw->buf_status;
+
+    DEBUG_TEXT = "Buffer Status\t\tCleared, \tMask=%08X, Register=%08X";
+    DEBUG_SHOW ("USB", buffer_mask, buffer_status);
 
     DEBUG_TEXT = "Buffer Status Handler \tCleared Buffer Status, Bit Mask=%08x";
-    DEBUG_SHOW ("IRQ", buffer_status_bits);
+    DEBUG_SHOW ("IRQ", buffer_mask);
 
 }
 
@@ -208,7 +212,6 @@ void set_ep0_buffer_status(bool enable_interrupts) {
 
     }
 
-    // 0x20000000, set bit in BUFF_STATUS for every EP0 buffer completion
 }
 
 volatile uint16_t __not_in_flash_func (get_buffer_bytes_to_host)(uint8_t EP_NUMBER) {
@@ -221,4 +224,8 @@ volatile uint16_t __not_in_flash_func (get_buffer_bytes_to_pico)(uint8_t EP_NUMB
    return (uint16_t) usb_dpram->ep_buf_ctrl[EP_NUMBER].out & 0x01FF;
 }
 
+uint8_t __not_in_flash_func (*last_packet_text)(bool last_packet) {
 
+    return (last_packet) ? "TRUE" : "FALSE" ; 
+
+}
