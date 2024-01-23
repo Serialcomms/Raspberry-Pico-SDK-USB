@@ -157,7 +157,6 @@ void isr_usbctrl() {           // USB interrupt handler IRQ5
 
     }
 
-
     if (IRQ_STATUS ^ IRQ_HANDLED) {
 
         DEBUG_TEXT = "Unhandled Interrupt\t IRQ 0x%08x";
