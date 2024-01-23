@@ -26,7 +26,7 @@ uint8_t *DEBUG_TEXT = DEBUG_STRING_BUFFER;
 
 static struct critical_section debug_critical_section;
 
-void __not_in_flash_func(DEBUG_SHOW)(uint8_t *prefix_text, ...) {
+void __time_critical_func (DEBUG_SHOW)(uint8_t *prefix_text, ...) {
  
     critical_section_enter_blocking(&debug_critical_section);
   

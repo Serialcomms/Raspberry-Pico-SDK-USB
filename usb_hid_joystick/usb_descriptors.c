@@ -20,7 +20,7 @@ uint8_t pico_device_descriptor[] = {
 0x00,        // bDeviceClass (Use class information in the Interface Descriptors)
 0x00,        // bDeviceSubClass 
 0x00,        // bDeviceProtocol 
-0x08,        // bMaxPacketSize0 64
+0x40,        // bMaxPacketSize0 64
 0x8A, 0x2E,  // idVendor 0x2E8A (Raspberry Pi)
 0xAA, 0xAA,  // idProduct 0xAAAA
 0x00, 0x01,  // bcdDevice 2.00

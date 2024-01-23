@@ -70,8 +70,6 @@ static inline void usb_setup_host_endpoint(uint8_t EP_NUMBER, uint16_t TRANSFER_
 
   uint8_t EP_OFFSET = EP_NUMBER - 1;
 
-  valid_host_endpoint[EP_NUMBER] = true; 
-
   void *usb_dpram_address =  &usb_dpram->epx_data[(64 * 2 * EP_OFFSET) + 0x0000];  // first half of available dpram
 
   host_endpoint[EP_NUMBER].async_mode = false;
@@ -100,8 +98,6 @@ static inline void usb_setup_host_endpoint(uint8_t EP_NUMBER, uint16_t TRANSFER_
 static inline void usb_setup_pico_endpoint(uint8_t EP_NUMBER, uint16_t TRANSFER_TYPE, void *completion_handler_address) {
 
   uint8_t EP_OFFSET = EP_NUMBER - 1;
-
-  valid_pico_endpoint[EP_NUMBER] = true; 
 
   void *usb_dpram_address = &usb_dpram->epx_data[(64 * 2 * EP_OFFSET) + 0x0780];  // second half of available dpram 6CC ??
 

@@ -31,7 +31,7 @@ switch (setup->request) {
         DEBUG_TEXT = "Setup Interface \tSetting Idle, Request=%d";
         DEBUG_SHOW ("HID", setup->request);
 
-        pico_usb_joystick.RECEIVED_HID_SET_IDLE = true;
+        pico.usb.functions.joystick.set_idle = true;
 
     break;
 
@@ -71,7 +71,7 @@ static void send_hid_descriptors_to_host() {
 
         start_async_transfer_to_host(0, report_descriptor, report_length);
 
-        pico_usb_joystick.DESCRIPTOR.HID_REPORT = true;
+        pico.usb.functions.joystick.hid_report = true;
 
     } else {
 
@@ -81,7 +81,7 @@ static void send_hid_descriptors_to_host() {
 
         wait_for_transaction_completion(true);
 
-        pico_usb_joystick.DESCRIPTOR.HID_REPORT = true;
+        pico.usb.functions.joystick.hid_report = true;
 
     }
 

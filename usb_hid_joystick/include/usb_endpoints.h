@@ -34,11 +34,9 @@ struct endpoint_profile {
 
 };
 
-extern bool valid_host_endpoint[15];
-extern bool valid_pico_endpoint[15];
-
 extern struct endpoint_profile host_endpoint[15];
 extern struct endpoint_profile pico_endpoint[15];
 
-extern buffer_completion_handler buffer_completion_handler_pico[15];
-extern buffer_completion_handler buffer_completion_handler_host[15];
+//extern struct endpoint_profile __not_in_flash("endpoints") host_endpoint[15];
+//extern struct endpoint_profile __not_in_flash("endpoints") pico_endpoint[15];
+

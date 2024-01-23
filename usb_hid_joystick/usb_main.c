@@ -69,7 +69,7 @@ void wait_for_device_enumeration() {
     absolute_time_t wait_time_end = make_timeout_time_ms(wait_seconds * 1000);
     absolute_time_t wait_enumeration = make_timeout_time_ms(15000);
 
-    pico_usb_joystick.LAST_TRANSACTION_WAIT = 2000000;
+    pico.usb.device.last_transaction.wait = 2000000;
 
     device_enumerated = false;
 
@@ -122,7 +122,7 @@ static inline void device_enumeration_pass() {
         busy_wait_ms(2000);
 
         DEBUG_TEXT = "Simulation Starting\tUSB Joystick with controls and buttons";
-        DEBUG_SHOW ("SDK");
+        DEBUG_SHOW ("JOY");
 
         busy_wait_ms(1000);
 
@@ -145,7 +145,7 @@ static inline void device_enumeration_fail() {
 
     show_device_enumerated();
 
-        while (1) {  
+    while (1) {  
 
         busy_wait_ms(50);
 
@@ -155,6 +155,6 @@ static inline void device_enumeration_fail() {
 
         gpio_put(PICO_DEFAULT_LED_PIN, 0);
 
-        }
+    }
 
 }

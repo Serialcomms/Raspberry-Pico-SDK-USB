@@ -22,7 +22,7 @@
 
 extern uint8_t *DEBUG_TEXT;
 
-void  __not_in_flash_func (usb_handle_buffer_status_host)(uint8_t EP_NUMBER) {
+void usb_handle_buffer_status_host (uint8_t EP_NUMBER) {
 
     void *handler_address = host_endpoint[EP_NUMBER].completion_handler;
 
@@ -41,7 +41,7 @@ void  __not_in_flash_func (usb_handle_buffer_status_host)(uint8_t EP_NUMBER) {
 
 }
 
-void __not_in_flash_func (usb_handle_buffer_status_pico)(uint8_t EP_NUMBER) {
+void usb_handle_buffer_status_pico (uint8_t EP_NUMBER) {
 
     void *handler_address = pico_endpoint[EP_NUMBER].completion_handler;
 
@@ -59,7 +59,7 @@ void __not_in_flash_func (usb_handle_buffer_status_pico)(uint8_t EP_NUMBER) {
     }
 }
 
-void __not_in_flash_func (buffer_completion_default)(uint8_t EP_NUMBER, uint8_t direction_bit) {
+void buffer_completion_default (uint8_t EP_NUMBER, uint8_t direction_bit) {
 
     uint32_t buffer_status_bit = 1 << ((2 * EP_NUMBER) + direction_bit);
 
@@ -73,7 +73,7 @@ void __not_in_flash_func (buffer_completion_default)(uint8_t EP_NUMBER, uint8_t 
 
 }
 
-void __not_in_flash_func (usb_handle_buffer_status()) {
+void usb_handle_buffer_status() {
 
     uint8_t  endpoint_buffer_number = 0;
     io_rw_32 buffer_status_register = usb_hw->buf_status;
@@ -101,7 +101,7 @@ void __not_in_flash_func (usb_handle_buffer_status()) {
 }
 
 
-void __not_in_flash_func (isr_usbctrl()) {           // USB interrupt handler IRQ5
+void isr_usbctrl() {           // USB interrupt handler IRQ5
    
     uint32_t IRQ_HANDLED = 0;
     io_rw_32 IRQ_STATUS = usb_hw->ints;
@@ -167,7 +167,8 @@ void __not_in_flash_func (isr_usbctrl()) {           // USB interrupt handler IR
     }
 }
 
-uint8_t __not_in_flash_func (*endpoint_irq_pending)(uint32_t buffer_status) {
+uint8_t *endpoint_irq_pending (uint32_t buffer_status) {
 
     return buffer_status & 0x03 ? "TRUE" : "FALSE" ;   
 }
+

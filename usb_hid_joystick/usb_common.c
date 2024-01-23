@@ -145,7 +145,7 @@ void wait_for_transaction_completion(bool clear_transaction) {
         DEBUG_TEXT = "Serial Interface Engine\tTransaction Complete, Wait Duration=%ldµs";
         DEBUG_SHOW ("USB", wait_duration);
 
-        pico_usb_joystick.LAST_TRANSACTION_TIME = get_absolute_time();
+        pico.usb.device.last_transaction.time = get_absolute_time();
 
     }
     
@@ -187,6 +187,12 @@ uint8_t get_device_address() {
 
 }
 
+bool device_address_set() {
+
+    return (usb_hw->dev_addr_ctrl & 0x7f) ? true : false;
+
+}
+
 void build_ep0_data_packet(uint8_t *source_buffer, uint8_t transfer_bytes) {
 
     uint8_t offset = 0; 
@@ -214,17 +220,17 @@ void set_ep0_buffer_status(bool enable_interrupts) {
 
 }
 
-volatile uint16_t __not_in_flash_func (get_buffer_bytes_to_host)(uint8_t EP_NUMBER) {
+volatile uint16_t get_buffer_bytes_to_host (uint8_t EP_NUMBER) {
 
    return (uint16_t) usb_dpram->ep_buf_ctrl[EP_NUMBER].in & 0x01FF;
 }
 
-volatile uint16_t __not_in_flash_func (get_buffer_bytes_to_pico)(uint8_t EP_NUMBER) {
+volatile uint16_t get_buffer_bytes_to_pico (uint8_t EP_NUMBER) {
 
    return (uint16_t) usb_dpram->ep_buf_ctrl[EP_NUMBER].out & 0x01FF;
 }
 
-uint8_t __not_in_flash_func (*last_packet_text)(bool last_packet) {
+uint8_t *last_packet_text (bool last_packet) {
 
     return (last_packet) ? "TRUE" : "FALSE" ; 
 

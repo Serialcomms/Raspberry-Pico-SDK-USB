@@ -15,7 +15,7 @@
 
 extern uint8_t *DEBUG_TEXT;
 
-void  __not_in_flash_func (ep1_handler_to_host)(uint8_t EP_NUMBER) {
+void ep1_handler_to_host (uint8_t EP_NUMBER) {
  
     if (host_endpoint[1].async_bytes_pending) {
 
