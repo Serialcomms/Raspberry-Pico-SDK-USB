@@ -51,6 +51,10 @@ The properties windows should update continually at a nominal rate of 3Hz.
 </p>
 </details>
 
+#### Pico pre-built .uf2
+
+Pre-Built .uf2 [available here](https://github.com/Serialcomms/Raspberry-Pico-SDK-USB/releases/tag/Pico_HID_Joystick)
+
 <details><summary>Pico Debug Output</summary>  
 
 #### Pico Debug Output
