@@ -51,9 +51,7 @@ The properties windows should update continually at a nominal rate of 3Hz.
 </p>
 </details>
 
-#### Pico pre-built .uf2
-
-<details><summary>Pico Binary</summary>
+<details><summary>Pico pre-built .uf2 binary</summary>
 
 </p>
 
