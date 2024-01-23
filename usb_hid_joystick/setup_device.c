@@ -49,7 +49,9 @@ void send_device_descriptor_to_host(uint16_t request_packet_size) {
     pico.usb.descriptors.device = true;
   
 
-  } else {  // host wants first 8 bytes only to determine EP0 max_packet_size
+  } else {  
+    
+    // host wants first 8 bytes only to determine EP0 max_packet_size
  
     build_ep0_data_packet(device_descriptor, 8);
     

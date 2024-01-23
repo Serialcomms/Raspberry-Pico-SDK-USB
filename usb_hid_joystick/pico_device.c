@@ -80,7 +80,9 @@ void show_device_enumerated() {
 
 }
 
-void set_binary_declarations() {     // for use with Picotool
+void set_binary_declarations() {     
+
+    // for use with Picotool
 
     bi_decl(bi_program_description("Pico USB Joystick"));
     bi_decl(bi_program_feature("PicoProbe / UART Debug"));

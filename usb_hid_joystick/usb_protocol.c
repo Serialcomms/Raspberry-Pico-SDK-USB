@@ -101,14 +101,14 @@ void usb_setup_device_respond_to_host() {
     
     switch(setup->request) {
 
-        case USB_REQUEST_GET_STATUS:            // 0
+        case USB_REQUEST_GET_STATUS:
 
             DEBUG_TEXT = "Pico Request Handler \tGET PICO DEVICE STATUS, Count=%d";
             DEBUG_SHOW ("USB", ++get_status_count);
 
         break;
 
-        case USB_REQUEST_GET_DESCRIPTOR:        // 6
+        case USB_REQUEST_GET_DESCRIPTOR:
 
             DEBUG_TEXT = "Pico Request Handler \tGET PICO USB DESCRIPTOR, Count=%d";
             DEBUG_SHOW ("USB", ++get_descriptor_count);
@@ -117,7 +117,7 @@ void usb_setup_device_respond_to_host() {
 
         break;
 
-        case USB_REQUEST_GET_CONFIGURATION:     // 8
+        case USB_REQUEST_GET_CONFIGURATION:
 
             DEBUG_TEXT = "Pico Request Handler \tGET PICO USB CONFIGURATION, Count=%d";
             DEBUG_SHOW ("USB", ++get_configuration_count);

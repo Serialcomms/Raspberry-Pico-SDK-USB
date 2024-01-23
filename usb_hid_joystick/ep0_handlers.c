@@ -62,7 +62,7 @@ void ep0_handler_to_host (uint8_t EP_NUMBER) {
 
     uint32_t transaction_duration = 0;
 
-    const bool USE_ASYNC_HANDLER = false;  // does not call properly when = true;
+    const bool USE_ASYNC_HANDLER = false;  // does not call async properly when = true;
 
     DEBUG_TEXT = "Buffer Status Handler \tStarting Completion Handler for Endpoint %d";
     DEBUG_SHOW ("IRQ", EP_NUMBER);

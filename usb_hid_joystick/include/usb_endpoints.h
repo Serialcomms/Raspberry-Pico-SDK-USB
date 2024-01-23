@@ -36,7 +36,3 @@ struct endpoint_profile {
 
 extern struct endpoint_profile host_endpoint[15];
 extern struct endpoint_profile pico_endpoint[15];
-
-//extern struct endpoint_profile __not_in_flash("endpoints") host_endpoint[15];
-//extern struct endpoint_profile __not_in_flash("endpoints") pico_endpoint[15];
-
