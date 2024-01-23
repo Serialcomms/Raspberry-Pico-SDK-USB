@@ -54,7 +54,7 @@ bool last_transaction_done() {
 
     uint64_t last_transaction_us = absolute_time_diff_us(earliest_time, get_absolute_time());
  
-    return (last_transaction_us >pico.usb.device.last_transaction.wait) ? true : false ;
+    return (last_transaction_us > pico.usb.device.last_transaction.wait) ? true : false ;
   
 }
 
