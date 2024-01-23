@@ -44,37 +44,23 @@ usb_hw->muxing = MUX_REGISTER_VALUE;
 usb_hw->inte = IRQ_REGISTER_VALUE;
 usb_hw->pwr = PWR_REGISTER_VALUE;                       
 
-busy_wait_ms(101);
-
-//irq_set_enabled(USBCTRL_IRQ, true);                     // Enable USB interrupt at processor
-
 }
 
 void usb_insert_device() {
 
-    io_rw_32 SIE_REGISTER_VALUE;
+    usb_hw->sie_ctrl |= USB_SIE_CTRL_PULLUP_EN_BITS;
+    
+    irq_set_enabled(USBCTRL_IRQ, true); 
 
-    SIE_REGISTER_VALUE = usb_hw->sie_ctrl;
-
-    SIE_REGISTER_VALUE |= USB_SIE_CTRL_PULLUP_EN_BITS;
-
-    usb_hw->sie_ctrl = SIE_REGISTER_VALUE;
-
-    irq_set_enabled(USBCTRL_IRQ, true);                     // Enable USB interrupt at processor
+    busy_wait_ms(101);
 
 }
 
 void usb_remove_device() {
 
-    io_rw_32 SIE_REGISTER_VALUE;
+    irq_set_enabled(USBCTRL_IRQ, false);
 
-    SIE_REGISTER_VALUE = usb_hw->sie_ctrl;
-
-    SIE_REGISTER_VALUE &= ~USB_SIE_CTRL_PULLUP_EN_BITS;
-
-    usb_hw->sie_ctrl = SIE_REGISTER_VALUE;
-
-    irq_set_enabled(USBCTRL_IRQ, false);                     // Enable USB interrupt at processor
+    usb_hw->sie_ctrl &= ~USB_SIE_CTRL_PULLUP_EN_BITS;
 
 }
 
