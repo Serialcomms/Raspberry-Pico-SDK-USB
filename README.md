@@ -26,7 +26,7 @@ Once compiled, the uf2 image can be uploaded as normal and the Pico attached to 
 
 Picoprobe or other UART interface device required to view debug messages.
 
-It should then enumerate as a Human Interface Device / Joystick game controller and send continual activity to the host.
+Pico should then enumerate as a Human Interface Device / Joystick game controller and send continuous axis movement and button activity to the host.
 
 <details><summary>Windows Game Controllers</summary>  
 
