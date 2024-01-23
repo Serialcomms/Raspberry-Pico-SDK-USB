@@ -12,8 +12,6 @@ Synchronous (blocking) and Asynchronous (interrupt-driven) transmission function
 
 Multipacket transfers are currently supported in Pico-to-Host direction only.
 
-This release uses endpoint_0 max packet size = 8 to better illustrate PID toggling.
-
 No attempt to optimise memory usage, code size, style or performance has been made at this stage.
 
 The repository may be extensively modified or made unavailable at any time without notice.
