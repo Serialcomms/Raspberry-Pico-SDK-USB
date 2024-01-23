@@ -16,6 +16,8 @@ endif()
 
 #set(PICO_EXAMPLES_PATH ${PROJECT_SOURCE_DIR})
 
+#set(PICO_COPY_TO_RAM 1)
+
 set(SKIP_PICO_STDIO_USB 1)
 
 # Initialize the SDK
