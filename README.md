@@ -24,7 +24,7 @@ The example provided simulates a continually-running joystick.
 
 Once compiled, the uf2 image can be uploaded as normal and the Pico attached to a host machine.
 
-Picoprobe or other UART interface device required to view debug messages.
+Debug Probe / Picoprobe or other UART interface device required to view debug messages.
 
 Pico should then enumerate as a Human Interface Device / Joystick game controller and send continuous axis movement and button activity to the host.
 
