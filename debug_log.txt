@@ -1,0 +1,615 @@
+000:00:00.105   SDK:  Pico USB Initialising     USB Device - HID Joystick Function
+000:00:00.112   DBG:  Pico USB Initialising     Debug Show Threshold = > 0
+000:00:00.118   USB:  String Descriptor         CHIP_B2_ROM_V3_ID_E6616407E3245 (31 ASCII Bytes)
+000:00:00.125   USB:  Pico Serial String        Serial Number = CHIP_B2_ROM_V3_ID_E6616407E3245
+000:00:00.137   CLK:  Pico Clocks (MHz)         Oscillator=5, System=125, Peripheral=125, USB=48
+000:00:00.142   MEM:  Pico Memory Heap          Total Bytes=211368, Free Bytes=211368
+000:00:00.149   USB:  Device Initialisation     DPRAM Start Address=50100000, Size=4096 Bytes
+000:00:01.323   IRQ:  USB BUS RESET             USB Bus Reset command received from host
+000:00:01.327   USB:  Bus Reset                 Servicing USB Bus Reset, Pico Device Address=0
+000:00:01.334   USB:  Bus Reset                 Enabling Setup Interrupt Register=00011000
+000:00:01.370   ===:  ====================      ===============================================
+000:00:01.375   IRQ:  USB Device Setup          Setup Packet Received From Host, Pico Address=0
+000:00:01.383   SET:  Setup Packet Handler      Setup Bytes = 80, 06, 00, 01, 00, 00, 40, 00
+000:00:01.390   SET:  Setup Packet Handler      Setup Respond to Host, Request=6, Length=64
+000:00:01.398   SET:  Setup Packet Handler      Setup Recipient=Device, Type=Standard
+000:00:01.405   GET:  Setup Packet Handler      Setup Get Descriptor Type=1, Index=0
+000:00:01.412   EP0:  Buffer Status             Buffer Completion Status, Host=0, Pico=0
+000:00:01.418   USB:  Pico Request Handler      GET PICO USB DESCRIPTOR, Count=1
+000:00:01.425   USB:  Pico Request Handler      GET DESCRIPTOR TYPE=DEVICE, Count=1
+000:00:01.432   USB:  Setup Control Status      Preparing Control Transfer, Set Packet IDs=1
+000:00:01.439   EP0:  Sending Data Packet       Data Packet Size=8 Bytes, Packet ID=1
+000:00:01.446   PID:  Toggle Packet ID EP0      Pico > Host     Old PID=1 > New PID=0
+000:00:01.453   EP0:  USB Device Descriptor     Send to Host, Packet Size=64, Bytes=8/18
+000:00:06.963   IRQ:  USB BUS RESET             USB Bus Reset command received from host
+000:00:06.966   USB:  Bus Reset                 Servicing USB Bus Reset, Pico Device Address=0
+000:00:06.974   USB:  Bus Reset                 Enabling Setup Interrupt Register=00011000
+000:00:06.993   ===:  ====================      ===============================================
+000:00:06.998   IRQ:  USB Device Setup          Setup Packet Received From Host, Pico Address=0
+000:00:07.006   SET:  Setup Packet Handler      Setup Bytes = 00, 05, 02, 00, 00, 00, 00, 00
+000:00:07.014   SET:  Setup Packet Handler      Setup Request to Pico, Request=5, Length=0
+000:00:07.021   SET:  Setup Packet Handler      Setup Recipient=Device, Type=Standard
+000:00:07.028   GET:  Setup Packet Handler      Setup Configure Device Address=2
+000:00:07.034   EP0:  Buffer Status             Buffer Completion Status, Host=0, Pico=0
+000:00:07.041   USB:  Setup Control Status      Preparing Control Transfer, Set Packet IDs=1
+000:00:07.049   USB:  Setup Device Address      New Device Address Allocated=2
+000:00:07.055   ACK:  ACK Handshake (Host)      Sending ACK to Host, PID=1
+000:00:07.062   DEV:  Setup Device Handler      Device Address Changed, Pico New Address=2
+000:00:07.068   ===:  ====================      ===============================================
+000:00:07.076   IRQ:  USB Device Setup          Setup Packet Received From Host, Pico Address=2
+000:00:07.084   SET:  Setup Packet Handler      Setup Bytes = 80, 06, 00, 01, 00, 00, 12, 00
+000:00:07.091   SET:  Setup Packet Handler      Setup Respond to Host, Request=6, Length=18
+000:00:07.099   SET:  Setup Packet Handler      Setup Recipient=Device, Type=Standard
+000:00:07.106   GET:  Setup Packet Handler      Setup Get Descriptor Type=1, Index=0
+000:00:07.112   EP0:  Buffer Status             Buffer Completion Status, Host=0, Pico=0
+000:00:07.119   USB:  Pico Request Handler      GET PICO USB DESCRIPTOR, Count=2
+000:00:07.126   USB:  Pico Request Handler      GET DESCRIPTOR TYPE=DEVICE, Count=2
+000:00:07.133   USB:  Setup Control Status      Preparing Control Transfer, Set Packet IDs=1
+000:00:07.140   USB:  Synchronous Transfer      Full (64 Byte) Packets=0, Final Packet Size=18
+000:00:07.148   TIM:  Buffer Wait Complete      Waited 1 µs for buffer available to CPU
+000:00:07.155   USB:  Synchronous Transfer      Sending Final Data Packet, Bytes=18
+000:00:07.162   EP0:  Sending Data Packet       Sync Data Packet Size=18 Bytes, Packet ID=1
+000:00:07.169   PID:  Toggle Packet ID EP0      Pico > Host     Old PID=1 > New PID=0
+000:00:07.176   SIE:  Serial Interface Engine   Buffer Wait     Mask=00000001, Register=00000001
+000:00:07.184   USB:  Buffer Status             Clearing        Mask=00000001, Register=00000001
+000:00:07.191   USB:  Buffer Status             Cleared         Mask=00000001, Register=00000000
+000:00:07.198   USB:  Buffer Wait Complete      Duration=8159µs
+000:00:07.203   USB:  Synchronous Transfer      Buffer Offset=18, Transfer Duration=55118µs
+000:00:07.211   ACK:  ACK Handshake (Host)      Receiving ACK from Host, PID=1
+000:00:07.217   PID:  Toggle Packet ID EP0      Host > Pico     Old PID=1 > New PID=0
+000:00:07.224   SIE:  Serial Interface Engine   Buffer Wait     Mask=00000002, Register=00000002
+000:00:07.232   USB:  Buffer Status             Clearing        Mask=00000002, Register=00000002
+000:00:07.239   USB:  Buffer Status             Cleared         Mask=00000002, Register=00000000
+000:00:07.246   USB:  Buffer Wait Complete      Duration=8160µs
+000:00:07.251   ZLP:  Status Transaction        Received Zero Length Packet (Bytes=0) from host
+000:00:07.258   EP0:  Buffer Status             Buffer Completion Status, Host=0, Pico=0
+000:00:07.265   EP0:  USB Device Descriptor     Send to Host, Packet Size=64, Bytes=18/18
+000:00:07.272   ===:  ====================      ===============================================
+000:00:07.280   IRQ:  USB Device Setup          Setup Packet Received From Host, Pico Address=2
+000:00:07.288   SET:  Setup Packet Handler      Setup Bytes = 80, 06, 00, 02, 00, 00, FF, 00
+000:00:07.295   SET:  Setup Packet Handler      Setup Respond to Host, Request=6, Length=255
+000:00:07.303   SET:  Setup Packet Handler      Setup Recipient=Device, Type=Standard
+000:00:07.310   GET:  Setup Packet Handler      Setup Get Descriptor Type=2, Index=0
+000:00:07.317   EP0:  Buffer Status             Buffer Completion Status, Host=0, Pico=0
+000:00:07.323   USB:  Pico Request Handler      GET PICO USB DESCRIPTOR, Count=3
+000:00:07.330   USB:  Pico Request Handler      GET DESCRIPTOR TYPE=CONFIG, Count=3
+000:00:07.337   USB:  Setup Control Status      Preparing Control Transfer, Set Packet IDs=1
+000:00:07.344   EP0:  USB Device Config         Configuration Descriptor, Sending 9/34 Bytes
+000:00:07.352   USB:  Synchronous Transfer      Full (64 Byte) Packets=0, Final Packet Size=9
+000:00:07.360   TIM:  Buffer Wait Complete      Waited 2 µs for buffer available to CPU
+000:00:07.367   USB:  Synchronous Transfer      Sending Final Data Packet, Bytes=9
+000:00:07.373   EP0:  Sending Data Packet       Sync Data Packet Size=9 Bytes, Packet ID=1
+000:00:07.381   PID:  Toggle Packet ID EP0      Pico > Host     Old PID=1 > New PID=0
+000:00:07.387   SIE:  Serial Interface Engine   Buffer Wait     Mask=00000001, Register=00000001
+000:00:07.396   USB:  Buffer Status             Clearing        Mask=00000001, Register=00000001
+000:00:07.402   USB:  Buffer Status             Cleared         Mask=00000001, Register=00000000
+000:00:07.409   USB:  Buffer Wait Complete      Duration=8159µs
+000:00:07.414   USB:  Synchronous Transfer      Buffer Offset=9, Transfer Duration=54944µs
+000:00:07.422   EP0:  Device Configuration      Receive Status Transaction ACK from host
+000:00:07.429   ACK:  ACK Handshake (Host)      Receiving ACK from Host, PID=1
+000:00:07.436   PID:  Toggle Packet ID EP0      Host > Pico     Old PID=1 > New PID=0
+000:00:07.442   SIE:  Serial Interface Engine   Buffer Wait     Mask=00000002, Register=00000002
+000:00:07.450   USB:  Buffer Status             Clearing        Mask=00000002, Register=00000002
+000:00:07.457   USB:  Buffer Status             Cleared         Mask=00000002, Register=00000000
+000:00:07.464   USB:  Buffer Wait Complete      Duration=8159µs
+000:00:07.469   ZLP:  Status Transaction        Received Zero Length Packet (Bytes=0) from host
+000:00:07.477   EP0:  Buffer Status             Buffer Completion Status, Host=0, Pico=0
+000:00:07.484   ===:  ====================      ===============================================
+000:00:07.491   IRQ:  USB Device Setup          Setup Packet Received From Host, Pico Address=2
+000:00:07.499   SET:  Setup Packet Handler      Setup Bytes = 80, 06, 00, 02, 00, 00, 22, 00
+000:00:07.506   SET:  Setup Packet Handler      Setup Respond to Host, Request=6, Length=34
+000:00:07.514   SET:  Setup Packet Handler      Setup Recipient=Device, Type=Standard
+000:00:07.521   GET:  Setup Packet Handler      Setup Get Descriptor Type=2, Index=0
+000:00:07.528   EP0:  Buffer Status             Buffer Completion Status, Host=0, Pico=0
+000:00:07.534   USB:  Pico Request Handler      GET PICO USB DESCRIPTOR, Count=4
+000:00:07.541   USB:  Pico Request Handler      GET DESCRIPTOR TYPE=CONFIG, Count=4
+000:00:07.548   USB:  Setup Control Status      Preparing Control Transfer, Set Packet IDs=1
+000:00:07.555   EP0:  USB Device Config         Configuration Descriptor, Sending 34/34 Bytes
+000:00:07.563   USB:  Synchronous Transfer      Full (64 Byte) Packets=0, Final Packet Size=34
+000:00:07.571   TIM:  Buffer Wait Complete      Waited 1 µs for buffer available to CPU
+000:00:07.578   USB:  Synchronous Transfer      Sending Final Data Packet, Bytes=34
+000:00:07.585   EP0:  Sending Data Packet       Sync Data Packet Size=34 Bytes, Packet ID=1
+000:00:07.592   PID:  Toggle Packet ID EP0      Pico > Host     Old PID=1 > New PID=0
+000:00:07.599   SIE:  Serial Interface Engine   Buffer Wait     Mask=00000001, Register=00000001
+000:00:07.607   USB:  Buffer Status             Clearing        Mask=00000001, Register=00000001
+000:00:07.614   USB:  Buffer Status             Cleared         Mask=00000001, Register=00000000
+000:00:07.621   USB:  Buffer Wait Complete      Duration=8159µs
+000:00:07.626   USB:  Synchronous Transfer      Buffer Offset=34, Transfer Duration=55118µs
+000:00:07.633   EP0:  Device Configuration      Receive Status Transaction ACK from host
+000:00:07.641   ACK:  ACK Handshake (Host)      Receiving ACK from Host, PID=1
+000:00:07.647   PID:  Toggle Packet ID EP0      Host > Pico     Old PID=1 > New PID=0
+000:00:07.654   SIE:  Serial Interface Engine   Buffer Wait     Mask=00000002, Register=00000002
+000:00:07.662   USB:  Buffer Status             Clearing        Mask=00000002, Register=00000002
+000:00:07.669   USB:  Buffer Status             Cleared         Mask=00000002, Register=00000000
+000:00:07.676   USB:  Buffer Wait Complete      Duration=8160µs
+000:00:07.681   ZLP:  Status Transaction        Received Zero Length Packet (Bytes=0) from host
+000:00:07.688   EP0:  Buffer Status             Buffer Completion Status, Host=0, Pico=0
+000:00:07.695   ===:  ====================      ===============================================
+000:00:07.703   IRQ:  USB Device Setup          Setup Packet Received From Host, Pico Address=2
+000:00:07.710   SET:  Setup Packet Handler      Setup Bytes = 80, 06, 00, 03, 00, 00, FF, 00
+000:00:07.718   SET:  Setup Packet Handler      Setup Respond to Host, Request=6, Length=255
+000:00:07.725   SET:  Setup Packet Handler      Setup Recipient=Device, Type=Standard
+000:00:07.732   GET:  Setup Packet Handler      Setup Get Descriptor Type=3, Index=0
+000:00:07.739   EP0:  Buffer Status             Buffer Completion Status, Host=0, Pico=0
+000:00:07.746   USB:  Pico Request Handler      GET PICO USB DESCRIPTOR, Count=5
+000:00:07.753   USB:  Pico Request Handler      GET DESCRIPTOR TYPE=STRING, Count=5
+000:00:07.759   USB:  Setup Control Status      Preparing Control Transfer, Set Packet IDs=1
+000:00:07.767   EP0:  USB String Transfer       String Length = 4 Bytes
+000:00:07.773   USB:  Synchronous Transfer      Full (64 Byte) Packets=0, Final Packet Size=4
+000:00:07.780   TIM:  Buffer Wait Complete      Waited 1 µs for buffer available to CPU
+000:00:07.788   USB:  Synchronous Transfer      Sending Final Data Packet, Bytes=4
+000:00:07.794   EP0:  Sending Data Packet       Sync Data Packet Size=4 Bytes, Packet ID=1
+000:00:07.802   PID:  Toggle Packet ID EP0      Pico > Host     Old PID=1 > New PID=0
+000:00:07.808   SIE:  Serial Interface Engine   Buffer Wait     Mask=00000001, Register=00000001
+000:00:07.816   USB:  Buffer Status             Clearing        Mask=00000001, Register=00000001
+000:00:07.823   USB:  Buffer Status             Cleared         Mask=00000001, Register=00000000
+000:00:07.830   USB:  Buffer Wait Complete      Duration=8160µs
+000:00:07.835   USB:  Synchronous Transfer      Buffer Offset=4, Transfer Duration=54945µs
+000:00:07.843   ACK:  ACK Handshake (Host)      Receiving ACK from Host, PID=1
+000:00:07.849   PID:  Toggle Packet ID EP0      Host > Pico     Old PID=1 > New PID=0
+000:00:07.856   SIE:  Serial Interface Engine   Buffer Wait     Mask=00000002, Register=00000002
+000:00:07.864   USB:  Buffer Status             Clearing        Mask=00000002, Register=00000002
+000:00:07.871   USB:  Buffer Status             Cleared         Mask=00000002, Register=00000000
+000:00:07.878   USB:  Buffer Wait Complete      Duration=8159µs
+000:00:07.883   ZLP:  Status Transaction        Received Zero Length Packet (Bytes=0) from host
+000:00:07.890   EP0:  Buffer Status             Buffer Completion Status, Host=0, Pico=0
+000:00:07.897   ===:  ====================      ===============================================
+000:00:07.905   IRQ:  USB Device Setup          Setup Packet Received From Host, Pico Address=2
+000:00:07.912   SET:  Setup Packet Handler      Setup Bytes = 80, 06, 02, 03, 09, 04, FF, 00
+000:00:07.920   SET:  Setup Packet Handler      Setup Respond to Host, Request=6, Length=255
+000:00:07.928   SET:  Setup Packet Handler      Setup Recipient=Device, Type=Standard
+000:00:07.934   GET:  Setup Packet Handler      Setup Get Descriptor Type=3, Index=2
+000:00:07.941   EP0:  Buffer Status             Buffer Completion Status, Host=0, Pico=0
+000:00:07.948   USB:  Pico Request Handler      GET PICO USB DESCRIPTOR, Count=6
+000:00:07.955   USB:  Pico Request Handler      GET DESCRIPTOR TYPE=STRING, Count=6
+000:00:07.961   USB:  Setup Control Status      Preparing Control Transfer, Set Packet IDs=1
+000:00:07.969   USB:  String Descriptor         Pico SDK Device (15 ASCII Bytes)
+000:00:07.975   EP0:  USB String Transfer       Pico SDK Device (30 Unicode Bytes)+2 Bytes=32
+000:00:07.983   USB:  Synchronous Transfer      Full (64 Byte) Packets=0, Final Packet Size=32
+000:00:07.991   TIM:  Buffer Wait Complete      Waited 1 µs for buffer available to CPU
+000:00:07.998   USB:  Synchronous Transfer      Sending Final Data Packet, Bytes=32
+000:00:08.005   EP0:  Sending Data Packet       Sync Data Packet Size=32 Bytes, Packet ID=1
+000:00:08.012   PID:  Toggle Packet ID EP0      Pico > Host     Old PID=1 > New PID=0
+000:00:08.019   SIE:  Serial Interface Engine   Buffer Wait     Mask=00000001, Register=00000001
+000:00:08.027   USB:  Buffer Status             Clearing        Mask=00000001, Register=00000001
+000:00:08.034   USB:  Buffer Status             Cleared         Mask=00000001, Register=00000000
+000:00:08.041   USB:  Buffer Wait Complete      Duration=8160µs
+000:00:08.046   USB:  Synchronous Transfer      Buffer Offset=32, Transfer Duration=55119µs
+000:00:08.053   ACK:  ACK Handshake (Host)      Receiving ACK from Host, PID=1
+000:00:08.060   PID:  Toggle Packet ID EP0      Host > Pico     Old PID=1 > New PID=0
+000:00:08.066   SIE:  Serial Interface Engine   Buffer Wait     Mask=00000002, Register=00000002
+000:00:08.075   USB:  Buffer Status             Clearing        Mask=00000002, Register=00000002
+000:00:08.081   USB:  Buffer Status             Cleared         Mask=00000002, Register=00000000
+000:00:08.088   USB:  Buffer Wait Complete      Duration=8160µs
+000:00:08.093   ZLP:  Status Transaction        Received Zero Length Packet (Bytes=0) from host
+000:00:08.101   EP0:  Buffer Status             Buffer Completion Status, Host=0, Pico=0
+000:00:08.108   ===:  ====================      ===============================================
+000:00:08.116   IRQ:  USB Device Setup          Setup Packet Received From Host, Pico Address=2
+000:00:08.123   SET:  Setup Packet Handler      Setup Bytes = 80, 06, 00, 01, 00, 00, 12, 00
+000:00:08.131   SET:  Setup Packet Handler      Setup Respond to Host, Request=6, Length=18
+000:00:08.138   SET:  Setup Packet Handler      Setup Recipient=Device, Type=Standard
+000:00:08.145   GET:  Setup Packet Handler      Setup Get Descriptor Type=1, Index=0
+000:00:08.152   EP0:  Buffer Status             Buffer Completion Status, Host=0, Pico=0
+000:00:08.159   USB:  Pico Request Handler      GET PICO USB DESCRIPTOR, Count=7
+000:00:08.165   USB:  Pico Request Handler      GET DESCRIPTOR TYPE=DEVICE, Count=7
+000:00:08.172   USB:  Setup Control Status      Preparing Control Transfer, Set Packet IDs=1
+000:00:08.180   USB:  Synchronous Transfer      Full (64 Byte) Packets=0, Final Packet Size=18
+000:00:08.187   TIM:  Buffer Wait Complete      Waited 1 µs for buffer available to CPU
+000:00:08.195   USB:  Synchronous Transfer      Sending Final Data Packet, Bytes=18
+000:00:08.201   EP0:  Sending Data Packet       Sync Data Packet Size=18 Bytes, Packet ID=1
+000:00:08.209   PID:  Toggle Packet ID EP0      Pico > Host     Old PID=1 > New PID=0
+000:00:08.216   SIE:  Serial Interface Engine   Buffer Wait     Mask=00000001, Register=00000001
+000:00:08.224   USB:  Buffer Status             Clearing        Mask=00000001, Register=00000001
+000:00:08.231   USB:  Buffer Status             Cleared         Mask=00000001, Register=00000000
+000:00:08.237   USB:  Buffer Wait Complete      Duration=8159µs
+000:00:08.243   USB:  Synchronous Transfer      Buffer Offset=18, Transfer Duration=55118µs
+000:00:08.250   ACK:  ACK Handshake (Host)      Receiving ACK from Host, PID=1
+000:00:08.256   PID:  Toggle Packet ID EP0      Host > Pico     Old PID=1 > New PID=0
+000:00:08.263   SIE:  Serial Interface Engine   Buffer Wait     Mask=00000002, Register=00000002
+000:00:08.271   USB:  Buffer Status             Clearing        Mask=00000002, Register=00000002
+000:00:08.278   USB:  Buffer Status             Cleared         Mask=00000002, Register=00000000
+000:00:08.285   USB:  Buffer Wait Complete      Duration=8160µs
+000:00:08.290   ZLP:  Status Transaction        Received Zero Length Packet (Bytes=0) from host
+000:00:08.298   EP0:  Buffer Status             Buffer Completion Status, Host=0, Pico=0
+000:00:08.304   EP0:  USB Device Descriptor     Send to Host, Packet Size=64, Bytes=18/18
+000:00:08.312   ===:  ====================      ===============================================
+000:00:08.320   IRQ:  USB Device Setup          Setup Packet Received From Host, Pico Address=2
+000:00:08.327   SET:  Setup Packet Handler      Setup Bytes = 80, 06, 00, 02, 00, 00, 09, 00
+000:00:08.335   SET:  Setup Packet Handler      Setup Respond to Host, Request=6, Length=9
+000:00:08.342   SET:  Setup Packet Handler      Setup Recipient=Device, Type=Standard
+000:00:08.349   GET:  Setup Packet Handler      Setup Get Descriptor Type=2, Index=0
+000:00:08.356   EP0:  Buffer Status             Buffer Completion Status, Host=0, Pico=0
+000:00:08.363   USB:  Pico Request Handler      GET PICO USB DESCRIPTOR, Count=8
+000:00:08.369   USB:  Pico Request Handler      GET DESCRIPTOR TYPE=CONFIG, Count=8
+000:00:08.376   USB:  Setup Control Status      Preparing Control Transfer, Set Packet IDs=1
+000:00:08.384   EP0:  USB Device Config         Configuration Descriptor, Sending 9/34 Bytes
+000:00:08.391   USB:  Synchronous Transfer      Full (64 Byte) Packets=0, Final Packet Size=9
+000:00:08.399   TIM:  Buffer Wait Complete      Waited 1 µs for buffer available to CPU
+000:00:08.406   USB:  Synchronous Transfer      Sending Final Data Packet, Bytes=9
+000:00:08.413   EP0:  Sending Data Packet       Sync Data Packet Size=9 Bytes, Packet ID=1
+000:00:08.420   PID:  Toggle Packet ID EP0      Pico > Host     Old PID=1 > New PID=0
+000:00:08.427   SIE:  Serial Interface Engine   Buffer Wait     Mask=00000001, Register=00000001
+000:00:08.435   USB:  Buffer Status             Clearing        Mask=00000001, Register=00000001
+000:00:08.442   USB:  Buffer Status             Cleared         Mask=00000001, Register=00000000
+000:00:08.449   USB:  Buffer Wait Complete      Duration=8160µs
+000:00:08.454   USB:  Synchronous Transfer      Buffer Offset=9, Transfer Duration=54945µs
+000:00:08.461   EP0:  Device Configuration      Receive Status Transaction ACK from host
+000:00:08.469   ACK:  ACK Handshake (Host)      Receiving ACK from Host, PID=1
+000:00:08.475   PID:  Toggle Packet ID EP0      Host > Pico     Old PID=1 > New PID=0
+000:00:08.481   SIE:  Serial Interface Engine   Buffer Wait     Mask=00000002, Register=00000002
+000:00:08.490   USB:  Buffer Status             Clearing        Mask=00000002, Register=00000002
+000:00:08.496   USB:  Buffer Status             Cleared         Mask=00000002, Register=00000000
+000:00:08.503   USB:  Buffer Wait Complete      Duration=8160µs
+000:00:08.508   ZLP:  Status Transaction        Received Zero Length Packet (Bytes=0) from host
+000:00:08.516   EP0:  Buffer Status             Buffer Completion Status, Host=0, Pico=0
+000:00:08.523   ===:  ====================      ===============================================
+000:00:08.531   IRQ:  USB Device Setup          Setup Packet Received From Host, Pico Address=2
+000:00:08.538   SET:  Setup Packet Handler      Setup Bytes = 80, 06, 00, 02, 00, 00, 22, 00
+000:00:08.546   SET:  Setup Packet Handler      Setup Respond to Host, Request=6, Length=34
+000:00:08.553   SET:  Setup Packet Handler      Setup Recipient=Device, Type=Standard
+000:00:08.560   GET:  Setup Packet Handler      Setup Get Descriptor Type=2, Index=0
+000:00:08.567   EP0:  Buffer Status             Buffer Completion Status, Host=0, Pico=0
+000:00:08.574   USB:  Pico Request Handler      GET PICO USB DESCRIPTOR, Count=9
+000:00:08.580   USB:  Pico Request Handler      GET DESCRIPTOR TYPE=CONFIG, Count=9
+000:00:08.587   USB:  Setup Control Status      Preparing Control Transfer, Set Packet IDs=1
+000:00:08.595   EP0:  USB Device Config         Configuration Descriptor, Sending 34/34 Bytes
+000:00:08.602   USB:  Synchronous Transfer      Full (64 Byte) Packets=0, Final Packet Size=34
+000:00:08.610   TIM:  Buffer Wait Complete      Waited 1 µs for buffer available to CPU
+000:00:08.617   USB:  Synchronous Transfer      Sending Final Data Packet, Bytes=34
+000:00:08.624   EP0:  Sending Data Packet       Sync Data Packet Size=34 Bytes, Packet ID=1
+000:00:08.631   PID:  Toggle Packet ID EP0      Pico > Host     Old PID=1 > New PID=0
+000:00:08.638   SIE:  Serial Interface Engine   Buffer Wait     Mask=00000001, Register=00000001
+000:00:08.646   USB:  Buffer Status             Clearing        Mask=00000001, Register=00000001
+000:00:08.653   USB:  Buffer Status             Cleared         Mask=00000001, Register=00000000
+000:00:08.660   USB:  Buffer Wait Complete      Duration=8160µs
+000:00:08.665   USB:  Synchronous Transfer      Buffer Offset=34, Transfer Duration=55118µs
+000:00:08.673   EP0:  Device Configuration      Receive Status Transaction ACK from host
+000:00:08.680   ACK:  ACK Handshake (Host)      Receiving ACK from Host, PID=1
+000:00:08.686   PID:  Toggle Packet ID EP0      Host > Pico     Old PID=1 > New PID=0
+000:00:08.693   SIE:  Serial Interface Engine   Buffer Wait     Mask=00000002, Register=00000002
+000:00:08.701   USB:  Buffer Status             Clearing        Mask=00000002, Register=00000002
+000:00:08.708   USB:  Buffer Status             Cleared         Mask=00000002, Register=00000000
+000:00:08.715   USB:  Buffer Wait Complete      Duration=8159µs
+000:00:08.720   ZLP:  Status Transaction        Received Zero Length Packet (Bytes=0) from host
+000:00:08.728   EP0:  Buffer Status             Buffer Completion Status, Host=0, Pico=0
+000:00:08.734   ===:  ====================      ===============================================
+000:00:08.742   IRQ:  USB Device Setup          Setup Packet Received From Host, Pico Address=2
+000:00:08.750   SET:  Setup Packet Handler      Setup Bytes = 00, 09, 01, 00, 00, 00, 00, 00
+000:00:08.757   SET:  Setup Packet Handler      Setup Request to Pico, Request=9, Length=0
+000:00:08.765   SET:  Setup Packet Handler      Setup Recipient=Device, Type=Standard
+000:00:08.771   GET:  Setup Packet Handler      Unhandled Device Request Type=0
+000:00:08.778   EP0:  Buffer Status             Buffer Completion Status, Host=0, Pico=0
+000:00:08.785   USB:  Setup Control Status      Preparing Control Transfer, Set Packet IDs=1
+000:00:08.792   HID:  Pico Request Handler      SET CONFIGURATION REQUEST (HID), Value=1
+000:00:08.799   ACK:  ACK Handshake (Pico)      Sending ACK to Host, PID=1
+000:00:08.805   PID:  Toggle Packet ID EP0      Host > Pico     Old PID=1 > New PID=0
+000:00:08.812   EP0:  Buffer Status             Buffer Completion Status, Host=0, Pico=0
+000:00:08.819   EP1:  Configure Endpoint        Configure and Enable Endpoint 1 to Host
+000:00:08.826   EP1:  Endpoint Control In       Register = AC000180, Offset = 0180
+000:00:08.832   EPx:  Pico Request Handler      Enabling Buffer Status Completion IRQ=2000863C
+000:00:08.841   ===:  ====================      ===============================================
+000:00:08.848   IRQ:  USB Device Setup          Setup Packet Received From Host, Pico Address=2
+000:00:08.855   SET:  Setup Packet Handler      Setup Bytes = 21, 0A, 00, 00, 00, 00, 00, 00
+000:00:08.863   SET:  Setup Packet Handler      Setup Request to Pico, Request=10, Length=0
+000:00:08.870   SET:  Setup Packet Handler      Setup Recipient=Interface, Type=Class
+000:00:08.877   GET:  Setup Packet Handler      Setup Control Stage=1, Type=Class, Interface=0
+000:00:08.885   EP0:  Buffer Status             Buffer Completion Status, Host=0, Pico=0
+000:00:09.892   MEM:  Pico Memory Heap          Total Bytes=211368, Free Bytes=211368
+000:00:09.896   ===:  ====================      ===============================================
+000:00:09.904   SDK:  Pico SDK/USB              Joystick Simulation Starting
+000:00:09.909   JOY:  Simulation Starting       USB Joystick with controls and buttons
+000:00:09.916   ===:  ====================      ===============================================
+000:00:12.757   TIM:  Buffer Wait Complete      Waited 1 µs for buffer available to CPU
+000:00:12.761   USB:  Start Async Transfer      Sending First 6/6 Bytes
+000:00:12.767   EP1:  Sending Data Packet       Data Packet Size=6 Bytes, Packet ID=0
+000:00:12.774   PID:  Toggle Packet ID EP1      Pico > Host     Old PID=0 > New PID=1
+000:00:13.214   TIM:  Buffer Wait Timeout       Waited 100002 µs for buffer available to CPU
+000:00:13.219   USB:  Start Async Transfer      Sending First 6/6 Bytes
+000:00:13.224   EP1:  Sending Data Packet       Data Packet Size=6 Bytes, Packet ID=1
+000:00:13.231   PID:  Toggle Packet ID EP1      Pico > Host     Old PID=1 > New PID=0
+000:00:13.671   TIM:  Buffer Wait Timeout       Waited 100001 µs for buffer available to CPU
+000:00:13.676   USB:  Start Async Transfer      Sending First 6/6 Bytes
+000:00:13.681   EP1:  Sending Data Packet       Data Packet Size=6 Bytes, Packet ID=0
+000:00:13.688   PID:  Toggle Packet ID EP1      Pico > Host     Old PID=0 > New PID=1
+000:00:13.791   ===:  ====================      ===============================================
+000:00:13.796   IRQ:  USB Device Setup          Setup Packet Received From Host, Pico Address=2
+000:00:13.804   SET:  Setup Packet Handler      Setup Bytes = 81, 06, 00, 22, 00, 00, 99, 00
+000:00:13.812   SET:  Setup Packet Handler      Setup Respond to Host, Request=6, Length=153
+000:00:13.819   SET:  Setup Packet Handler      Setup Recipient=Interface, Type=Standard
+000:00:13.826   GET:  Setup Packet Handler      Setup Control Stage=1, Type=Standard, Interface=0
+000:00:13.834   EP0:  Buffer Status             Buffer Completion Status, Host=0, Pico=0
+000:00:13.841   HID:  Pico HID Interface        Send HID Report Descriptor to Host
+000:00:13.848   USB:  Setup Control Status      Preparing Control Transfer, Set Packet IDs=1
+000:00:13.855   TIM:  Buffer Wait Complete      Waited 1 µs for buffer available to CPU
+000:00:13.862   USB:  Start Async Transfer      Sending First 64/89 Bytes
+000:00:13.868   EP0:  Sending Data Packet       Data Packet Size=64 Bytes, Packet ID=1
+000:00:13.875   PID:  Toggle Packet ID EP0      Pico > Host     Old PID=1 > New PID=0
+000:00:13.882   IRQ:  USB Buffer Completion     Buffer Status Register=00000001
+000:00:13.889   IRQ:  Buffer Status Handler     Pico > Host, Processing Endpoint Number 0, IRQ=Y
+000:00:13.897   IRQ:  Buffer Status Handler     Starting Completion Handler for Endpoint 0
+000:00:13.904   IRQ:  Buffer Status Handler     Starting ASYNC Completion Handler for Endpoint 0
+000:00:13.912   IRQ:  Buffer Status Handler     ASYNC Bytes Transferred=64, Bytes Remaining=25
+000:00:13.920   USB:  Buffer Status             Clearing        Mask=00000001, Register=00000001
+000:00:13.927   USB:  Buffer Status             Cleared         Mask=00000001, Register=00000000
+000:00:13.934   EP0:  Sending Async Packet      Buffer Offset=64, Bytes Pending=25, Last=TRUE
+000:00:13.942   EP0:  Sending Data Packet       Data Packet Size=25 Bytes, Packet ID=0
+000:00:13.949   PID:  Toggle Packet ID EP0      Pico > Host     Old PID=0 > New PID=1
+000:00:13.955   IRQ:  USB Buffer Completion     Buffer Status Register=00000001
+000:00:13.962   IRQ:  Buffer Status Handler     Pico > Host, Processing Endpoint Number 0, IRQ=Y
+000:00:13.970   IRQ:  Buffer Status Handler     Starting Completion Handler for Endpoint 0
+000:00:13.977   IRQ:  Buffer Status Handler     Starting ASYNC Completion Handler for Endpoint 0
+000:00:13.985   IRQ:  Buffer Status Handler     ASYNC Bytes Transferred=25, Bytes Remaining=0
+000:00:13.993   USB:  Buffer Status             Clearing        Mask=00000001, Register=00000001
+000:00:14.000   USB:  Buffer Status             Cleared         Mask=00000001, Register=00000000
+000:00:14.007   IRQ:  Buffer Status Handler     Transfer Complete, Async Bytes Transfered=89
+000:00:14.015   ACK:  ACK Handshake (Host)      Receiving ACK from Host, PID=1
+000:00:14.021   PID:  Toggle Packet ID EP0      Host > Pico     Old PID=1 > New PID=0
+000:00:14.028   SIE:  Serial Interface Engine   Buffer Wait     Mask=00000002, Register=00000006
+000:00:14.036   USB:  Buffer Status             Clearing        Mask=00000002, Register=00000006
+000:00:14.043   USB:  Buffer Status             Cleared         Mask=00000002, Register=00000004
+000:00:14.049   USB:  Buffer Wait Complete      Duration=8159µs
+000:00:14.055   ZLP:  Status Transaction        Received Zero Length Packet (Bytes=0) from host
+000:00:14.062   EP0:  Buffer Status             Buffer Completion Status, Host=0, Pico=0
+000:00:14.069   ===:  ====================      ===============================================
+000:00:14.077   IRQ:  USB Device Setup          Setup Packet Received From Host, Pico Address=2
+000:00:14.084   SET:  Setup Packet Handler      Setup Bytes = 80, 06, 00, 02, 00, 00, 09, 00
+000:00:14.092   SET:  Setup Packet Handler      Setup Respond to Host, Request=6, Length=9
+000:00:14.099   SET:  Setup Packet Handler      Setup Recipient=Device, Type=Standard
+000:00:14.106   GET:  Setup Packet Handler      Setup Get Descriptor Type=2, Index=0
+000:00:14.113   EP0:  Buffer Status             Buffer Completion Status, Host=0, Pico=0
+000:00:14.120   USB:  Pico Request Handler      GET PICO USB DESCRIPTOR, Count=10
+000:00:14.126   USB:  Pico Request Handler      GET DESCRIPTOR TYPE=CONFIG, Count=10
+000:00:14.133   USB:  Setup Control Status      Preparing Control Transfer, Set Packet IDs=1
+000:00:14.141   EP0:  USB Device Config         Configuration Descriptor, Sending 9/34 Bytes
+000:00:14.148   USB:  Synchronous Transfer      Full (64 Byte) Packets=0, Final Packet Size=9
+000:00:14.156   TIM:  Buffer Wait Complete      Waited 1 µs for buffer available to CPU
+000:00:14.163   USB:  Synchronous Transfer      Sending Final Data Packet, Bytes=9
+000:00:14.170   EP0:  Sending Data Packet       Sync Data Packet Size=9 Bytes, Packet ID=1
+000:00:14.177   PID:  Toggle Packet ID EP0      Pico > Host     Old PID=1 > New PID=0
+000:00:14.184   SIE:  Serial Interface Engine   Buffer Wait     Mask=00000001, Register=00000005
+000:00:14.192   USB:  Buffer Status             Clearing        Mask=00000001, Register=00000005
+000:00:14.199   USB:  Buffer Status             Cleared         Mask=00000001, Register=00000004
+000:00:14.206   USB:  Buffer Wait Complete      Duration=8160µs
+000:00:14.211   USB:  Synchronous Transfer      Buffer Offset=9, Transfer Duration=54945µs
+000:00:14.218   EP0:  Device Configuration      Receive Status Transaction ACK from host
+000:00:14.226   ACK:  ACK Handshake (Host)      Receiving ACK from Host, PID=1
+000:00:14.232   PID:  Toggle Packet ID EP0      Host > Pico     Old PID=1 > New PID=0
+000:00:14.239   SIE:  Serial Interface Engine   Buffer Wait     Mask=00000002, Register=00000006
+000:00:14.247   USB:  Buffer Status             Clearing        Mask=00000002, Register=00000006
+000:00:14.254   USB:  Buffer Status             Cleared         Mask=00000002, Register=00000004
+000:00:14.261   USB:  Buffer Wait Complete      Duration=8160µs
+000:00:14.266   ZLP:  Status Transaction        Received Zero Length Packet (Bytes=0) from host
+000:00:14.273   EP0:  Buffer Status             Buffer Completion Status, Host=0, Pico=0
+000:00:14.280   IRQ:  USB Buffer Completion     Buffer Status Register=00000004
+000:00:14.286   IRQ:  Buffer Status Handler     Pico > Host, Processing Endpoint Number 1, IRQ=Y
+000:00:14.295   SIE:  Serial Interface Engine   Buffer Wait     Mask=00000004, Register=00000004
+000:00:14.303   USB:  Buffer Status             Clearing        Mask=00000004, Register=00000004
+000:00:14.310   USB:  Buffer Status             Cleared         Mask=00000004, Register=00000000
+000:00:14.316   USB:  Buffer Wait Complete      Duration=8159µs
+000:00:14.322   ===:  ====================      ===============================================
+000:00:14.329   ===:  ====================      ===============================================
+000:00:14.337   IRQ:  USB Device Setup          Setup Packet Received From Host, Pico Address=2
+000:00:14.345   SET:  Setup Packet Handler      Setup Bytes = 80, 06, 00, 02, 00, 00, 22, 00
+000:00:14.352   SET:  Setup Packet Handler      Setup Respond to Host, Request=6, Length=34
+000:00:14.360   SET:  Setup Packet Handler      Setup Recipient=Device, Type=Standard
+000:00:14.367   GET:  Setup Packet Handler      Setup Get Descriptor Type=2, Index=0
+000:00:14.374   EP0:  Buffer Status             Buffer Completion Status, Host=0, Pico=0
+000:00:14.380   USB:  Pico Request Handler      GET PICO USB DESCRIPTOR, Count=11
+000:00:14.387   USB:  Pico Request Handler      GET DESCRIPTOR TYPE=CONFIG, Count=11
+000:00:14.394   USB:  Setup Control Status      Preparing Control Transfer, Set Packet IDs=1
+000:00:14.401   EP0:  USB Device Config         Configuration Descriptor, Sending 34/34 Bytes
+000:00:14.409   USB:  Synchronous Transfer      Full (64 Byte) Packets=0, Final Packet Size=34
+000:00:14.417   TIM:  Buffer Wait Complete      Waited 1 µs for buffer available to CPU
+000:00:14.424   USB:  Synchronous Transfer      Sending Final Data Packet, Bytes=34
+000:00:14.431   EP0:  Sending Data Packet       Sync Data Packet Size=34 Bytes, Packet ID=1
+000:00:14.438   PID:  Toggle Packet ID EP0      Pico > Host     Old PID=1 > New PID=0
+000:00:14.445   SIE:  Serial Interface Engine   Buffer Wait     Mask=00000001, Register=00000001
+000:00:14.453   USB:  Buffer Status             Clearing        Mask=00000001, Register=00000001
+000:00:14.460   USB:  Buffer Status             Cleared         Mask=00000001, Register=00000000
+000:00:14.467   USB:  Buffer Wait Complete      Duration=8160µs
+000:00:14.472   USB:  Synchronous Transfer      Buffer Offset=34, Transfer Duration=55118µs
+000:00:14.479   EP0:  Device Configuration      Receive Status Transaction ACK from host
+000:00:14.487   ACK:  ACK Handshake (Host)      Receiving ACK from Host, PID=1
+000:00:14.493   PID:  Toggle Packet ID EP0      Host > Pico     Old PID=1 > New PID=0
+000:00:14.500   SIE:  Serial Interface Engine   Buffer Wait     Mask=00000002, Register=00000002
+000:00:14.508   USB:  Buffer Status             Clearing        Mask=00000002, Register=00000002
+000:00:14.515   USB:  Buffer Status             Cleared         Mask=00000002, Register=00000000
+000:00:14.522   USB:  Buffer Wait Complete      Duration=8159µs
+000:00:14.527   ZLP:  Status Transaction        Received Zero Length Packet (Bytes=0) from host
+000:00:14.534   EP0:  Buffer Status             Buffer Completion Status, Host=0, Pico=0
+000:00:14.541   ===:  ====================      ===============================================
+000:00:14.549   IRQ:  USB Device Setup          Setup Packet Received From Host, Pico Address=2
+000:00:14.556   SET:  Setup Packet Handler      Setup Bytes = 80, 06, 00, 03, 00, 00, FF, 00
+000:00:14.564   SET:  Setup Packet Handler      Setup Respond to Host, Request=6, Length=255
+000:00:14.571   SET:  Setup Packet Handler      Setup Recipient=Device, Type=Standard
+000:00:14.578   GET:  Setup Packet Handler      Setup Get Descriptor Type=3, Index=0
+000:00:14.585   EP0:  Buffer Status             Buffer Completion Status, Host=0, Pico=0
+000:00:14.592   USB:  Pico Request Handler      GET PICO USB DESCRIPTOR, Count=12
+000:00:14.599   USB:  Pico Request Handler      GET DESCRIPTOR TYPE=STRING, Count=12
+000:00:14.606   USB:  Setup Control Status      Preparing Control Transfer, Set Packet IDs=1
+000:00:14.613   EP0:  USB String Transfer       String Length = 4 Bytes
+000:00:14.619   USB:  Synchronous Transfer      Full (64 Byte) Packets=0, Final Packet Size=4
+000:00:14.626   TIM:  Buffer Wait Complete      Waited 1 µs for buffer available to CPU
+000:00:14.634   USB:  Synchronous Transfer      Sending Final Data Packet, Bytes=4
+000:00:14.640   EP0:  Sending Data Packet       Sync Data Packet Size=4 Bytes, Packet ID=1
+000:00:14.648   PID:  Toggle Packet ID EP0      Pico > Host     Old PID=1 > New PID=0
+000:00:14.654   SIE:  Serial Interface Engine   Buffer Wait     Mask=00000001, Register=00000001
+000:00:14.663   USB:  Buffer Status             Clearing        Mask=00000001, Register=00000001
+000:00:14.669   USB:  Buffer Status             Cleared         Mask=00000001, Register=00000000
+000:00:14.676   USB:  Buffer Wait Complete      Duration=8160µs
+000:00:14.681   USB:  Synchronous Transfer      Buffer Offset=4, Transfer Duration=54945µs
+000:00:14.689   ACK:  ACK Handshake (Host)      Receiving ACK from Host, PID=1
+000:00:14.695   PID:  Toggle Packet ID EP0      Host > Pico     Old PID=1 > New PID=0
+000:00:14.702   SIE:  Serial Interface Engine   Buffer Wait     Mask=00000002, Register=00000002
+000:00:14.710   USB:  Buffer Status             Clearing        Mask=00000002, Register=00000002
+000:00:14.717   USB:  Buffer Status             Cleared         Mask=00000002, Register=00000000
+000:00:14.724   USB:  Buffer Wait Complete      Duration=8159µs
+000:00:14.729   ZLP:  Status Transaction        Received Zero Length Packet (Bytes=0) from host
+000:00:14.737   EP0:  Buffer Status             Buffer Completion Status, Host=0, Pico=0
+000:00:14.743   ===:  ====================      ===============================================
+000:00:14.751   IRQ:  USB Device Setup          Setup Packet Received From Host, Pico Address=2
+000:00:14.759   SET:  Setup Packet Handler      Setup Bytes = 80, 06, 01, 03, 09, 04, FF, 00
+000:00:14.766   SET:  Setup Packet Handler      Setup Respond to Host, Request=6, Length=255
+000:00:14.774   SET:  Setup Packet Handler      Setup Recipient=Device, Type=Standard
+000:00:14.781   GET:  Setup Packet Handler      Setup Get Descriptor Type=3, Index=1
+000:00:14.787   EP0:  Buffer Status             Buffer Completion Status, Host=0, Pico=0
+000:00:14.794   USB:  Pico Request Handler      GET PICO USB DESCRIPTOR, Count=13
+000:00:14.801   USB:  Pico Request Handler      GET DESCRIPTOR TYPE=STRING, Count=13
+000:00:14.808   USB:  Setup Control Status      Preparing Control Transfer, Set Packet IDs=1
+000:00:14.815   USB:  String Descriptor         Raspberry Pico SDK (18 ASCII Bytes)
+000:00:14.822   EP0:  USB String Transfer       Raspberry Pico SDK (36 Unicode Bytes)+2 Bytes=38
+000:00:14.830   USB:  Synchronous Transfer      Full (64 Byte) Packets=0, Final Packet Size=38
+000:00:14.838   TIM:  Buffer Wait Complete      Waited 2 µs for buffer available to CPU
+000:00:14.845   USB:  Synchronous Transfer      Sending Final Data Packet, Bytes=38
+000:00:14.852   EP0:  Sending Data Packet       Sync Data Packet Size=38 Bytes, Packet ID=1
+000:00:14.859   PID:  Toggle Packet ID EP0      Pico > Host     Old PID=1 > New PID=0
+000:00:14.866   SIE:  Serial Interface Engine   Buffer Wait     Mask=00000001, Register=00000001
+000:00:14.874   USB:  Buffer Status             Clearing        Mask=00000001, Register=00000001
+000:00:14.881   USB:  Buffer Status             Cleared         Mask=00000001, Register=00000000
+000:00:14.888   USB:  Buffer Wait Complete      Duration=8160µs
+000:00:14.893   USB:  Synchronous Transfer      Buffer Offset=38, Transfer Duration=55118µs
+000:00:14.900   ACK:  ACK Handshake (Host)      Receiving ACK from Host, PID=1
+000:00:14.907   PID:  Toggle Packet ID EP0      Host > Pico     Old PID=1 > New PID=0
+000:00:14.913   SIE:  Serial Interface Engine   Buffer Wait     Mask=00000002, Register=00000002
+000:00:14.921   USB:  Buffer Status             Clearing        Mask=00000002, Register=00000002
+000:00:14.928   USB:  Buffer Status             Cleared         Mask=00000002, Register=00000000
+000:00:14.935   USB:  Buffer Wait Complete      Duration=8159µs
+000:00:14.940   ZLP:  Status Transaction        Received Zero Length Packet (Bytes=0) from host
+000:00:14.948   EP0:  Buffer Status             Buffer Completion Status, Host=0, Pico=0
+000:00:14.955   ===:  ====================      ===============================================
+000:00:14.962   IRQ:  USB Device Setup          Setup Packet Received From Host, Pico Address=2
+000:00:14.970   SET:  Setup Packet Handler      Setup Bytes = 80, 06, 02, 03, 09, 04, FF, 00
+000:00:14.978   SET:  Setup Packet Handler      Setup Respond to Host, Request=6, Length=255
+000:00:14.985   SET:  Setup Packet Handler      Setup Recipient=Device, Type=Standard
+000:00:14.992   GET:  Setup Packet Handler      Setup Get Descriptor Type=3, Index=2
+000:00:14.999   EP0:  Buffer Status             Buffer Completion Status, Host=0, Pico=0
+000:00:15.006   USB:  Pico Request Handler      GET PICO USB DESCRIPTOR, Count=14
+000:00:15.012   USB:  Pico Request Handler      GET DESCRIPTOR TYPE=STRING, Count=14
+000:00:15.019   USB:  Setup Control Status      Preparing Control Transfer, Set Packet IDs=1
+000:00:15.027   USB:  String Descriptor         Pico SDK Device (15 ASCII Bytes)
+000:00:15.033   EP0:  USB String Transfer       Pico SDK Device (30 Unicode Bytes)+2 Bytes=32
+000:00:15.041   USB:  Synchronous Transfer      Full (64 Byte) Packets=0, Final Packet Size=32
+000:00:15.048   TIM:  Buffer Wait Complete      Waited 1 µs for buffer available to CPU
+000:00:15.056   USB:  Synchronous Transfer      Sending Final Data Packet, Bytes=32
+000:00:15.062   EP0:  Sending Data Packet       Sync Data Packet Size=32 Bytes, Packet ID=1
+000:00:15.070   PID:  Toggle Packet ID EP0      Pico > Host     Old PID=1 > New PID=0
+000:00:15.077   SIE:  Serial Interface Engine   Buffer Wait     Mask=00000001, Register=00000001
+000:00:15.085   USB:  Buffer Status             Clearing        Mask=00000001, Register=00000001
+000:00:15.092   USB:  Buffer Status             Cleared         Mask=00000001, Register=00000000
+000:00:15.098   USB:  Buffer Wait Complete      Duration=8159µs
+000:00:15.104   USB:  Synchronous Transfer      Buffer Offset=32, Transfer Duration=55118µs
+000:00:15.111   ACK:  ACK Handshake (Host)      Receiving ACK from Host, PID=1
+000:00:15.118   PID:  Toggle Packet ID EP0      Host > Pico     Old PID=1 > New PID=0
+000:00:15.124   SIE:  Serial Interface Engine   Buffer Wait     Mask=00000002, Register=00000002
+000:00:15.132   USB:  Buffer Status             Clearing        Mask=00000002, Register=00000002
+000:00:15.139   USB:  Buffer Status             Cleared         Mask=00000002, Register=00000000
+000:00:15.146   USB:  Buffer Wait Complete      Duration=8160µs
+000:00:15.151   ZLP:  Status Transaction        Received Zero Length Packet (Bytes=0) from host
+000:00:15.159   EP0:  Buffer Status             Buffer Completion Status, Host=0, Pico=0
+000:00:15.165   TIM:  Buffer Wait Complete      Waited 2 µs for buffer available to CPU
+000:00:15.173   USB:  Start Async Transfer      Sending First 6/6 Bytes
+000:00:15.178   EP1:  Sending Data Packet       Data Packet Size=6 Bytes, Packet ID=1
+000:00:15.185   PID:  Toggle Packet ID EP1      Pico > Host     Old PID=1 > New PID=0
+000:00:15.193   IRQ:  USB Buffer Completion     Buffer Status Register=00000004
+000:00:15.198   IRQ:  Buffer Status Handler     Pico > Host, Processing Endpoint Number 1, IRQ=Y
+000:00:15.207   SIE:  Serial Interface Engine   Buffer Wait     Mask=00000004, Register=00000004
+000:00:15.215   USB:  Buffer Status             Clearing        Mask=00000004, Register=00000004
+000:00:15.222   USB:  Buffer Status             Cleared         Mask=00000004, Register=00000000
+000:00:15.228   USB:  Buffer Wait Complete      Duration=8160µs
+000:00:15.234   ===:  ====================      ===============================================
+000:00:15.525   TIM:  Buffer Wait Complete      Waited 1 µs for buffer available to CPU
+000:00:15.529   USB:  Start Async Transfer      Sending First 6/6 Bytes
+000:00:15.535   EP1:  Sending Data Packet       Data Packet Size=6 Bytes, Packet ID=0
+000:00:15.542   PID:  Toggle Packet ID EP1      Pico > Host     Old PID=0 > New PID=1
+000:00:15.549   IRQ:  USB Buffer Completion     Buffer Status Register=00000004
+000:00:15.555   IRQ:  Buffer Status Handler     Pico > Host, Processing Endpoint Number 1, IRQ=Y
+000:00:15.563   SIE:  Serial Interface Engine   Buffer Wait     Mask=00000004, Register=00000004
+000:00:15.571   USB:  Buffer Status             Clearing        Mask=00000004, Register=00000004
+000:00:15.578   USB:  Buffer Status             Cleared         Mask=00000004, Register=00000000
+000:00:15.585   USB:  Buffer Wait Complete      Duration=8160µs
+000:00:15.590   ===:  ====================      ===============================================
+000:00:15.931   TIM:  Buffer Wait Complete      Waited 1 µs for buffer available to CPU
+000:00:15.936   USB:  Start Async Transfer      Sending First 6/6 Bytes
+000:00:15.941   EP1:  Sending Data Packet       Data Packet Size=6 Bytes, Packet ID=1
+000:00:15.948   PID:  Toggle Packet ID EP1      Pico > Host     Old PID=1 > New PID=0
+000:00:15.955   IRQ:  USB Buffer Completion     Buffer Status Register=00000004
+000:00:15.961   IRQ:  Buffer Status Handler     Pico > Host, Processing Endpoint Number 1, IRQ=Y
+000:00:15.969   SIE:  Serial Interface Engine   Buffer Wait     Mask=00000004, Register=00000004
+000:00:15.978   USB:  Buffer Status             Clearing        Mask=00000004, Register=00000004
+000:00:15.984   USB:  Buffer Status             Cleared         Mask=00000004, Register=00000000
+000:00:15.991   USB:  Buffer Wait Complete      Duration=8159µs
+000:00:15.996   ===:  ====================      ===============================================
+000:00:16.337   TIM:  Buffer Wait Complete      Waited 1 µs for buffer available to CPU
+000:00:16.342   USB:  Start Async Transfer      Sending First 6/6 Bytes
+000:00:16.347   EP1:  Sending Data Packet       Data Packet Size=6 Bytes, Packet ID=0
+000:00:16.354   PID:  Toggle Packet ID EP1      Pico > Host     Old PID=0 > New PID=1
+000:00:16.361   IRQ:  USB Buffer Completion     Buffer Status Register=00000004
+000:00:16.368   IRQ:  Buffer Status Handler     Pico > Host, Processing Endpoint Number 1, IRQ=Y
+000:00:16.376   SIE:  Serial Interface Engine   Buffer Wait     Mask=00000004, Register=00000004
+000:00:16.384   USB:  Buffer Status             Clearing        Mask=00000004, Register=00000004
+000:00:16.391   USB:  Buffer Status             Cleared         Mask=00000004, Register=00000000
+000:00:16.397   USB:  Buffer Wait Complete      Duration=8159µs
+000:00:16.403   ===:  ====================      ===============================================
+000:00:16.694   TIM:  Buffer Wait Complete      Waited 1 µs for buffer available to CPU
+000:00:16.698   USB:  Start Async Transfer      Sending First 6/6 Bytes
+000:00:16.704   EP1:  Sending Data Packet       Data Packet Size=6 Bytes, Packet ID=1
+000:00:16.711   PID:  Toggle Packet ID EP1      Pico > Host     Old PID=1 > New PID=0
+000:00:16.718   IRQ:  USB Buffer Completion     Buffer Status Register=00000004
+000:00:16.724   IRQ:  Buffer Status Handler     Pico > Host, Processing Endpoint Number 1, IRQ=Y
+000:00:16.732   SIE:  Serial Interface Engine   Buffer Wait     Mask=00000004, Register=00000004
+000:00:16.740   USB:  Buffer Status             Clearing        Mask=00000004, Register=00000004
+000:00:16.747   USB:  Buffer Status             Cleared         Mask=00000004, Register=00000000
+000:00:16.754   USB:  Buffer Wait Complete      Duration=8159µs
+000:00:16.759   ===:  ====================      ===============================================
+000:00:17.100   TIM:  Buffer Wait Complete      Waited 1 µs for buffer available to CPU
+000:00:17.105   USB:  Start Async Transfer      Sending First 6/6 Bytes
+000:00:17.110   EP1:  Sending Data Packet       Data Packet Size=6 Bytes, Packet ID=0
+000:00:17.117   PID:  Toggle Packet ID EP1      Pico > Host     Old PID=0 > New PID=1
+000:00:17.124   IRQ:  USB Buffer Completion     Buffer Status Register=00000004
+000:00:17.130   IRQ:  Buffer Status Handler     Pico > Host, Processing Endpoint Number 1, IRQ=Y
+000:00:17.138   SIE:  Serial Interface Engine   Buffer Wait     Mask=00000004, Register=00000004
+000:00:17.147   USB:  Buffer Status             Clearing        Mask=00000004, Register=00000004
+000:00:17.153   USB:  Buffer Status             Cleared         Mask=00000004, Register=00000000
+000:00:17.160   USB:  Buffer Wait Complete      Duration=8159µs
+000:00:17.165   ===:  ====================      ===============================================
+000:00:17.506   TIM:  Buffer Wait Complete      Waited 2 µs for buffer available to CPU
+000:00:17.511   USB:  Start Async Transfer      Sending First 6/6 Bytes
+000:00:17.516   EP1:  Sending Data Packet       Data Packet Size=6 Bytes, Packet ID=1
+000:00:17.523   PID:  Toggle Packet ID EP1      Pico > Host     Old PID=1 > New PID=0
+000:00:17.530   IRQ:  USB Buffer Completion     Buffer Status Register=00000004
+000:00:17.537   IRQ:  Buffer Status Handler     Pico > Host, Processing Endpoint Number 1, IRQ=Y
+000:00:17.545   SIE:  Serial Interface Engine   Buffer Wait     Mask=00000004, Register=00000004
+000:00:17.553   USB:  Buffer Status             Clearing        Mask=00000004, Register=00000004
+000:00:17.560   USB:  Buffer Status             Cleared         Mask=00000004, Register=00000000
+000:00:17.566   USB:  Buffer Wait Complete      Duration=8159µs
+000:00:17.572   ===:  ====================      ===============================================
+000:00:17.912   TIM:  Buffer Wait Complete      Waited 1 µs for buffer available to CPU
+000:00:17.917   USB:  Start Async Transfer      Sending First 6/6 Bytes
+000:00:17.923   EP1:  Sending Data Packet       Data Packet Size=6 Bytes, Packet ID=0
+000:00:17.930   PID:  Toggle Packet ID EP1      Pico > Host     Old PID=0 > New PID=1
+000:00:17.937   IRQ:  USB Buffer Completion     Buffer Status Register=00000004
+000:00:17.943   IRQ:  Buffer Status Handler     Pico > Host, Processing Endpoint Number 1, IRQ=Y
+000:00:17.951   SIE:  Serial Interface Engine   Buffer Wait     Mask=00000004, Register=00000004
+000:00:17.959   USB:  Buffer Status             Clearing        Mask=00000004, Register=00000004
+000:00:17.966   USB:  Buffer Status             Cleared         Mask=00000004, Register=00000000
+000:00:17.973   USB:  Buffer Wait Complete      Duration=8159µs
+000:00:17.978   ===:  ====================      ===============================================
+000:00:18.269   TIM:  Buffer Wait Complete      Waited 2 µs for buffer available to CPU
+000:00:18.274   USB:  Start Async Transfer      Sending First 6/6 Bytes
+000:00:18.279   EP1:  Sending Data Packet       Data Packet Size=6 Bytes, Packet ID=1
+000:00:18.286   PID:  Toggle Packet ID EP1      Pico > Host     Old PID=1 > New PID=0
+000:00:18.293   IRQ:  USB Buffer Completion     Buffer Status Register=00000004
+000:00:18.299   IRQ:  Buffer Status Handler     Pico > Host, Processing Endpoint Number 1, IRQ=Y
+000:00:18.307   SIE:  Serial Interface Engine   Buffer Wait     Mask=00000004, Register=00000004
+000:00:18.316   USB:  Buffer Status             Clearing        Mask=00000004, Register=00000004
+000:00:18.323   USB:  Buffer Status             Cleared         Mask=00000004, Register=00000000
+000:00:18.329   USB:  Buffer Wait Complete      Duration=8159µs
+000:00:18.334   ===:  ====================      ===============================================
+000:00:18.675   TIM:  Buffer Wait Complete      Waited 1 µs for buffer available to CPU
+000:00:18.680   USB:  Start Async Transfer      Sending First 6/6 Bytes
+000:00:18.686   EP1:  Sending Data Packet       Data Packet Size=6 Bytes, Packet ID=0
+000:00:18.692   PID:  Toggle Packet ID EP1      Pico > Host     Old PID=0 > New PID=1
+000:00:18.699   IRQ:  USB Buffer Completion     Buffer Status Register=00000004
+000:00:18.706   IRQ:  Buffer Status Handler     Pico > Host, Processing Endpoint Number 1, IRQ=Y
+000:00:18.714   SIE:  Serial Interface Engine   Buffer Wait     Mask=00000004, Register=00000004
+000:00:18.722   USB
