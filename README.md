@@ -16,7 +16,7 @@ No attempt to optimise memory usage, code size, style or performance has been ma
 
 The repository may be extensively modified or made unavailable at any time without notice.
 
-Some unresolved issues (possibly related to stack usage ?) remain in the endpoint handler and debug routines.
+Some unresolved issues (possibly related to stack usage ?) remain in the endpoint handler.
 
 ### Usage
 
