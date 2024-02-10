@@ -223,6 +223,11 @@ uint8_t get_debug_threshold() {
     return debug_threshold;
 }
 
+uint8_t *boolean_text(bool boolean_value) {
+
+    return boolean_value ? "TRUE" : "FALSE"; 
+}
+
 volatile void show_buffer_control(uint8_t EP) {
 
     TIMESTAMP(); printf("USB:  Pico Buffer Control \tSEQ Error=%s, ACK Recd.=%s, Complete=%s\n", sie_status_seq_error(), sie_status_ack_received(), sie_trans_complete());

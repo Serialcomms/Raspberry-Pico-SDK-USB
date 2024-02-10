@@ -8,6 +8,8 @@ uint8_t get_debug_threshold();
 
 void init_debug_critical_section();
 
+uint8_t *boolean_text(bool boolean_value);
+
 volatile void show_ep0_buffers_complete();
 volatile void show_buffer_control(uint8_t EP);
 

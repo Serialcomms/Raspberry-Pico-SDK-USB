@@ -39,8 +39,6 @@ void send_sync_packet(uint8_t EP_NUMBER, uint8_t data_packet_size, bool last_pac
     host_endpoint[EP_NUMBER].packet_id = toggle_data_pid(EP_NUMBER, true, DATA_PID);
 
     usb_wait_for_buffer_completion_pico_to_host(EP_NUMBER, true);
-    //usb_wait_for_buffer_completion_host_to_pico(EP_NUMBER, true);
-
 }
 
 void send_async_packet(uint8_t EP_NUMBER) {
@@ -95,8 +93,6 @@ void send_data_packet(uint8_t EP_NUMBER, uint8_t data_packet_size, bool wait_for
     if (wait_for_buffers) {
 
         usb_wait_for_buffer_completion_pico_to_host(EP_NUMBER, true);
-
-        //usb_wait_for_buffer_completion_host_to_pico(EP_NUMBER, true);
     } 
        
 } 

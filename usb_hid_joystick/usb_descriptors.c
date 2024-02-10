@@ -155,3 +155,45 @@ uint8_t ep0_packet_size() {
         return 8;
     }
 }
+
+uint16_t usb_product_id() {
+
+  return pico_device_descriptor[9] << 8 | pico_device_descriptor[8];
+
+}
+
+uint16_t usb_vendor_id() {
+
+  return pico_device_descriptor[11] << 8 | pico_device_descriptor[10];
+
+}
+
+float usb_device_version() {
+
+  return bcd_convert(pico_device_descriptor[3] , pico_device_descriptor[2]);
+
+}
+
+float usb_device_release() {
+
+  return bcd_convert(pico_device_descriptor[13] , pico_device_descriptor[12]);
+
+}
+
+float bcd_convert(uint8_t major, uint8_t minor) {
+
+  const float TEN = 10;
+ 
+  uint8_t major_tens = MIN(major >> 4, 9);
+  uint8_t major_units = MIN(major & 0xF, 9);
+
+  uint8_t minor_tens = MIN(minor >> 4, 9);
+  uint8_t minor_units = MIN(minor & 0xF, 9);
+
+  float integer_part = major_tens * TEN + major_units;
+
+  float fractional_part = minor_tens * TEN + minor_units;
+
+  return integer_part + fractional_part / (TEN * TEN);
+
+}

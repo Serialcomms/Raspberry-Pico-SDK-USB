@@ -18,6 +18,17 @@ uint8_t ep0_packet_size();
 uint16_t config_total_length();
 uint16_t hid_report_descriptor_size();
 
+uint8_t ep0_packet_size();
+uint16_t usb_vendor_id();
+uint16_t usb_product_id();
+uint16_t config_total_length();
+uint16_t hid_report_descriptor_size();
+
+float usb_device_version();
+float usb_device_release();
+
+float bcd_convert(uint8_t major, uint8_t minor);
+
 // bmRequestType bit definitions
 #define USB_REQ_TYPE_STANDARD 0x00u
 #define USB_REQ_TYPE_TYPE_MASK 0x60u
