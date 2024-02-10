@@ -3,6 +3,7 @@
 #### Proof-of-Concept development to help understand USB device stack operation in a Pico SDK/Hardware context.
 
 8th February Update : debug/logging and other improvements.
+10th February Update : add USB info to status startup screen.
 
 The 'stack' [^1] is written in C, and is derived from the [low-level device example](https://github.com/raspberrypi/pico-examples/tree/master/usb/device/dev_lowlevel) supported by the Raspberry Pico documentation set.
 
