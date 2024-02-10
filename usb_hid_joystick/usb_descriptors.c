@@ -156,13 +156,13 @@ uint8_t ep0_packet_size() {
     }
 }
 
-uint16_t usb_product_id() {
+uint16_t usb_vendor_id() {
 
   return pico_device_descriptor[9] << 8 | pico_device_descriptor[8];
 
 }
 
-uint16_t usb_vendor_id() {
+uint16_t usb_product_id() {
 
   return pico_device_descriptor[11] << 8 | pico_device_descriptor[10];
 
