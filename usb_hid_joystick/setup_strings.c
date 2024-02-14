@@ -10,6 +10,7 @@
 #include "include/pico_info.h"
 #include "include/usb_debug.h"
 #include "include/time_stamp.h"
+#include "include/setup_packet.h"
 #include "include/usb_common.h"
 #include "include/usb_transmit.h"
 #include "include/usb_receive.h"
@@ -23,59 +24,69 @@
 extern bool DEBUG_HIDE;
 extern uint8_t *DEBUG_TEXT;
 
+extern usb_setup_t *setup;
+
 uint8_t *pico_string_descriptors[] = {
 
     (uint8_t[]) {0x04, 0x03, 0x09, 0x04},               // Language bytes
-    (uint8_t *) "Raspberry Pico SDK",                   // Vendor
-    (uint8_t *) "Pico SDK Device",                      // Product
-    (uint8_t *) "123-2040",                             // Interface
-    (uint8_t *) "Pico SDK/HID",                         //
-  
+    (uint8_t *) "Raspberry Pi",                         // Vendor
+    (uint8_t *) "Pico SDK Joystick",                    // Product
+    (uint8_t *) "Pico HID Interface",                   // Interface
+    (uint8_t *) "Spare String",                         //
     NULL
 
-} ;
+};
 
 uint8_t string_buffer[64];
 static uint8_t serial_number[32];
 
 void send_device_string_to_host(uint8_t string_index) {
 
+  uint8_t  string_length = 0;
+  uint8_t *string_descriptor;
+  uint16_t language_id = setup->index;
+  uint8_t string_entries = count_of(pico_string_descriptors);
+
+  bool get_language = setup->index & 0x0F ? false : true;
+
   DEBUG_HIDE = false;
 
-    static uint8_t  string_length = 0;
-    static uint8_t *string_descriptor;
+  DEBUG_TEXT = "Pico Strings Handler \tLanguage ID=%04X";
+  DEBUG_SHOW ("VAL", 9, language_id);
 
-    uint8_t string_entries = count_of(pico_string_descriptors);
+    if (get_language) {
 
-    if (string_entries) {
+      string_descriptor = pico_string_descriptors[0];
+      string_length = sizeof(pico_string_descriptors[0]);
 
-      if (string_index < string_entries) {
+      usb_start_string_transfer(string_descriptor, string_length, string_index) ;
+    
+    } else {
 
-        if (string_index == 0) {
+      if (string_entries) {
 
-          string_descriptor = pico_string_descriptors[0];
-          string_length = sizeof(pico_string_descriptors[0]);
-
-        } else {
-
+        if (string_index < string_entries) {
+          
           string_descriptor = string_buffer;
           string_length = build_string_descriptor(pico_string_descriptors[string_index]);
 
+          usb_start_string_transfer(string_descriptor, string_length, string_index) ;
+
+           
+        } else {  // string index not in array, generate serial number instead
+
+          string_descriptor = serial_number;
+          string_length = generate_serial_number_string(false);
+          usb_start_string_transfer(string_descriptor, string_length, string_index) ;
+
         }
 
-      } else {  // string index not in array, generate serial number instead
+      } else {
 
-        string_descriptor = serial_number;
-        string_length = generate_serial_number_string(false);
+        DEBUG_TEXT = "Pico Strings Handler \tString Array Empty";
+        DEBUG_SHOW ("ERR", 9);
 
-      }
-
-      usb_start_string_transfer(string_descriptor, string_length, string_index) ;
-
-    } else {
-
-      DEBUG_TEXT = "Pico Strings Handler \tString Array Empty";
-      DEBUG_SHOW ("ERR", 9, DEBUG_TEXT);
+      }  
 
     }
 
@@ -135,6 +146,8 @@ void usb_start_string_transfer(uint8_t *string_descriptor, uint8_t string_length
     
         }
 
+        prepare_control_transfer();
+        
         synchronous_transfer_to_host(0, string_descriptor, string_length);
 
         ack_pico_to_host_control_transfer();

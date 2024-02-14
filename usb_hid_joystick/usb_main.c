@@ -36,6 +36,10 @@ int main(void) {
     gpio_init(PICO_DEFAULT_LED_PIN);
 
     gpio_set_dir(PICO_DEFAULT_LED_PIN, GPIO_OUT);
+
+    gpio_init(16);
+
+    gpio_set_dir(16, GPIO_OUT);
    
     stdio_uart_init();
 
@@ -50,6 +54,8 @@ int main(void) {
     usb_device_init();
 
     busy_wait_ms(1000);
+    
+    gpio_put(16, 1); 
 
     wait_for_device_enumeration();
 
@@ -88,10 +94,12 @@ void wait_for_device_enumeration() {
 
     usb_insert_device();
 
-    busy_wait_ms(500);
+    busy_wait_ms(1500);
 
     DEBUG_TEXT = "Device Enumeration\tAllowing %d seconds max. for USB Device Enumeration";
     DEBUG_SHOW ("DEV", 0, wait_seconds);
+
+    busy_wait_ms(2500);
 
     wait_time_now = get_absolute_time(); 
 

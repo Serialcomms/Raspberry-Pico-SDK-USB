@@ -42,3 +42,5 @@ static inline void show_device_decode();
 static inline void show_interface_decode();
 
 static inline void show_recipient_decode();
+
+static inline void show_descriptor_decode();

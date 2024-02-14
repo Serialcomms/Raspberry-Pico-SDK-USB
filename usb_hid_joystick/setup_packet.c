@@ -1,3 +1,4 @@
+
 /*
  * Copyright (c) 2024 Serialcomms (GitHub).
  *
@@ -33,25 +34,26 @@ usb_setup_t *setup = &setup_command;
 uint8_t request_type_index = 0;
 uint8_t request_recipient_index = 0;
 
-uint8_t *request_type[]         =  { "Standard", "Class", "Vendor", "Reserved", "Unknown" };
-uint8_t *request_action[]       =  { "Respond to Host", "Request to Pico", "Unknown" };
-uint8_t *request_direction[]    =  { "Pico > Host", "Host > Pico", "Unknown" };
-uint8_t *request_recipient[]    =  { "Device", "Interface", "Endpoint", "Other", "Unknown" };
+uint8_t *request_type[]         = { "Standard", "Class", "Vendor", "Reserved", "Unknown" };
+uint8_t *request_action[]       = { "Respond to Host", "Request to Pico", "Unknown" };
+uint8_t *request_direction[]    = { "Pico > Host", "Host > Pico", "Unknown" };
+uint8_t *request_recipient[]    = { "Device", "Interface", "Endpoint", "Other", "Unknown" };
+uint8_t *descriptor_type[]      = { "Invalid", "Configuration", "Device", "String", "Unknown" } ;
 
 volatile uint8_t *setup_packet = usb_dpram->setup_packet;
 
 static inline void prepare_setup_packet() {
 
     setup->request = setup_packet[1];
-    setup->direction = setup_packet[0] & 0x80;
-    setup->recipient = setup_packet[0] & 0x1F;
+    setup->direction = setup_packet[0] & 0x80; // 1 - pico-to-host
+    setup->recipient = setup_packet[0] & 0x0F;
     setup->descriptor_type = setup_packet[3];
     setup->descriptor_index = setup_packet[2];
     setup->request_type = (setup_packet[0] & 0x60) >> 5;
 
-    setup->value =  setup_packet[3] << 8 | setup_packet[2];
-    setup->index =  setup_packet[5] << 8 | setup_packet[4];
-    setup->length = setup_packet[7] << 8 | setup_packet[6];
+    setup->value =  (setup_packet[3] << 8) | setup_packet[2];
+    setup->index =  (setup_packet[5] << 8) | setup_packet[4];
+    setup->length = (setup_packet[7] << 8) | setup_packet[6];
 
     pico.usb.device.control_transfer_stage = 1;
 
@@ -120,7 +122,7 @@ static inline void setup_interface_class() {
 
     } else {
 
-     //   usb_setup_class_request_to_pico();
+      //  usb_setup_class_request_to_pico();
 
     }
 
@@ -165,8 +167,7 @@ static inline void show_device_decode() {
 
         case 6:
 
-            DEBUG_TEXT = "Setup Packet Handler\tSetup Get Descriptor Type=%d, Index=%d";
-            DEBUG_SHOW ("GET", 2, setup->descriptor_type, setup->descriptor_index);
+            show_descriptor_decode();
 
         break;
 
@@ -185,6 +186,53 @@ static inline void show_device_decode() {
         break;
 
     }         
+
+}
+
+
+static inline void show_descriptor_decode() {
+
+    switch (setup->descriptor_type) {
+
+        case 1:     // device
+
+            DEBUG_TEXT = "Setup Packet Handler\tSetup Get %s, Value=%d, Index=%d";
+            DEBUG_SHOW ("GET", 2, descriptor_type[setup->descriptor_type], setup->value, setup->descriptor_index);
+
+        break;
+
+
+        case 2:     // configuration
+
+
+            DEBUG_TEXT = "Setup Packet Handler\tSetup Get %s, Value=%d, Index=%d";
+            DEBUG_SHOW ("GET", 2, descriptor_type[setup->descriptor_type], setup->value, setup->descriptor_index);
+
+        break;
+
+
+        case 3:     // string
+
+            DEBUG_TEXT = "Setup Packet Handler\tSetup Get %s, Language ID=%04X, Index=%d" ;
+            DEBUG_SHOW ("GET", 2, descriptor_type[setup->descriptor_type], setup->index, setup->descriptor_index);
+
+
+
+        break;
+
+        default:
+
+            DEBUG_TEXT = "Setup Packet Handler\tSetup Get Descriptor Type=%s, Value=%d, Index=%d";
+            DEBUG_SHOW ("GET", 2, descriptor_type[4], setup->value, setup->descriptor_index);
+
+        break;
+
+    }
+    
+    
+  // DEBUG_TEXT = "Setup Packet Handler\tSetup Get Descriptor Type=%d, Value=%d, Index=%d";
+  //  DEBUG_SHOW ("GET", 2, setup->descriptor_type, setup->value, setup->descriptor_index);
+
 
 }
 
